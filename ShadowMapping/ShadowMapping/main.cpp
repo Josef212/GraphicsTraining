@@ -12,6 +12,10 @@
 #include "Shader.h"
 #include "Geometry.h"
 #include "GeometryDefs.h"
+#include "RenderInfo.h"
+
+#include "FrameBuffer.h"
+#include "DepthFrameBuffer.h"
 
 
 // -------------------------------------------------------------------------------
@@ -25,6 +29,14 @@ void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 void ProcessInput(GLFWwindow* window);
 
 static void ErrorCallback(int error, const char* description);
+
+			//-----
+
+void RenderSimpleGeometry(RenderInfo& info);
+void RenderSceneFromDirectionalLight(RenderInfo& info);
+void RenderFrameBuffer(RenderInfo& info);
+
+void RenderIntoFrameBuffer(RenderInfo& info);
 
 // -------------------------------------------------------------------------------
 
@@ -42,6 +54,7 @@ float dt = 0.f;
 float lastFrame = 0.f;
 
 Camera camera;
+Camera camera2(glm::vec3(0.f, 2.f, 5.f));
 
 // -------------------------------------------------------------------------------
 
@@ -104,10 +117,15 @@ int main(int argc, char** argv)
 	// ==============================================
 	// Init geometry, materials, cameras, shaders, scene, etc.
 
+	FrameBuffer frameBuffer(winW, winH);
+
 	Shader simpleSh("Simple shader", "./Data/Shaders/simple.vert", "./Data/Shaders/simple.frag");
+	Shader framebufferRenderSh("Frame buffer render", "./Data/Shaders/render_framebuffer.vert", "./Data/Shaders/render_framebuffer.frag");
 
 	Geometry simpleCube(cubeVerticesCount, cubeIndicesCount, cubeIndices, cubeVertices, cubeNormals, cubeTexCoords, cubeColors);
 	Geometry simplePlane(planeVerticesCount, planeIndicesCount, planeIndices, planeVertices, planeNormals, planeTexCoords, planeColors);
+
+	Geometry quadToShowTexture(quadVerticesCount, quadIndicesCount, quadIndices, quadVertices, quadNormals, quadTexCoords, quadColors);
 
 	// ==============================================
 
@@ -124,27 +142,31 @@ int main(int argc, char** argv)
 
 		// ---------------
 
+		frameBuffer.Bind();
 		glClearColor(.3f, .3f, .3f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glEnable(GL_DEPTH_TEST);
 
 		// Render
 
-		simpleSh.Use();
+		RenderInfo info;
+		info.ResetModel();
 
 		glm::mat4 proj = glm::perspective(glm::radians(camera.Zoom), (float)winW / (float)winH, 0.1f, 100.f);
+		glm::mat4 view = camera.GetViewMatrix();
 		glm::mat4 model = glm::mat4(1.f);
 		simpleSh.SetMat4("projection", proj);
-		simpleSh.SetMat4("view", camera.GetViewMatrix());
+		simpleSh.SetMat4("view", view);
 
 		// Render plane -------------
-
+		
 		model = glm::scale(model, glm::vec3(3.f, 1.f, 3.f));
 
-		simpleSh.SetMat4("model", model);
-
-		glBindVertexArray(simplePlane.EBO());
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, simplePlane.IdIndices());
-		glDrawElements(GL_TRIANGLES, simplePlane.CountIndices(), GL_UNSIGNED_INT, NULL);
+		info.SetMatrices(proj, view, model);
+		info.shader = &simpleSh;
+		info.geometry = &simplePlane;
+		
+		RenderSimpleGeometry(info);  
 
 		// --------------------------
 
@@ -153,17 +175,32 @@ int main(int argc, char** argv)
 		model = glm::mat4(1.f);
 		model = glm::translate(model, glm::vec3(0.f, 0.5f, 0.f));
 
-		simpleSh.SetMat4("model", model);
+		info.SetMatrices(proj, view, model);
+		info.shader = &simpleSh;
+		info.geometry = &simpleCube;
 
-		glBindVertexArray(simpleCube.EBO());
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, simpleCube.IdIndices());
-		glDrawElements(GL_TRIANGLES, simpleCube.CountIndices(), GL_UNSIGNED_INT, NULL);
+		RenderSimpleGeometry(info);
 
 		// -------------------
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		glBindVertexArray(0);
-		glUseProgram(0);
+		frameBuffer.UnBind();
+		glClearColor(.1f, .1f, .1f, 1.f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+		// Render the quad ---------
+
+		model = glm::mat4(1.f);
+		model = glm::translate(model, glm::vec3(0.f, 2.f, -4.f));
+
+		info.SetMatrices(proj, view, model);
+		info.shader = &framebufferRenderSh;
+		info.geometry = &quadToShowTexture;
+		info.frameBuffer = &frameBuffer;
+
+		RenderFrameBuffer(info);
+
+		// -------------------------
 
 
 		// ---------------------------
@@ -274,4 +311,81 @@ void ProcessInput(GLFWwindow* window)
 static void ErrorCallback(int error, const char* description)
 {
 	fprintf(stderr, "Error %d: %s\n", error, description);
+}
+
+		// -------------------------------
+
+void RenderSimpleGeometry(RenderInfo& info)
+{
+	info.shader->Use();
+
+	info.shader->SetMat4("projection", info.projection);
+	info.shader->SetMat4("view", info.view);
+	info.shader->SetMat4("model", info.model);
+
+	glBindVertexArray(info.geometry->EBO());
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, info.geometry->IdIndices());
+	glDrawElements(GL_TRIANGLES, info.geometry->CountIndices(), GL_UNSIGNED_INT, NULL);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+	glUseProgram(0);
+}
+
+void RenderSceneFromDirectionalLight(RenderInfo& info)
+{
+
+	info.shader->Use();
+
+	info.shader->SetMat4("projection", info.projection);
+	info.shader->SetMat4("view", info.view);
+	info.shader->SetMat4("model", info.model);
+
+	glBindVertexArray(info.geometry->EBO());
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, info.geometry->IdIndices());
+	glDrawElements(GL_TRIANGLES, info.geometry->CountIndices(), GL_UNSIGNED_INT, NULL);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+	glUseProgram(0);
+}
+
+// Render the framebuffer for debugging purposes.
+void RenderFrameBuffer(RenderInfo& info)
+{
+	info.shader->Use();
+
+	//info.shader->SetMat4("projection", info.projection);
+	//info.shader->SetMat4("view", info.view);
+	//info.shader->SetMat4("model", info.model);
+
+	info.shader->SetInt("screenTexture", 0);
+	
+	glBindVertexArray(info.geometry->EBO());
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, info.geometry->IdIndices());
+
+	glBindTexture(GL_TEXTURE_2D, info.frameBuffer->ColorTexture());
+
+	glDrawElements(GL_TRIANGLES, info.geometry->CountIndices(), GL_UNSIGNED_INT, NULL);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+	glUseProgram(0);
+}
+
+void RenderIntoFrameBuffer(RenderInfo& info)
+{
+	info.shader->Use();
+
+	info.shader->SetMat4("projection", info.projection);
+	info.shader->SetMat4("view", info.view);
+	info.shader->SetMat4("model", info.model);
+
+	glBindVertexArray(info.geometry->EBO());
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, info.geometry->IdIndices());
+	glDrawElements(GL_TRIANGLES, info.geometry->CountIndices(), GL_UNSIGNED_INT, NULL);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+	glUseProgram(0);
 }

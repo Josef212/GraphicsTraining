@@ -122,14 +122,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DepthFrameBuffer.cpp" />
+    <ClCompile Include="FrameBuffer.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="RenderInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Defs.h" />
+    <ClInclude Include="DepthFrameBuffer.h" />
+    <ClInclude Include="FrameBuffer.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="GeometryDefs.h" />
+    <ClInclude Include="RenderInfo.h" />
     <ClInclude Include="Shader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
