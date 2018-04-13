@@ -142,17 +142,17 @@ int main(int argc, char** argv)
 
 		// ---------------
 
-		frameBuffer.Bind();
+		//frameBuffer.Bind();
 		glClearColor(.3f, .3f, .3f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glEnable(GL_DEPTH_TEST);
+		//glEnable(GL_DEPTH_TEST);
 
 		// Render
 
 		RenderInfo info;
 		info.ResetModel();
 
-		glm::mat4 proj = glm::perspective(glm::radians(camera.Zoom), (float)winW / (float)winH, 0.1f, 100.f);
+		glm::mat4 proj = glm::perspective(glm::radians(camera.Zoom), (float)winW / (float)winH, 1.0f, 100.f);
 		glm::mat4 view = camera.GetViewMatrix();
 		glm::mat4 model = glm::mat4(1.f);
 		simpleSh.SetMat4("projection", proj);
@@ -183,9 +183,9 @@ int main(int argc, char** argv)
 
 		// -------------------
 
-		frameBuffer.UnBind();
-		glClearColor(.1f, .1f, .1f, 1.f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		//frameBuffer.UnBind();
+		//glClearColor(.1f, .1f, .1f, 1.f);
+		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
 		// Render the quad ---------
@@ -198,7 +198,7 @@ int main(int argc, char** argv)
 		info.geometry = &quadToShowTexture;
 		info.frameBuffer = &frameBuffer;
 
-		RenderFrameBuffer(info);
+		//RenderFrameBuffer(info);
 
 		// -------------------------
 
