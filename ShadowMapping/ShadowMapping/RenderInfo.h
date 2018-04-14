@@ -14,6 +14,9 @@ struct RenderInfo
 	glm::mat4 view;
 	glm::mat4 model;
 
+	glm::mat4 lightSpaceMatrix;
+	glm::vec3 lightPos;
+
 	Shader* shader;
 	Geometry* geometry;
 

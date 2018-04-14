@@ -33,10 +33,13 @@ static void ErrorCallback(int error, const char* description);
 			//-----
 
 void RenderSimpleGeometry(RenderInfo& info);
+void RenderSimpleGeometryWithShadow(RenderInfo& info);
 void RenderSceneFromDirectionalLight(RenderInfo& info);
 void RenderFrameBuffer(RenderInfo& info);
 
 void RenderIntoFrameBuffer(RenderInfo& info);
+
+void DebugRenderFrmeBuffer(RenderInfo& info);
 
 // -------------------------------------------------------------------------------
 
@@ -92,8 +95,6 @@ int main(int argc, char** argv)
 
 	glViewport(0, 0, winW, winH);
 
-	glViewport(0, 0, winW, winH);
-
 	glfwSetFramebufferSizeCallback(window, FrameBufferSizeCallback);
 
 	glfwSetKeyCallback(window, KeyCallback);
@@ -108,6 +109,7 @@ int main(int argc, char** argv)
 	glEnable(GL_DEPTH_TEST);
 	//glEnable(GL_CULL_FACE);
 	//glCullFace(GL_BACK);
+	//glFrontFace(GL_CW);
 
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -118,9 +120,14 @@ int main(int argc, char** argv)
 	// Init geometry, materials, cameras, shaders, scene, etc.
 
 	FrameBuffer frameBuffer(winW, winH);
+	DepthFrameBuffer shadowMapBuffer;
+	shadowMapBuffer.Create(1024, 1024);
 
 	Shader simpleSh("Simple shader", "./Data/Shaders/simple.vert", "./Data/Shaders/simple.frag");
 	Shader framebufferRenderSh("Frame buffer render", "./Data/Shaders/render_framebuffer.vert", "./Data/Shaders/render_framebuffer.frag");
+	Shader renderDepthBufferSh("Render depth buffer shader", "./Data/Shaders/render_depth.vert", "./Data/Shaders/render_depth.frag");
+	Shader simpleTextureSh("Simple texture shader", "./Data/Shaders/simple_texture.vert", "./Data/Shaders/simple_texture.frag");
+	Shader simpleShadowSceneSh("Simple shadow scene shader", "./Data/Shaders/simple_shadow_scene.vert", "./Data/Shaders/simple_shadow_scene.frag");
 
 	Geometry simpleCube(cubeVerticesCount, cubeIndicesCount, cubeIndices, cubeVertices, cubeNormals, cubeTexCoords, cubeColors);
 	Geometry simplePlane(planeVerticesCount, planeIndicesCount, planeIndices, planeVertices, planeNormals, planeTexCoords, planeColors);
@@ -155,18 +162,40 @@ int main(int argc, char** argv)
 		glm::mat4 proj = glm::perspective(glm::radians(camera.Zoom), (float)winW / (float)winH, 1.0f, 100.f);
 		glm::mat4 view = camera.GetViewMatrix();
 		glm::mat4 model = glm::mat4(1.f);
-		simpleSh.SetMat4("projection", proj);
-		simpleSh.SetMat4("view", view);
+
+
+		// ==========================================================================
+		// Calc shadows
+
+		float nearPlane = 1.0f, farPlane = 10.f;
+		glm::vec3 lightPos = glm::vec3(-2.f, 4.f, -1.f);
+
+		glm::mat4 lightProjection = glm::ortho(-10.f, 10.f, -10.f, 10.f, nearPlane, farPlane);
+		glm::mat4 lightView = glm::lookAt(lightPos,
+			glm::vec3(0.f, 0.f, 0.f),
+			glm::vec3(0.f, 1.f, 0.f));
+
+		glm::mat4 lightSpaceMatrix = lightProjection * lightView;
+
+		info.lightSpaceMatrix = lightSpaceMatrix;
+		info.lightPos = lightPos;
+
+		info.depthFrameBuffer = &shadowMapBuffer;
+		info.shader = &renderDepthBufferSh;
+
+		glViewport(0, 0, shadowMapBuffer.Width(), shadowMapBuffer.Height());
+		shadowMapBuffer.Bind();
+		glClear(GL_DEPTH_BUFFER_BIT);
+		glCullFace(GL_FRONT);
 
 		// Render plane -------------
 		
 		model = glm::scale(model, glm::vec3(3.f, 1.f, 3.f));
 
-		info.SetMatrices(proj, view, model);
-		info.shader = &simpleSh;
+		info.model = model;
 		info.geometry = &simplePlane;
 		
-		RenderSimpleGeometry(info);  
+		RenderSceneFromDirectionalLight(info);
 
 		// --------------------------
 
@@ -175,30 +204,62 @@ int main(int argc, char** argv)
 		model = glm::mat4(1.f);
 		model = glm::translate(model, glm::vec3(0.f, 0.5f, 0.f));
 
-		info.SetMatrices(proj, view, model);
-		info.shader = &simpleSh;
+		info.model = model;
 		info.geometry = &simpleCube;
 
-		RenderSimpleGeometry(info);
+		RenderSceneFromDirectionalLight(info);
 
 		// -------------------
+
+		// ==========================================================================
+		// Render the actual scene
 
 		//frameBuffer.UnBind();
 		//glClearColor(.1f, .1f, .1f, 1.f);
 		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		glCullFace(GL_BACK);
 
-		// Render the quad ---------
+		shadowMapBuffer.UnBind();
+		glViewport(0, 0, winW, winH);
+
+		// Render plane -------------
 
 		model = glm::mat4(1.f);
-		model = glm::translate(model, glm::vec3(0.f, 2.f, -4.f));
+		model = glm::scale(model, glm::vec3(3.f, 1.f, 3.f));
 
 		info.SetMatrices(proj, view, model);
-		info.shader = &framebufferRenderSh;
-		info.geometry = &quadToShowTexture;
-		info.frameBuffer = &frameBuffer;
+		info.shader = &simpleShadowSceneSh;
+		info.geometry = &simplePlane;
 
-		//RenderFrameBuffer(info);
+		RenderSimpleGeometryWithShadow(info);
+
+		// --------------------------
+
+		// Render cube --------------
+
+		model = glm::mat4(1.f);
+		model = glm::translate(model, glm::vec3(0.f, 0.5f, 0.f));
+
+		info.model = model;
+		info.geometry = &simpleCube;
+
+		RenderSimpleGeometryWithShadow(info);
+
+		// -------------------
+
+
+		// Render the debug quad with shadow map ---------
+
+		model = glm::mat4(1.f);
+		model = glm::translate(model, glm::vec3(2.f, 2.f, 1.f));
+
+		info.SetMatrices(proj, view, model);
+		info.shader = &simpleTextureSh;
+		info.geometry = &quadToShowTexture;
+		info.depthFrameBuffer = &shadowMapBuffer;
+
+		DebugRenderFrmeBuffer(info);
 
 		// -------------------------
 
@@ -332,13 +393,37 @@ void RenderSimpleGeometry(RenderInfo& info)
 	glUseProgram(0);
 }
 
+void RenderSimpleGeometryWithShadow(RenderInfo& info)
+{
+	info.shader->Use();
+
+	info.shader->SetMat4("projection", info.projection);
+	info.shader->SetMat4("view", info.view);
+	info.shader->SetMat4("model", info.model);
+
+	info.shader->SetVec3("viewPos", camera.Position);
+	info.shader->SetVec3("lightPos", info.lightPos);
+	info.shader->SetMat4("lightSpaceMatrix", info.lightSpaceMatrix);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, info.depthFrameBuffer->DepthMapTex());
+
+	glBindVertexArray(info.geometry->EBO());
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, info.geometry->IdIndices());
+	glDrawElements(GL_TRIANGLES, info.geometry->CountIndices(), GL_UNSIGNED_INT, NULL);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+	glUseProgram(0);
+}
+
+// Calcs the shadows by rendering the scene from light position
 void RenderSceneFromDirectionalLight(RenderInfo& info)
 {
 
 	info.shader->Use();
 
-	info.shader->SetMat4("projection", info.projection);
-	info.shader->SetMat4("view", info.view);
+	info.shader->SetMat4("lightSpaceMatrix", info.lightSpaceMatrix);
 	info.shader->SetMat4("model", info.model);
 
 	glBindVertexArray(info.geometry->EBO());
@@ -387,5 +472,24 @@ void RenderIntoFrameBuffer(RenderInfo& info)
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+	glUseProgram(0);
+}
+
+void DebugRenderFrmeBuffer(RenderInfo& info)
+{
+	info.shader->Use();
+
+	info.shader->SetMat4("projection", info.projection);
+	info.shader->SetMat4("view", info.view);
+	info.shader->SetMat4("model", info.model);
+
+	info.shader->SetInt("shadow_texture", 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, info.depthFrameBuffer->DepthMapTex());
+
+	glBindVertexArray(info.geometry->EBO());
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, info.geometry->IdIndices());
+	glDrawElements(GL_TRIANGLES, info.geometry->CountIndices(), GL_UNSIGNED_INT, NULL);
+
 	glUseProgram(0);
 }

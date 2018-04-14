@@ -16,6 +16,8 @@ public:
 
 	GLuint FBO()const { return depthMapFBO; }
 	GLuint DepthMapTex()const { return depthMapTex; }
+	int Width()const { return width; }
+	int Height()const { return height; }
 
 private:
 	GLuint depthMapFBO = 0;
