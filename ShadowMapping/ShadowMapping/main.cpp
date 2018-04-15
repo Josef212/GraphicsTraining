@@ -126,7 +126,7 @@ int main(int argc, char** argv)
 	Shader simpleSh("Simple shader", "./Data/Shaders/simple.vert", "./Data/Shaders/simple.frag");
 	Shader framebufferRenderSh("Frame buffer render", "./Data/Shaders/render_framebuffer.vert", "./Data/Shaders/render_framebuffer.frag");
 	Shader renderDepthBufferSh("Render depth buffer shader", "./Data/Shaders/render_depth.vert", "./Data/Shaders/render_depth.frag");
-	Shader simpleTextureSh("Simple texture shader", "./Data/Shaders/simple_texture.vert", "./Data/Shaders/simple_texture.frag");
+	Shader simpleBillboardTextureSh("Simple billboard texture shader", "./Data/Shaders/simple_billboard_texture.vert", "./Data/Shaders/simple_billboard_texture.frag");
 	Shader simpleShadowSceneSh("Simple shadow scene shader", "./Data/Shaders/simple_shadow_scene.vert", "./Data/Shaders/simple_shadow_scene.frag");
 
 	Geometry simpleCube(cubeVerticesCount, cubeIndicesCount, cubeIndices, cubeVertices, cubeNormals, cubeTexCoords, cubeColors);
@@ -249,13 +249,13 @@ int main(int argc, char** argv)
 		// -------------------
 
 
-		// Render the debug quad with shadow map ---------
+		// Render the debug quad with shadow map --------- //TODO: Make it billboard
 
 		model = glm::mat4(1.f);
-		model = glm::translate(model, glm::vec3(2.f, 2.f, 1.f));
+		model = glm::translate(model, glm::vec3(0.f, 3.f, 0.f));
 
 		info.SetMatrices(proj, view, model);
-		info.shader = &simpleTextureSh;
+		info.shader = &simpleBillboardTextureSh;
 		info.geometry = &quadToShowTexture;
 		info.depthFrameBuffer = &shadowMapBuffer;
 
@@ -479,9 +479,22 @@ void DebugRenderFrmeBuffer(RenderInfo& info)
 {
 	info.shader->Use();
 
+	glm::mat4 modelView = info.view * info.model;
+
+	modelView[0][0] = 1.0;
+	modelView[0][1] = 0.0;
+	modelView[0][2] = 0.0;
+
+	modelView[1][0] = 0.0;
+	modelView[1][1] = 1.0;
+	modelView[1][2] = 0.0;
+
+	modelView[2][0] = 0.0;
+	modelView[2][1] = 0.0;
+	modelView[2][2] = 1.0;
+
 	info.shader->SetMat4("projection", info.projection);
-	info.shader->SetMat4("view", info.view);
-	info.shader->SetMat4("model", info.model);
+	info.shader->SetMat4("model_view", modelView);
 
 	info.shader->SetInt("shadow_texture", 0);
 	glActiveTexture(GL_TEXTURE0);
