@@ -167,12 +167,14 @@ int main(int argc, char** argv)
 		// ==========================================================================
 		// Calc shadows
 
-		float nearPlane = 1.0f, farPlane = 10.f;
+		float nearPlane = 1.0f, farPlane = 20.0f;
 		glm::vec3 lightPos = glm::vec3(-2.f, 4.f, -1.f);
 
-		glm::mat4 lightProjection = glm::ortho(-10.f, 10.f, -10.f, 10.f, nearPlane, farPlane);
-		glm::mat4 lightView = glm::lookAt(lightPos,
-			glm::vec3(0.f, 0.f, 0.f),
+		glm::mat4 lightProjection = glm::ortho(-15.f, 15.f, -15.f, 15.f, nearPlane, farPlane);
+		
+		glm::vec3 lPos = camera.Position + lightPos;
+		glm::mat4 lightView = glm::lookAt(lPos,
+			camera.Position,//glm::vec3(0.f, 0.f, 0.f),
 			glm::vec3(0.f, 1.f, 0.f));
 
 		glm::mat4 lightSpaceMatrix = lightProjection * lightView;
@@ -190,7 +192,7 @@ int main(int argc, char** argv)
 
 		// Render plane -------------
 		
-		model = glm::scale(model, glm::vec3(3.f, 1.f, 3.f));
+		model = glm::scale(model, glm::vec3(10.f, 1.f, 10.f));
 
 		info.model = model;
 		info.geometry = &simplePlane;
@@ -199,13 +201,32 @@ int main(int argc, char** argv)
 
 		// --------------------------
 
-		// Render cube --------------
+		// Render cubes --------------
 
 		model = glm::mat4(1.f);
 		model = glm::translate(model, glm::vec3(0.f, 0.5f, 0.f));
 
 		info.model = model;
 		info.geometry = &simpleCube;
+
+		RenderSceneFromDirectionalLight(info);
+
+		// ---
+
+		model = glm::mat4(1.f);
+		model = glm::translate(model, glm::vec3(-1.3f, 1.5f, -1.3f));
+
+		info.model = model;
+
+		RenderSceneFromDirectionalLight(info);
+
+		// ---
+
+		model = glm::mat4(1.f);
+		model = glm::translate(model, glm::vec3(-6.0f, .5f, -7.0f));
+		model = glm::scale(model, glm::vec3(0.7f, 1.f, 0.7f));
+
+		info.model = model;
 
 		RenderSceneFromDirectionalLight(info);
 
@@ -226,7 +247,7 @@ int main(int argc, char** argv)
 		// Render plane -------------
 
 		model = glm::mat4(1.f);
-		model = glm::scale(model, glm::vec3(3.f, 1.f, 3.f));
+		model = glm::scale(model, glm::vec3(10.f, 1.f, 10.f));
 
 		info.SetMatrices(proj, view, model);
 		info.shader = &simpleShadowSceneSh;
@@ -243,6 +264,25 @@ int main(int argc, char** argv)
 
 		info.model = model;
 		info.geometry = &simpleCube;
+
+		RenderSimpleGeometryWithShadow(info);
+
+		// ---
+
+		model = glm::mat4(1.f);
+		model = glm::translate(model, glm::vec3(-1.3f, 1.5f, -1.3f));
+
+		info.model = model;
+
+		RenderSimpleGeometryWithShadow(info);
+
+		// ---
+
+		model = glm::mat4(1.f);
+		model = glm::translate(model, glm::vec3(-6.0f, .5f, -7.0f));
+		model = glm::scale(model, glm::vec3(0.7f, 1.f, 0.7f));
+
+		info.model = model;
 
 		RenderSimpleGeometryWithShadow(info);
 
@@ -334,18 +374,20 @@ void ProcessInput(GLFWwindow* window)
 	
 	if (activeCamera)
 	{
+		float _dt = keys[GLFW_KEY_LEFT_SHIFT] ? dt * 2.f : dt;
+
 		if (keys[GLFW_KEY_W]) //w
-			activeCamera->ProcessKeyboard(FORWARD, dt);
+			activeCamera->ProcessKeyboard(FORWARD, _dt);
 		if (keys[GLFW_KEY_S]) //s
-			activeCamera->ProcessKeyboard(BACKWARD, dt);
+			activeCamera->ProcessKeyboard(BACKWARD, _dt);
 		if (keys[GLFW_KEY_A]) //a
-			activeCamera->ProcessKeyboard(LEFT, dt);
+			activeCamera->ProcessKeyboard(LEFT, _dt);
 		if (keys[GLFW_KEY_D]) //d
-			activeCamera->ProcessKeyboard(RIGHT, dt);
+			activeCamera->ProcessKeyboard(RIGHT, _dt);
 		if (keys[GLFW_KEY_Q]) //q
-			activeCamera->ProcessKeyboard(UP, dt);
+			activeCamera->ProcessKeyboard(UP, _dt);
 		if (keys[GLFW_KEY_E]) //e
-			activeCamera->ProcessKeyboard(DOWN, dt);
+			activeCamera->ProcessKeyboard(DOWN, _dt);
 	}
 	
 	//if (keys[GLFW_KEY_1])
