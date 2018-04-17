@@ -19,5 +19,7 @@
 		}\
 	}
 
+#define DEFAULT_WIN_WIDTH 1280
+#define DEFAULT_WIN_HEIGHT 720
 
 #endif // __DEFS_H__

@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 
+#include "Defs.h"
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -9,6 +11,8 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Camera.h"
+#include "PerspectiveCamera.h"
+#include "OrthographicCamera.h"
 #include "Shader.h"
 #include "Geometry.h"
 #include "GeometryDefs.h"
@@ -43,8 +47,8 @@ void DebugRenderFrmeBuffer(RenderInfo& info);
 
 // -------------------------------------------------------------------------------
 
-int winW = 1280;
-int winH = 720;
+int winW = DEFAULT_WIN_WIDTH;
+int winH = DEFAULT_WIN_HEIGHT;
 
 float lastX = winW / 2.f;
 float lastY = winH / 2.f;
@@ -56,8 +60,8 @@ bool buttons[7];
 float dt = 0.f;
 float lastFrame = 0.f;
 
-Camera camera;
-Camera camera2(glm::vec3(0.f, 2.f, 5.f));
+PerspectiveCamera camera;
+PerspectiveCamera camera2(glm::vec3(0.f, 2.f, 5.f));
 
 // -------------------------------------------------------------------------------
 
@@ -71,7 +75,7 @@ int main(int argc, char** argv)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
 
-	std::string windowTitle = "Shadow mapping: ";
+	std::string windowTitle = "OpenGL training: ";
 	windowTitle += (std::to_string(winW)) + "x" + (std::to_string(winH));
 	GLFWwindow* window = glfwCreateWindow(winW, winH, windowTitle.c_str(), NULL, NULL);
 	if(!window)
@@ -102,7 +106,7 @@ int main(int argc, char** argv)
 	glfwSetScrollCallback(window, ScrollCallback);
 	glfwSetMouseButtonCallback(window, MouseButtonCallback);
 
-	//glfwMaximizeWindow(window);
+	glfwMaximizeWindow(window);
 	
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -159,7 +163,7 @@ int main(int argc, char** argv)
 		RenderInfo info;
 		info.ResetModel();
 
-		glm::mat4 proj = glm::perspective(glm::radians(camera.Zoom), (float)winW / (float)winH, 1.0f, 100.f);
+		glm::mat4 proj = camera.GetProjectionMatrix();
 		glm::mat4 view = camera.GetViewMatrix();
 		glm::mat4 model = glm::mat4(1.f);
 
@@ -321,9 +325,12 @@ void FrameBufferSizeCallback(GLFWwindow* window, int width, int height)
 	winW = width; winH = height;
 	glViewport(0, 0, width, height);
 	
-	std::string windowTitle = "Shadow mapping: ";
+	std::string windowTitle = "OpenGL training: ";
 	windowTitle += (std::to_string(winW) + "x" + std::to_string(winH));
 	glfwSetWindowTitle(window, windowTitle.c_str());
+
+	camera.ResizeViewport(winW, winH);
+	camera2.ResizeViewport(winW, winH);
 }
 
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
