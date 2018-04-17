@@ -5,7 +5,7 @@
 #include <iostream>
 
 
-Shader::Shader(const char* name, const char* vertexPath, const char* fragmentPath, const char* geometryPath) : Resource(name)
+Shader::Shader(const char* name, const char* vertexPath, const char* fragmentPath, const char* geometryPath) : Resource(name, RES_SHADER)
 {
 	vertPath = vertexPath;
 	fragPath = fragmentPath;
@@ -166,7 +166,7 @@ void Shader::CheckCompileErrors(int sh, const char* type)
 		if (!success)
 		{
 			glGetShaderInfoLog(sh, 1024, NULL, infoLog);
-			std::cout << name << "->" << "ERROR::SHADER_COMPILATION_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+			std::cout << GetName() << "->" << "ERROR::SHADER_COMPILATION_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
 		}
 	}
 	else
@@ -175,7 +175,7 @@ void Shader::CheckCompileErrors(int sh, const char* type)
 		if (!success)
 		{
 			glGetProgramInfoLog(sh, 1024, NULL, infoLog);
-			std::cout << name << "->" << "ERROR::PROGRAM_LINKING_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+			std::cout << GetName() << "->" << "ERROR::PROGRAM_LINKING_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
 		}
 	}
 }

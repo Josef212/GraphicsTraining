@@ -1,13 +1,16 @@
-#pragma once
+#ifndef __GEOMETRY_H__
+#define __GEOMETRY_H__
+
+#include "Resource.h"
 
 #include <GL/glew.h>
 
-class Geometry
+class Geometry : public Resource
 {
 	friend class ModelLoader;
 public:
-	Geometry();
-	Geometry(unsigned int numVertices, unsigned int numIndices, int* indices, float* vertices, float* normals = nullptr, float* texCoords = nullptr, float* colors = nullptr);
+	Geometry(const char* name);
+	Geometry(const char* name, unsigned int numVertices, unsigned int numIndices, int* indices, float* vertices, float* normals = nullptr, float* texCoords = nullptr, float* colors = nullptr);
 	virtual ~Geometry();
 
 	void Set(unsigned int numVertices, unsigned int numIndices, int* indices, float* vertices, float* normals = nullptr, float* texCoords = nullptr, float* colors = nullptr);
@@ -20,7 +23,7 @@ public:
 
 	void SendInfoToVRAM();
 
-	void Free();
+	void Free() override;
 	void FreeVRam();
 
 	int CountVertices()const { return numVertices; }
@@ -34,10 +37,7 @@ public:
 
 private:
 	
-	
-
 public:
-
 
 private:
 
@@ -59,3 +59,4 @@ private:
 	GLuint idColors = 0;
 };
 
+#endif // !__GEOMETRY_H__

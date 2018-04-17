@@ -45,6 +45,8 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime)
 		Position += WorldUp * velocity;
 	if (direction == DOWN)
 		Position -= WorldUp * velocity;
+
+	view = glm::lookAt(Position, Position + Front, Up);
 }
 
 void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch)

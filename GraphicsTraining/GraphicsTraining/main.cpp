@@ -18,9 +18,13 @@
 #include "GeometryDefs.h"
 #include "RenderInfo.h"
 
+#include "ResourceManager.h"
+#include "GuiManager.h"
+
 #include "FrameBuffer.h"
 #include "DepthFrameBuffer.h"
 
+#include "ThirdParty/ImGui/imgui_impl_glfw_gl3.h"
 
 // -------------------------------------------------------------------------------
 
@@ -57,17 +61,26 @@ bool firstMouse = true;
 bool keys[1024];
 bool buttons[7];
 
+bool editorIsUsingMouse = false;
+bool editorIsUsingKeyboard = false;
+
 float dt = 0.f;
 float lastFrame = 0.f;
 
 PerspectiveCamera camera;
 PerspectiveCamera camera2(glm::vec3(0.f, 2.f, 5.f));
 
+ResourceManager* resourceManager = nullptr;// new ResourceManager();
+GuiManager* guiManager = nullptr;
+
 // -------------------------------------------------------------------------------
 
 int main(int argc, char** argv)
 {
 	glfwSetErrorCallback(ErrorCallback);
+
+	resourceManager = new ResourceManager();
+	guiManager = new GuiManager();
 
 	if (!glfwInit()) return 1;
 
@@ -106,9 +119,9 @@ int main(int argc, char** argv)
 	glfwSetScrollCallback(window, ScrollCallback);
 	glfwSetMouseButtonCallback(window, MouseButtonCallback);
 
-	glfwMaximizeWindow(window);
+	//glfwMaximizeWindow(window);
 	
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	glEnable(GL_DEPTH_TEST);
 	//glEnable(GL_CULL_FACE);
@@ -119,6 +132,8 @@ int main(int argc, char** argv)
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
+
+	guiManager->Init(window);
 
 	// ==============================================
 	// Init geometry, materials, cameras, shaders, scene, etc.
@@ -133,10 +148,10 @@ int main(int argc, char** argv)
 	Shader simpleBillboardTextureSh("Simple billboard texture shader", "./Data/Shaders/simple_billboard_texture.vert", "./Data/Shaders/simple_billboard_texture.frag");
 	Shader simpleShadowSceneSh("Simple shadow scene shader", "./Data/Shaders/simple_shadow_scene.vert", "./Data/Shaders/simple_shadow_scene.frag");
 
-	Geometry simpleCube(cubeVerticesCount, cubeIndicesCount, cubeIndices, cubeVertices, cubeNormals, cubeTexCoords, cubeColors);
-	Geometry simplePlane(planeVerticesCount, planeIndicesCount, planeIndices, planeVertices, planeNormals, planeTexCoords, planeColors);
+	Geometry simpleCube("Cube geometry", cubeVerticesCount, cubeIndicesCount, cubeIndices, cubeVertices, cubeNormals, cubeTexCoords, cubeColors);
+	Geometry simplePlane("Plane geometry", planeVerticesCount, planeIndicesCount, planeIndices, planeVertices, planeNormals, planeTexCoords, planeColors);
 
-	Geometry quadToShowTexture(quadVerticesCount, quadIndicesCount, quadIndices, quadVertices, quadNormals, quadTexCoords, quadColors);
+	Geometry quadToShowTexture("Quad geometry", quadVerticesCount, quadIndicesCount, quadIndices, quadVertices, quadNormals, quadTexCoords, quadColors);
 
 	// ==============================================
 
@@ -149,6 +164,7 @@ int main(int argc, char** argv)
 		// ---------------
 
 		glfwPollEvents();
+		guiManager->StartFrame(editorIsUsingMouse, editorIsUsingKeyboard);
 		ProcessInput(window);
 
 		// ---------------
@@ -293,7 +309,7 @@ int main(int argc, char** argv)
 		// -------------------
 
 
-		// Render the debug quad with shadow map --------- //TODO: Make it billboard
+		// Render the debug quad with shadow map --------- 
 
 		model = glm::mat4(1.f);
 		model = glm::translate(model, glm::vec3(0.f, 3.f, 0.f));
@@ -307,13 +323,21 @@ int main(int argc, char** argv)
 
 		// -------------------------
 
+		guiManager->Render();
 
 		// ---------------------------
+
+		guiManager->EndFrame();
 
 		glfwSwapBuffers(window);
 	}
 
 	glfwTerminate();
+
+	RELEASE(guiManager);
+	RELEASE(resourceManager);
+
+	if(DEBUG_LOG) system("PAUSE");
 
 	return 0;
 }
@@ -338,15 +362,20 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);
 	
-	if (action == GLFW_PRESS)
+	if (action == GLFW_PRESS && !editorIsUsingKeyboard)
 		keys[key] = true;
 	else if (action == GLFW_RELEASE)
 		keys[key] = false;
+
+	ImGui_ImplGlfw_KeyCallback(window, key, scancode, action, mode);
 }
 
 void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
-	camera.ProcessMouseScroll(yoffset);
+	if (!editorIsUsingMouse)
+		camera.ProcessMouseScroll(yoffset);
+
+	ImGui_ImplGlfw_ScrollCallback(window, xoffset, yoffset);
 }
 
 void MouseCallback(GLFWwindow* window, double xpos, double ypos)
@@ -364,7 +393,8 @@ void MouseCallback(GLFWwindow* window, double xpos, double ypos)
 	lastX = xpos;
 	lastY = ypos;
 	
-	camera.ProcessMouseMovement(xoffset, yoffset);
+	if (buttons[GLFW_MOUSE_BUTTON_LEFT] && !editorIsUsingMouse)
+		camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
 void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
@@ -373,6 +403,8 @@ void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 		buttons[button] = true;
 	else
 		buttons[button] = false;
+
+	ImGui_ImplGlfw_MouseButtonCallback(window, button, action, mods);
 }
 
 void ProcessInput(GLFWwindow* window)

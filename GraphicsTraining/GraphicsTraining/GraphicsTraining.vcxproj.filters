@@ -19,33 +19,33 @@
     <Filter Include="CoreComponents\Camera">
       <UniqueIdentifier>{30af7e28-e481-43a4-88dc-fceffa4de7eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CoreComponents\Geometry">
+      <UniqueIdentifier>{444937ae-ee20-41ad-8a3b-aade8f21478f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CoreComponents\Rendering">
+      <UniqueIdentifier>{06e8b717-9463-4b9d-aaa0-3192d370c3fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{c25773ee-ed54-4263-ad0f-22ff3b9dc71a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CoreComponents\Resources">
+      <UniqueIdentifier>{c41ea101-1278-40cf-9ee9-6269273d7749}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gui">
+      <UniqueIdentifier>{28f4fe0f-345f-4717-a425-0a59dbc56d2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gui\ImGui">
+      <UniqueIdentifier>{35bc00ac-0327-466f-85a0-50ca10567194}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gui\Panels">
+      <UniqueIdentifier>{9c8dc433-7f77-4eca-b59f-b2f0b23f2e95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CubeMapFrameBuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Defs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DepthFrameBuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FrameBuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Geometry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GeometryDefs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderInfo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
@@ -57,27 +57,66 @@
     <ClInclude Include="OrthographicCamera.h">
       <Filter>CoreComponents\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Geometry.h">
+      <Filter>CoreComponents\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>CoreComponents\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderInfo.h">
+      <Filter>CoreComponents\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="DepthFrameBuffer.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeMapFrameBuffer.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameBuffer.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>CoreComponents\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>CoreComponents\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\ImGui\imconfig.h">
+      <Filter>Gui\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\ImGui\imgui.h">
+      <Filter>Gui\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\ImGui\imgui_impl_glfw_gl3.h">
+      <Filter>Gui\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\ImGui\imgui_internal.h">
+      <Filter>Gui\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\ImGui\stb_rect_pack.h">
+      <Filter>Gui\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\ImGui\stb_textedit.h">
+      <Filter>Gui\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\ImGui\stb_truetype.h">
+      <Filter>Gui\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiManager.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorPanel.h">
+      <Filter>Gui\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor_GeometryPanel.h">
+      <Filter>Gui\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor_ShaderPanel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CubeMapFrameBuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DepthFrameBuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FrameBuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Geometry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderInfo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
@@ -88,6 +127,51 @@
     </ClCompile>
     <ClCompile Include="PerspectiveCamera.cpp">
       <Filter>CoreComponents\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry.cpp">
+      <Filter>CoreComponents\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>CoreComponents\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderInfo.cpp">
+      <Filter>CoreComponents\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeMapFrameBuffer.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="DepthFrameBuffer.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameBuffer.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>CoreComponents\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\ImGui\imgui.cpp">
+      <Filter>Gui\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\ImGui\imgui_demo.cpp">
+      <Filter>Gui\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\ImGui\imgui_draw.cpp">
+      <Filter>Gui\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\ImGui\imgui_impl_glfw_gl3.cpp">
+      <Filter>Gui\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiManager.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorPanel.cpp">
+      <Filter>Gui\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor_GeometryPanel.cpp">
+      <Filter>Gui\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor_ShaderPanel.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

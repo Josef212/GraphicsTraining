@@ -22,4 +22,6 @@
 #define DEFAULT_WIN_WIDTH 1280
 #define DEFAULT_WIN_HEIGHT 720
 
+#define DEBUG_LOG true
+
 #endif // __DEFS_H__

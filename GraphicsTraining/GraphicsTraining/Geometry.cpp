@@ -4,11 +4,11 @@
 #include <cstring>
 
 
-Geometry::Geometry()
+Geometry::Geometry(const char* name) : Resource(name, RES_GEOMETRY)
 {
 }
 
-Geometry::Geometry(unsigned int numVertices, unsigned int numIndices, int * indices, float * vertices, float * normals, float * texCoords, float * colors)
+Geometry::Geometry(const char* name, unsigned int numVertices, unsigned int numIndices, int * indices, float * vertices, float * normals, float * texCoords, float * colors) : Resource(name, RES_GEOMETRY)
 {
 	this->numIndices = numIndices;
 	this->numVertices = numVertices;
