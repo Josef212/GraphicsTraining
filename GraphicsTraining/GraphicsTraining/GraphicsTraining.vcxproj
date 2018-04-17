@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{F803BEA2-EBEE-48DB-B6EC-6C6310EB7EEF}</ProjectGuid>
-    <RootNamespace>ShadowMapping</RootNamespace>
+    <ProjectGuid>{DB7738AE-B76D-4474-AACC-E352F30B1B4F}</ProjectGuid>
+    <RootNamespace>GraphicsTraining</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -70,7 +70,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>ThirdParty\GLM;ThirdParty;ThirdParty\Glew\include;$(IncludePath)</IncludePath>
+    <IncludePath>ThirdParty\Glew\include;ThirdParty;ThirdParty\GLM;$(IncludePath)</IncludePath>
     <LibraryPath>ThirdParty\Glew\lib\Release\Win32;ThirdParty\GLFW;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -81,8 +81,8 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
       <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -122,14 +122,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CubeMapFrameBuffer.cpp" />
-    <ClCompile Include="DepthFrameBuffer.cpp" />
-    <ClCompile Include="FrameBuffer.cpp" />
-    <ClCompile Include="Geometry.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="RenderInfo.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CubeMapFrameBuffer.h" />
     <ClInclude Include="Defs.h" />
@@ -139,6 +131,14 @@
     <ClInclude Include="GeometryDefs.h" />
     <ClInclude Include="RenderInfo.h" />
     <ClInclude Include="Shader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CubeMapFrameBuffer.cpp" />
+    <ClCompile Include="DepthFrameBuffer.cpp" />
+    <ClCompile Include="FrameBuffer.cpp" />
+    <ClCompile Include="Geometry.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="RenderInfo.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
