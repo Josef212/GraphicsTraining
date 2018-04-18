@@ -40,6 +40,9 @@
     <Filter Include="Gui\Panels">
       <UniqueIdentifier>{9c8dc433-7f77-4eca-b59f-b2f0b23f2e95}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CoreComponents\Scene">
+      <UniqueIdentifier>{6aaa4fc1-b689-4439-a870-35aa9e2fffa2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Defs.h">
@@ -112,7 +115,10 @@
       <Filter>Gui\Panels</Filter>
     </ClInclude>
     <ClInclude Include="Editor_ShaderPanel.h">
-      <Filter>Header Files</Filter>
+      <Filter>Gui\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>CoreComponents\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -171,7 +177,10 @@
       <Filter>Gui\Panels</Filter>
     </ClCompile>
     <ClCompile Include="Editor_ShaderPanel.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Gui\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>CoreComponents\Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

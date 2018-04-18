@@ -34,6 +34,11 @@ void GuiManager::Init(GLFWwindow * window)
 	ImGui::CreateContext();
 	ImGui_ImplGlfwGL3_Init(window, false);
 	ImGui::StyleColorsDark();
+
+	for(auto it : panels)
+	{
+		it->OnInit();
+	}
 }
 
 void GuiManager::StartFrame(bool & editorUseMouse, bool & editorUseKeyboard)

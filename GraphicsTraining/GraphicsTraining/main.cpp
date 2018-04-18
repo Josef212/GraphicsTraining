@@ -20,6 +20,7 @@
 
 #include "ResourceManager.h"
 #include "GuiManager.h"
+#include "Scene.h"
 
 #include "FrameBuffer.h"
 #include "DepthFrameBuffer.h"
@@ -70,8 +71,9 @@ float lastFrame = 0.f;
 PerspectiveCamera camera;
 PerspectiveCamera camera2(glm::vec3(0.f, 2.f, 5.f));
 
-ResourceManager* resourceManager = nullptr;// new ResourceManager();
-GuiManager* guiManager = nullptr;
+ResourceManager* resourceManager = nullptr;
+GuiManager* guiManager = nullptr; 
+Scene* scene = nullptr;
 
 // -------------------------------------------------------------------------------
 
@@ -80,6 +82,7 @@ int main(int argc, char** argv)
 	glfwSetErrorCallback(ErrorCallback);
 
 	resourceManager = new ResourceManager();
+	scene = new Scene();
 	guiManager = new GuiManager();
 
 	if (!glfwInit()) return 1;
@@ -119,7 +122,7 @@ int main(int argc, char** argv)
 	glfwSetScrollCallback(window, ScrollCallback);
 	glfwSetMouseButtonCallback(window, MouseButtonCallback);
 
-	//glfwMaximizeWindow(window);
+	glfwMaximizeWindow(window);
 	
 	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -133,7 +136,11 @@ int main(int argc, char** argv)
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 
+	scene->Init();
 	guiManager->Init(window);
+
+	scene->AddCamera(&camera, 0, true);
+	scene->AddCamera(&camera2, 1);
 
 	// ==============================================
 	// Init geometry, materials, cameras, shaders, scene, etc.
@@ -179,8 +186,10 @@ int main(int argc, char** argv)
 		RenderInfo info;
 		info.ResetModel();
 
-		glm::mat4 proj = camera.GetProjectionMatrix();
-		glm::mat4 view = camera.GetViewMatrix();
+		Camera* cam = scene->GetActiveCamera();
+
+		glm::mat4 proj = cam->GetProjectionMatrix();
+		glm::mat4 view = cam->GetViewMatrix();
 		glm::mat4 model = glm::mat4(1.f);
 
 
@@ -192,9 +201,9 @@ int main(int argc, char** argv)
 
 		glm::mat4 lightProjection = glm::ortho(-15.f, 15.f, -15.f, 15.f, nearPlane, farPlane);
 		
-		glm::vec3 lPos = camera.Position + lightPos;
+		glm::vec3 lPos = cam->Position + lightPos;
 		glm::mat4 lightView = glm::lookAt(lPos,
-			camera.Position,//glm::vec3(0.f, 0.f, 0.f),
+			cam->Position,//glm::vec3(0.f, 0.f, 0.f),
 			glm::vec3(0.f, 1.f, 0.f));
 
 		glm::mat4 lightSpaceMatrix = lightProjection * lightView;
@@ -335,6 +344,7 @@ int main(int argc, char** argv)
 	glfwTerminate();
 
 	RELEASE(guiManager);
+	RELEASE(scene);
 	RELEASE(resourceManager);
 
 	if(DEBUG_LOG) system("PAUSE");
@@ -353,8 +363,8 @@ void FrameBufferSizeCallback(GLFWwindow* window, int width, int height)
 	windowTitle += (std::to_string(winW) + "x" + std::to_string(winH));
 	glfwSetWindowTitle(window, windowTitle.c_str());
 
-	camera.ResizeViewport(winW, winH);
-	camera2.ResizeViewport(winW, winH);
+
+	scene->OnResize(winW, winH);
 }
 
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
@@ -373,7 +383,7 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	if (!editorIsUsingMouse)
-		camera.ProcessMouseScroll(yoffset);
+		scene->GetActiveCamera()->ProcessMouseScroll(yoffset);
 
 	ImGui_ImplGlfw_ScrollCallback(window, xoffset, yoffset);
 }
@@ -394,7 +404,7 @@ void MouseCallback(GLFWwindow* window, double xpos, double ypos)
 	lastY = ypos;
 	
 	if (buttons[GLFW_MOUSE_BUTTON_LEFT] && !editorIsUsingMouse)
-		camera.ProcessMouseMovement(xoffset, yoffset);
+		scene->GetActiveCamera()->ProcessMouseMovement(xoffset, yoffset);
 }
 
 void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
@@ -409,7 +419,7 @@ void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 
 void ProcessInput(GLFWwindow* window)
 {
-	Camera* activeCamera = &camera;
+	Camera* activeCamera = scene->GetActiveCamera();
 	
 	if (activeCamera)
 	{
@@ -429,24 +439,24 @@ void ProcessInput(GLFWwindow* window)
 			activeCamera->ProcessKeyboard(DOWN, _dt);
 	}
 	
-	//if (keys[GLFW_KEY_1])
-	//	scene.SetActiveIndex(0);
-	//if (keys[GLFW_KEY_2])
-	//	scene.SetActiveIndex(1);
-	//if (keys[GLFW_KEY_3])
-	//	scene.SetActiveIndex(2);
-	//if (keys[GLFW_KEY_4])
-	//	scene.SetActiveIndex(3);
-	//if (keys[GLFW_KEY_5])
-	//	scene.SetActiveIndex(4);
-	//if (keys[GLFW_KEY_6])
-	//	scene.SetActiveIndex(5);
-	//if (keys[GLFW_KEY_7])
-	//	scene.SetActiveIndex(6);
-	//if (keys[GLFW_KEY_8])
-	//	scene.SetActiveIndex(7);
-	//if (keys[GLFW_KEY_9])
-	//	scene.SetActiveIndex(8);
+	if (keys[GLFW_KEY_1])
+		scene->SetActiveCamera(0);
+	if (keys[GLFW_KEY_2])
+		scene->SetActiveCamera(1);
+	if (keys[GLFW_KEY_3])
+		scene->SetActiveCamera(2);
+	if (keys[GLFW_KEY_4])
+		scene->SetActiveCamera(3);
+	if (keys[GLFW_KEY_5])
+		scene->SetActiveCamera(4);
+	if (keys[GLFW_KEY_6])
+		scene->SetActiveCamera(5);
+	if (keys[GLFW_KEY_7])
+		scene->SetActiveCamera(6);
+	if (keys[GLFW_KEY_8])
+		scene->SetActiveCamera(7);
+	if (keys[GLFW_KEY_9])
+		scene->SetActiveCamera(8);
 
 }
 
@@ -482,7 +492,7 @@ void RenderSimpleGeometryWithShadow(RenderInfo& info)
 	info.shader->SetMat4("view", info.view);
 	info.shader->SetMat4("model", info.model);
 
-	info.shader->SetVec3("viewPos", camera.Position);
+	info.shader->SetVec3("viewPos", scene->GetActiveCamera()->Position);
 	info.shader->SetVec3("lightPos", info.lightPos);
 	info.shader->SetMat4("lightSpaceMatrix", info.lightSpaceMatrix);
 

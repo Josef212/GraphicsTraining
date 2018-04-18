@@ -19,6 +19,9 @@ public:
 	GLuint FBO()const { return fbo; }
 	GLuint ColorTexture()const { return colorTexture; }
 
+	int Width() const { return width; }
+	int Height() const { return height; }
+
 private:
 	GLuint fbo = 0;
 	GLuint colorTexture = 0;

@@ -138,6 +138,7 @@
     <ClInclude Include="RenderInfo.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ThirdParty\ImGui\imconfig.h" />
     <ClInclude Include="ThirdParty\ImGui\imgui.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="PerspectiveCamera.cpp" />
     <ClCompile Include="RenderInfo.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ThirdParty\ImGui\imgui.cpp" />
     <ClCompile Include="ThirdParty\ImGui\imgui_demo.cpp" />

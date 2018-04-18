@@ -9,6 +9,7 @@ public:
 	EditorPanel(const char* name, bool startEnabled = false);
 	virtual ~EditorPanel();
 
+	virtual void OnInit() {}
 	virtual void Display() = 0;
 
 	void Enable() { show = true; }
