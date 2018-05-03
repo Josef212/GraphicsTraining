@@ -14,11 +14,16 @@ public:
 	void Load() override;
 	void Free() override;
 
-	void LoadTexture(const char* path, bool flipY = false);
+	void LoadTexture(const char* path);
 
 	bool Loaded()const { return textureID != 0; }
 
 	unsigned int TextureID()const { return textureID; }
+
+	int Width()const { return width; }
+	int Height()const { return height; }
+	int NumChannels()const { return nrChannels; }
+	const char* Path()const { return path.c_str(); }
 
 private:
 	unsigned int textureID = 0;

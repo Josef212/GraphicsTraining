@@ -166,7 +166,7 @@ int main(int argc, char** argv)
 	Geometry* simplePlane = new Geometry("Plane geometry", planeVerticesCount, planeIndicesCount, planeIndices, planeVertices, planeNormals, planeTexCoords, planeColors);
 
 	Geometry* quadToShowTexture = new Geometry("Quad geometry", quadVerticesCount, quadIndicesCount, quadIndices, quadVertices, quadNormals, quadTexCoords, quadColors);
-	
+		
 	std::string modelName = "./Data/Models/Boat.fbx";
 	Model* m = ModelLoader::LoadModel(modelName, scene);
 	m->modelMat = glm::scale(m->modelMat, glm::vec3(0.05f));

@@ -14,8 +14,7 @@ public:
 	void Display() override;
 
 private:
-	//TMP
-	Texture* t;
+	void TextureInfo(Texture* tex);
 };
 
 #endif // !__EDITOR_TEXTURE_PANEL_H__

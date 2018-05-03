@@ -61,7 +61,8 @@ void ModelLoader::ProcessNode(aiNode * node, const aiScene * aiScene, Model * mo
 
 void ModelLoader::ProcessMesh(aiMesh * mesh, Model * model, Scene * scene)
 {
-	Geometry* geometry = new Geometry(mesh->mName.C_Str());
+	static int meshIndex = 0;
+	Geometry* geometry = new Geometry(mesh->mName.length > 0 ? mesh->mName.C_Str() : ("mesh" + std::to_string(meshIndex++)).c_str());
 
 	geometry->numVertices = mesh->mNumVertices;
 	geometry->vertices = new float[geometry->numVertices * 3];

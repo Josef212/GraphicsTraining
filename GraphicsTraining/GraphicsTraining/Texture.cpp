@@ -30,7 +30,7 @@ void Texture::Free()
 	if (textureID != 0) glDeleteTextures(1, &textureID);
 }
 
-void Texture::LoadTexture(const char * path, bool flipY)
+void Texture::LoadTexture(const char * path)
 {
 	this->path = path;
 

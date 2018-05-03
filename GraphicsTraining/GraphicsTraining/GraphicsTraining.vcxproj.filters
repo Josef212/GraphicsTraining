@@ -163,7 +163,7 @@
       <Filter>ThirdPrty\stb</Filter>
     </ClInclude>
     <ClInclude Include="Editor_TexturePanel.h">
-      <Filter>Header Files</Filter>
+      <Filter>Gui\Panels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -249,7 +249,7 @@
       <Filter>CoreComponents\Textures</Filter>
     </ClCompile>
     <ClCompile Include="Editor_TexturePanel.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Gui\Panels</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
