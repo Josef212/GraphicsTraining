@@ -11,7 +11,8 @@ enum ResourceType
 	RES_GEOMETRY,
 	RES_SHADER,
 	RES_MATERIAL,
-	RES_MODEL
+	RES_MODEL,
+	RES_TEXTURE
 };
 
 class Resource

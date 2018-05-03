@@ -13,6 +13,7 @@
 #include "Editor_ShaderPanel.h"
 #include "Editor_MaterialPanel.h"
 #include "Editor_ModelPanel.h"
+#include "Editor_TexturePanel.h"
 
 
 GuiManager::GuiManager()
@@ -23,6 +24,7 @@ GuiManager::GuiManager()
 	panels.push_back(static_cast<EditorPanel*>(new Editor_ShaderPanel("Shader")));
 	panels.push_back(static_cast<EditorPanel*>(new Editor_MaterialPanel("Material")));
 	panels.push_back(static_cast<EditorPanel*>(new Editor_ModelPanel("Model")));
+	panels.push_back(static_cast<EditorPanel*>(new Editor_TexturePanel("Texture")));
 }
 
 

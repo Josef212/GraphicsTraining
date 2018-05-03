@@ -70,8 +70,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>ThirdParty\Glew\include;ThirdParty;ThirdParty\GLM;ThirdParty\assimp\include;$(IncludePath)</IncludePath>
-    <LibraryPath>ThirdParty\assimp\libx86;ThirdParty\Glew\lib\Release\Win32;ThirdParty\GLFW;$(LibraryPath)</LibraryPath>
+    <IncludePath>ThirdParty\SOIL;ThirdParty\Glew\include;ThirdParty;ThirdParty\GLM;ThirdParty\stb;ThirdParty\assimp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>ThirdParty\SOIL\lib;ThirdParty\assimp\libx86;ThirdParty\Glew\lib\Release\Win32;ThirdParty\GLFW;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -79,9 +79,10 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32.lib;glew32s.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32.lib;glew32s.lib;assimp.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -132,6 +133,7 @@
     <ClInclude Include="Editor_MaterialPanel.h" />
     <ClInclude Include="Editor_ModelPanel.h" />
     <ClInclude Include="Editor_ShaderPanel.h" />
+    <ClInclude Include="Editor_TexturePanel.h" />
     <ClInclude Include="FrameBuffer.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="GeometryDefs.h" />
@@ -146,6 +148,7 @@
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="ThirdParty\ImGui\imconfig.h" />
     <ClInclude Include="ThirdParty\ImGui\imgui.h" />
     <ClInclude Include="ThirdParty\ImGui\imgui_impl_glfw_gl3.h" />
@@ -153,6 +156,7 @@
     <ClInclude Include="ThirdParty\ImGui\stb_rect_pack.h" />
     <ClInclude Include="ThirdParty\ImGui\stb_textedit.h" />
     <ClInclude Include="ThirdParty\ImGui\stb_truetype.h" />
+    <ClInclude Include="ThirdParty\stb\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
@@ -164,6 +168,7 @@
     <ClCompile Include="Editor_MaterialPanel.cpp" />
     <ClCompile Include="Editor_ModelPanel.cpp" />
     <ClCompile Include="Editor_ShaderPanel.cpp" />
+    <ClCompile Include="Editor_TexturePanel.cpp" />
     <ClCompile Include="FrameBuffer.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="GuiManager.cpp" />
@@ -177,6 +182,7 @@
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="ThirdParty\ImGui\imgui.cpp" />
     <ClCompile Include="ThirdParty\ImGui\imgui_demo.cpp" />
     <ClCompile Include="ThirdParty\ImGui\imgui_draw.cpp" />

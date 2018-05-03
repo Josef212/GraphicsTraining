@@ -6,12 +6,15 @@
 #include "Defs.h"
 #include <vector>
 
+class Texture;
+
 class MatProperty
 {
 public:
 	MatProperty(const char* name, int value);
 	MatProperty(const char* name, float value);
 	MatProperty(const char* name, float* value, MatPropertyValueType type);
+	MatProperty(const char* name, Texture* value);
 	~MatProperty();
 
 public:
@@ -20,6 +23,7 @@ public:
 		int _int;
 		float _float;
 		float* _floatPtr;
+		Texture* _texture;
 	} propertyValue;
 
 	std::string propertyName;

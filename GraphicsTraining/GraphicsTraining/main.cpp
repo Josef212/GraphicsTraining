@@ -18,6 +18,7 @@
 #include "Material.h"
 #include "ComplexMaterial.h"
 #include "Model.h"
+#include "Texture.h"
 
 #include "GeometryDefs.h"
 #include "RenderInfo.h"
@@ -31,6 +32,7 @@
 
 #include "ThirdParty/ImGui/imgui_impl_glfw_gl3.h"
 #include "ComplexMaterial.h"
+#include "ModelLoader.h"
 
 // -------------------------------------------------------------------------------
 
@@ -165,6 +167,10 @@ int main(int argc, char** argv)
 
 	Geometry* quadToShowTexture = new Geometry("Quad geometry", quadVerticesCount, quadIndicesCount, quadIndices, quadVertices, quadNormals, quadTexCoords, quadColors);
 	
+	std::string modelName = "./Data/Models/Boat.fbx";
+	Model* m = ModelLoader::LoadModel(modelName, scene);
+	m->modelMat = glm::scale(m->modelMat, glm::vec3(0.05f));
+	
 	// ==============================================
 
 	while(!glfwWindowShouldClose(window))
@@ -182,12 +188,14 @@ int main(int argc, char** argv)
 		// ---------------
 
 		//frameBuffer.Bind();
-		glClearColor(.3f, .3f, .3f, 1.f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		//glClearColor(.3f, .3f, .3f, 1.f);
+		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		//glEnable(GL_DEPTH_TEST);
 
-		// Render
+		scene->RenderScene();
 
+		// Render
+		/*
 		RenderInfo info;
 		info.ResetModel();
 
@@ -334,7 +342,7 @@ int main(int argc, char** argv)
 		info.depthFrameBuffer = &shadowMapBuffer;
 
 		DebugRenderFrmeBuffer(info);
-
+		*/
 		// -------------------------
 
 		guiManager->Render();

@@ -13,14 +13,15 @@ class Model;
 class ModelLoader
 {
 public:
-	ModelLoader(std::string& path, Scene* scene);
+	ModelLoader();
 	virtual ~ModelLoader();
 
-private:
-	void LoadModel(std::string& path, Scene* scene);
+	static Model* LoadModel(std::string& path, Scene* scene);
 
-	void ProcessNode(aiNode* node, const aiScene* aiScene, Model* model, Scene* scene);
-	void ProcessMesh(aiMesh* mesh, Model* model, Scene* scene);
+private:
+
+	static void ProcessNode(aiNode* node, const aiScene* aiScene, Model* model, Scene* scene);
+	static void ProcessMesh(aiMesh* mesh, Model* model, Scene* scene);
 };
 
 #endif // !__MODELLOADER_H__

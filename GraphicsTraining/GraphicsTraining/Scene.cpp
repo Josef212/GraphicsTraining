@@ -9,6 +9,8 @@
 #include "Shader.h"
 #include "Material.h"
 #include "ComplexMaterial.h"
+#include "Model.h"
+#include "ModelLoader.h"
 
 
 Scene::Scene()
@@ -35,6 +37,29 @@ void Scene::Init()
 void Scene::CleanUp()
 {
 	std::cout << "\tSCENE: Clean up." << std::endl;
+}
+
+void Scene::AddModel(Model * model)
+{
+	if (model) models.push_back(model);
+}
+
+void Scene::RemoveModel(const char * name)
+{
+	if(name)
+	{
+		for(auto it = models.begin(); it != models.end();)
+		{
+			if ((*it)->GetName() == name)
+			{
+				it = models.erase(it);
+			}
+			else
+			{
+				++it;
+			}
+		}
+	}
 }
 
 void Scene::AddCamera(Camera * cam, int index, bool setAsActive)
@@ -74,4 +99,18 @@ void Scene::OnResize(int winW, int winH)
 Material * Scene::GetDefaultMaterial() const
 {
 	return defaultMaterial;
+}
+
+void Scene::RenderScene()
+{
+	glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	if(activeCamera)
+	{
+		for(auto it : models)
+		{
+			it->Render(this);
+		}
+	}
 }

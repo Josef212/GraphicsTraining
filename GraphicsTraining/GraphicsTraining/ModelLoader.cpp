@@ -9,9 +9,8 @@
 #include <iostream>
 
 
-ModelLoader::ModelLoader(std::string& path, Scene* scene)
+ModelLoader::ModelLoader()
 {
-	LoadModel(path, scene);
 }
 
 
@@ -19,7 +18,7 @@ ModelLoader::~ModelLoader()
 {
 }
 
-void ModelLoader::LoadModel(std::string & path, Scene * scene)
+Model* ModelLoader::LoadModel(std::string & path, Scene * scene)
 {
 	Assimp::Importer importer;
 	const aiScene* aiscene = importer.ReadFile(
@@ -27,8 +26,10 @@ void ModelLoader::LoadModel(std::string & path, Scene * scene)
 	if (!aiscene || aiscene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !aiscene->mRootNode)
 	{
 		std::cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << std::endl;
-		return;
+		return nullptr;
 	}
+
+	std::cout << "Loading model: " << path << std::endl;
 
 	int lastSeparator = path.find_last_of('/');
 	int lastPoint = path.find_last_of('.');
@@ -39,8 +40,9 @@ void ModelLoader::LoadModel(std::string & path, Scene * scene)
 
 	ProcessNode(aiscene->mRootNode, aiscene, model, scene);
 
-	// TODO
-	//scene->AddModel(model);
+	scene->AddModel(model);
+
+	return model;
 }
 
 void ModelLoader::ProcessNode(aiNode * node, const aiScene * aiScene, Model * model, Scene * scene)

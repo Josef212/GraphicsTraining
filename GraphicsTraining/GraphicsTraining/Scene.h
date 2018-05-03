@@ -21,6 +21,9 @@ public:
 	void Init();
 	void CleanUp();
 
+	void AddModel(Model* model);
+	void RemoveModel(const char* name);
+
 	void AddCamera(Camera* cam, int index, bool setAsActive = false);
 	void RemoveCamera(int index);
 
@@ -30,6 +33,8 @@ public:
 	void OnResize(int winW, int winH);
 
 	Material* GetDefaultMaterial()const;
+
+	void RenderScene();
 
 private:
 
@@ -43,6 +48,8 @@ private:
 	int viewportWidth, viewportHeight;
 
 	Material* defaultMaterial = nullptr;
+
+	std::vector<Model*> models;
 
 };
 extern Scene* scene;

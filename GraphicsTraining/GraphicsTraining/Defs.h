@@ -34,7 +34,8 @@ enum MatPropertyValueType
 	MAT_VEC4,
 	MAT_MAT2,
 	MAT_MAT3,
-	MAT_MAT4
+	MAT_MAT4,
+	MAT_TEXTURE
 };
 
 enum MatPropertyType

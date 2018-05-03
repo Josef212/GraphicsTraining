@@ -1,6 +1,7 @@
 #include "ComplexMaterial.h"
 
 #include "Shader.h"
+#include "Texture.h"
 
 
 MatProperty::MatProperty(const char* name, int value) : propertyName(name), propertyType(MAT_INT)
@@ -16,6 +17,11 @@ MatProperty::MatProperty(const char* name, float value) : propertyName(name), pr
 MatProperty::MatProperty(const char* name, float* value, MatPropertyValueType type) : propertyName(name), propertyType(type)
 {
 	propertyValue._floatPtr = value;
+}
+
+MatProperty::MatProperty(const char * name, Texture * value) : propertyName(name), propertyType(MAT_TEXTURE)
+{
+	propertyValue._texture = value;
 }
 
 MatProperty::~MatProperty()
@@ -89,6 +95,8 @@ void ComplexMaterial::OnFree()
 
 void ComplexMaterial::SendInfo(Scene* scene) const
 {
+	int texturesCount = 0;
+
 	for(auto it : properties)
 	{
 		if(it)
@@ -125,6 +133,13 @@ void ComplexMaterial::SendInfo(Scene* scene) const
 
 			case MatPropertyValueType::MAT_MAT4:
 				shader->SetMat4(it->propertyName.c_str(), it->propertyValue._floatPtr);
+				break;
+
+			case MatPropertyValueType::MAT_TEXTURE:
+				glActiveTexture(GL_TEXTURE0 + texturesCount);
+				glBindTexture(GL_TEXTURE_2D, it->propertyValue._texture->TextureID());
+				shader->SetInt(it->propertyName.c_str(), texturesCount);
+				++texturesCount;
 				break;
 			}
 		}
