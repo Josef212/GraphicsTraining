@@ -1,5 +1,7 @@
 #include "GuiManager.h"
 
+#include "Defs.h"
+
 #include "ThirdParty/ImGui/imgui_impl_glfw_gl3.h"
 #include "ThirdParty/ImGui/imgui.h"
 
@@ -9,6 +11,8 @@
 #include "EditorPanel.h"
 #include "Editor_GeometryPanel.h"
 #include "Editor_ShaderPanel.h"
+#include "Editor_MaterialPanel.h"
+#include "Editor_ModelPanel.h"
 
 
 GuiManager::GuiManager()
@@ -17,6 +21,8 @@ GuiManager::GuiManager()
 
 	panels.push_back(static_cast<EditorPanel*>(new Editor_GeometryPanel("Geometry")));
 	panels.push_back(static_cast<EditorPanel*>(new Editor_ShaderPanel("Shader")));
+	panels.push_back(static_cast<EditorPanel*>(new Editor_MaterialPanel("Material")));
+	panels.push_back(static_cast<EditorPanel*>(new Editor_ModelPanel("Model")));
 }
 
 
@@ -91,6 +97,11 @@ void GuiManager::EndFrame()
 void GuiManager::CleanUp()
 {
 	std::cout << "\tGUI MANAGER: Clean up." << std::endl;
+
+	for(auto it : panels)
+	{
+		RELEASE(it);
+	}
 
 	ImGui_ImplGlfwGL3_Shutdown();
 }

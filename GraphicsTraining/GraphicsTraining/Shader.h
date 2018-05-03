@@ -12,6 +12,8 @@ public:
 	Shader(const char* name, const char* vertexPath, const char* fragmentPath, const char* geometryPath = nullptr);
 	virtual ~Shader();
 
+	void Free() override;
+
 	void Use()const;
 
 	void SetBool(const char* name, bool value) const;

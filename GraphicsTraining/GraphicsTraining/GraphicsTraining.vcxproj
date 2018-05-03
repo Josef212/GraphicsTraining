@@ -123,16 +123,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="ComplexMaterial.h" />
     <ClInclude Include="CubeMapFrameBuffer.h" />
     <ClInclude Include="Defs.h" />
     <ClInclude Include="DepthFrameBuffer.h" />
     <ClInclude Include="EditorPanel.h" />
     <ClInclude Include="Editor_GeometryPanel.h" />
+    <ClInclude Include="Editor_MaterialPanel.h" />
+    <ClInclude Include="Editor_ModelPanel.h" />
     <ClInclude Include="Editor_ShaderPanel.h" />
     <ClInclude Include="FrameBuffer.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="GeometryDefs.h" />
     <ClInclude Include="GuiManager.h" />
+    <ClInclude Include="Material.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="OrthographicCamera.h" />
     <ClInclude Include="PerspectiveCamera.h" />
     <ClInclude Include="RenderInfo.h" />
@@ -150,15 +155,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="ComplexMaterial.cpp" />
     <ClCompile Include="CubeMapFrameBuffer.cpp" />
     <ClCompile Include="DepthFrameBuffer.cpp" />
     <ClCompile Include="EditorPanel.cpp" />
     <ClCompile Include="Editor_GeometryPanel.cpp" />
+    <ClCompile Include="Editor_MaterialPanel.cpp" />
+    <ClCompile Include="Editor_ModelPanel.cpp" />
     <ClCompile Include="Editor_ShaderPanel.cpp" />
     <ClCompile Include="FrameBuffer.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="GuiManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Material.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="OrthographicCamera.cpp" />
     <ClCompile Include="PerspectiveCamera.cpp" />
     <ClCompile Include="RenderInfo.cpp" />

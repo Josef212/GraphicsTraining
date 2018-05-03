@@ -15,6 +15,10 @@
 #include "OrthographicCamera.h"
 #include "Shader.h"
 #include "Geometry.h"
+#include "Material.h"
+#include "ComplexMaterial.h"
+#include "Model.h"
+
 #include "GeometryDefs.h"
 #include "RenderInfo.h"
 
@@ -26,6 +30,7 @@
 #include "DepthFrameBuffer.h"
 
 #include "ThirdParty/ImGui/imgui_impl_glfw_gl3.h"
+#include "ComplexMaterial.h"
 
 // -------------------------------------------------------------------------------
 
@@ -149,17 +154,17 @@ int main(int argc, char** argv)
 	DepthFrameBuffer shadowMapBuffer;
 	shadowMapBuffer.Create(1024, 1024);
 
-	Shader simpleSh("Simple shader", "./Data/Shaders/simple.vert", "./Data/Shaders/simple.frag");
-	Shader framebufferRenderSh("Frame buffer render", "./Data/Shaders/render_framebuffer.vert", "./Data/Shaders/render_framebuffer.frag");
-	Shader renderDepthBufferSh("Render depth buffer shader", "./Data/Shaders/render_depth.vert", "./Data/Shaders/render_depth.frag");
-	Shader simpleBillboardTextureSh("Simple billboard texture shader", "./Data/Shaders/simple_billboard_texture.vert", "./Data/Shaders/simple_billboard_texture.frag");
-	Shader simpleShadowSceneSh("Simple shadow scene shader", "./Data/Shaders/simple_shadow_scene.vert", "./Data/Shaders/simple_shadow_scene.frag");
+	Shader* simpleSh = new Shader("Simple shader", "./Data/Shaders/simple.vert", "./Data/Shaders/simple.frag");
+	Shader* framebufferRenderSh = new Shader("Frame buffer render", "./Data/Shaders/render_framebuffer.vert", "./Data/Shaders/render_framebuffer.frag");
+	Shader* renderDepthBufferSh = new Shader("Render depth buffer shader", "./Data/Shaders/render_depth.vert", "./Data/Shaders/render_depth.frag");
+	Shader* simpleBillboardTextureSh = new Shader("Simple billboard texture shader", "./Data/Shaders/simple_billboard_texture.vert", "./Data/Shaders/simple_billboard_texture.frag");
+	Shader* simpleShadowSceneSh = new Shader("Simple shadow scene shader", "./Data/Shaders/simple_shadow_scene.vert", "./Data/Shaders/simple_shadow_scene.frag");
 
-	Geometry simpleCube("Cube geometry", cubeVerticesCount, cubeIndicesCount, cubeIndices, cubeVertices, cubeNormals, cubeTexCoords, cubeColors);
-	Geometry simplePlane("Plane geometry", planeVerticesCount, planeIndicesCount, planeIndices, planeVertices, planeNormals, planeTexCoords, planeColors);
+	Geometry* simpleCube = new Geometry("Cube geometry", cubeVerticesCount, cubeIndicesCount, cubeIndices, cubeVertices, cubeNormals, cubeTexCoords, cubeColors);
+	Geometry* simplePlane = new Geometry("Plane geometry", planeVerticesCount, planeIndicesCount, planeIndices, planeVertices, planeNormals, planeTexCoords, planeColors);
 
-	Geometry quadToShowTexture("Quad geometry", quadVerticesCount, quadIndicesCount, quadIndices, quadVertices, quadNormals, quadTexCoords, quadColors);
-
+	Geometry* quadToShowTexture = new Geometry("Quad geometry", quadVerticesCount, quadIndicesCount, quadIndices, quadVertices, quadNormals, quadTexCoords, quadColors);
+	
 	// ==============================================
 
 	while(!glfwWindowShouldClose(window))
@@ -212,7 +217,7 @@ int main(int argc, char** argv)
 		info.lightPos = lightPos;
 
 		info.depthFrameBuffer = &shadowMapBuffer;
-		info.shader = &renderDepthBufferSh;
+		info.shader = renderDepthBufferSh;
 
 		glViewport(0, 0, shadowMapBuffer.Width(), shadowMapBuffer.Height());
 		shadowMapBuffer.Bind();
@@ -224,7 +229,7 @@ int main(int argc, char** argv)
 		model = glm::scale(model, glm::vec3(10.f, 1.f, 10.f));
 
 		info.model = model;
-		info.geometry = &simplePlane;
+		info.geometry = simplePlane;
 		
 		RenderSceneFromDirectionalLight(info);
 
@@ -236,7 +241,7 @@ int main(int argc, char** argv)
 		model = glm::translate(model, glm::vec3(0.f, 0.5f, 0.f));
 
 		info.model = model;
-		info.geometry = &simpleCube;
+		info.geometry = simpleCube;
 
 		RenderSceneFromDirectionalLight(info);
 
@@ -279,8 +284,8 @@ int main(int argc, char** argv)
 		model = glm::scale(model, glm::vec3(10.f, 1.f, 10.f));
 
 		info.SetMatrices(proj, view, model);
-		info.shader = &simpleShadowSceneSh;
-		info.geometry = &simplePlane;
+		info.shader = simpleShadowSceneSh;
+		info.geometry = simplePlane;
 
 		RenderSimpleGeometryWithShadow(info);
 
@@ -292,7 +297,7 @@ int main(int argc, char** argv)
 		model = glm::translate(model, glm::vec3(0.f, 0.5f, 0.f));
 
 		info.model = model;
-		info.geometry = &simpleCube;
+		info.geometry = simpleCube;
 
 		RenderSimpleGeometryWithShadow(info);
 
@@ -324,8 +329,8 @@ int main(int argc, char** argv)
 		model = glm::translate(model, glm::vec3(0.f, 3.f, 0.f));
 
 		info.SetMatrices(proj, view, model);
-		info.shader = &simpleBillboardTextureSh;
-		info.geometry = &quadToShowTexture;
+		info.shader = simpleBillboardTextureSh;
+		info.geometry = quadToShowTexture;
 		info.depthFrameBuffer = &shadowMapBuffer;
 
 		DebugRenderFrmeBuffer(info);

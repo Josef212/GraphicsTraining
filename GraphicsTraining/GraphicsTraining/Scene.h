@@ -29,6 +29,8 @@ public:
 
 	void OnResize(int winW, int winH);
 
+	Material* GetDefaultMaterial()const;
+
 private:
 
 public:
@@ -39,6 +41,8 @@ private:
 	Camera* activeCamera = nullptr;
 
 	int viewportWidth, viewportHeight;
+
+	Material* defaultMaterial = nullptr;
 
 };
 extern Scene* scene;

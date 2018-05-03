@@ -37,7 +37,13 @@ Shader::Shader(const char* name, const char* vertexPath, const char* fragmentPat
 
 Shader::~Shader()
 {
+
+}
+
+void Shader::Free()
+{
 	glDeleteProgram(ID);
+	vertPath = fragPath = geoPath = "";
 }
 
 void Shader::Use()const

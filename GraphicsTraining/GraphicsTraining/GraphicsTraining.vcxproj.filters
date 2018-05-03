@@ -43,6 +43,15 @@
     <Filter Include="CoreComponents\Scene">
       <UniqueIdentifier>{6aaa4fc1-b689-4439-a870-35aa9e2fffa2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CoreComponents\Rendering\Shaders">
+      <UniqueIdentifier>{c52c20ee-968e-483e-a821-5fb09ed5f12c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CoreComponents\Rendering\Materials">
+      <UniqueIdentifier>{51034b0a-f5fa-47ae-886c-9628985a9629}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CoreComponents\Model">
+      <UniqueIdentifier>{8642b0f4-2b71-4065-8088-84a97dfb2188}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Defs.h">
@@ -62,9 +71,6 @@
     </ClInclude>
     <ClInclude Include="Geometry.h">
       <Filter>CoreComponents\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>CoreComponents\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="RenderInfo.h">
       <Filter>CoreComponents\Rendering</Filter>
@@ -120,6 +126,24 @@
     <ClInclude Include="Scene.h">
       <Filter>CoreComponents\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>CoreComponents\Rendering\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>CoreComponents\Rendering\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="ComplexMaterial.h">
+      <Filter>CoreComponents\Rendering\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>CoreComponents\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor_MaterialPanel.h">
+      <Filter>Gui\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor_ModelPanel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -136,9 +160,6 @@
     </ClCompile>
     <ClCompile Include="Geometry.cpp">
       <Filter>CoreComponents\Geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>CoreComponents\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="RenderInfo.cpp">
       <Filter>CoreComponents\Rendering</Filter>
@@ -181,6 +202,24 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>CoreComponents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>CoreComponents\Rendering\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>CoreComponents\Rendering\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="ComplexMaterial.cpp">
+      <Filter>CoreComponents\Rendering\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>CoreComponents\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor_MaterialPanel.cpp">
+      <Filter>Gui\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor_ModelPanel.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

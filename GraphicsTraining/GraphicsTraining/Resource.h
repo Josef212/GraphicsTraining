@@ -10,7 +10,8 @@ enum ResourceType
 	RES_NONE = 0,
 	RES_GEOMETRY,
 	RES_SHADER,
-	RES_MATERIAL
+	RES_MATERIAL,
+	RES_MODEL
 };
 
 class Resource

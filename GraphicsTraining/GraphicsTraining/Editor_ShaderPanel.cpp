@@ -32,17 +32,20 @@ void Editor_ShaderPanel::Display()
 		if (sh)
 		{
 			ImGuiTreeNodeFlags flags = 0;
-			if (sI == i) flags |= ImGuiTreeNodeFlags_Selected | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_OpenOnDoubleClick;
-			else
-				flags |= ImGuiTreeNodeFlags_Leaf;
+			//if (sI == i) flags |= ImGuiTreeNodeFlags_Selected | ImGuiTreeNodeFlags_OpenOnArrow | //ImGuiTreeNodeFlags_OpenOnDoubleClick;
+			//else
+			//	flags |= ImGuiTreeNodeFlags_Leaf;
 			
 			if (ImGui::TreeNodeEx(sh->GetNameCStr(), flags))
 			{
 				if (ImGui::IsItemClicked())  sI = i;
-				if(sI == i) ShaderInfo(sh);
+				//if(sI == i) 
+					ShaderInfo(sh);
 
 				ImGui::TreePop();
 			}
+
+			if (it != shs[shs.size() - 1]) ImGui::Separator();
 		}
 
 		++i;
@@ -53,7 +56,7 @@ void Editor_ShaderPanel::Display()
 
 void Editor_ShaderPanel::ShaderInfo(Shader * sh)
 {
-	ImGui::BeginChild("geos", ImVec2(400, 100));
+	//ImGui::BeginChild("geos", ImVec2(400, 100));
 
 	ImGui::Text("Program ID: "); ImGui::SameLine();
 	ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%d", sh->ID);
@@ -69,5 +72,5 @@ void Editor_ShaderPanel::ShaderInfo(Shader * sh)
 	ImGui::Text("Geometry path: "); ImGui::SameLine();
 	ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), sh->geoPath.c_str());
 
-	ImGui::EndChild();
+	//ImGui::EndChild();
 }

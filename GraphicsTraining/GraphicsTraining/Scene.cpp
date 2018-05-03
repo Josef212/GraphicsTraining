@@ -6,6 +6,9 @@
 
 #include "Defs.h"
 #include "Camera.h"
+#include "Shader.h"
+#include "Material.h"
+#include "ComplexMaterial.h"
 
 
 Scene::Scene()
@@ -25,6 +28,8 @@ Scene::~Scene()
 void Scene::Init()
 {
 	std::cout << "\tSCENE: Init." << std::endl;
+
+	defaultMaterial = new Material("Default material", new Shader("Defualt shader", "./Data/Shaders/simple.vert", "./Data/Shaders/simple.frag"));
 }
 
 void Scene::CleanUp()
@@ -64,4 +69,9 @@ void Scene::OnResize(int winW, int winH)
 
 	for (int i = 0; i < MAX_CAMERAS; ++i)
 		if (cameras[i]) cameras[i]->ResizeViewport(winW, winH);
+}
+
+Material * Scene::GetDefaultMaterial() const
+{
+	return defaultMaterial;
 }

@@ -25,7 +25,7 @@ Geometry::Geometry(const char* name, unsigned int numVertices, unsigned int numI
 
 Geometry::~Geometry()
 {
-	Free();
+
 }
 
 void Geometry::Set(unsigned int numVertices, unsigned int numIndices, int * indices, float * vertices, float * normals, float * texCoords, float * colors)

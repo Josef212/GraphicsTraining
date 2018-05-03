@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include "Defs.h"
 #include "Resource.h"
 
 
@@ -14,6 +15,12 @@ ResourceManager::ResourceManager()
 ResourceManager::~ResourceManager()
 {
 	std::cout << "\tRESOURCE MANAGER: Destruction." << std::endl;
+
+	for(auto it : resources)
+	{
+		it->Free();
+		RELEASE(it);
+	}
 }
 
 void ResourceManager::AddResource(Resource * res)

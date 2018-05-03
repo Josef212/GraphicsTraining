@@ -24,4 +24,23 @@
 
 #define DEBUG_LOG false
 
+enum MatPropertyValueType
+{
+	MAT_NONE = -1,
+	MAT_INT,
+	MAT_FLOAT,
+	MAT_VEC2,
+	MAT_VEC3,
+	MAT_VEC4,
+	MAT_MAT2,
+	MAT_MAT3,
+	MAT_MAT4
+};
+
+enum MatPropertyType
+{
+	MPVT_UNIFORM = 0,
+	MPVT_LOCATION = 1
+};
+
 #endif // __DEFS_H__

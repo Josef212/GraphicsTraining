@@ -12,6 +12,8 @@ public:
 	ResourceManager();
 	virtual ~ResourceManager();
 
+	virtual void OnScreenResize(int w, int h) {}
+
 	void AddResource(Resource* res);
 
 	unsigned int GatherResourceOfType(ResourceType type, std::vector<Resource*>& vec);
