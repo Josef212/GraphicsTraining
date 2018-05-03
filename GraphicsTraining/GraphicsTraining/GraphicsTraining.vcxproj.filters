@@ -142,6 +142,9 @@
       <Filter>Gui\Panels</Filter>
     </ClInclude>
     <ClInclude Include="Editor_ModelPanel.h">
+      <Filter>Gui\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -219,6 +222,9 @@
       <Filter>Gui\Panels</Filter>
     </ClCompile>
     <ClCompile Include="Editor_ModelPanel.cpp">
+      <Filter>Gui\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
