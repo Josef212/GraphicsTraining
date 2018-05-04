@@ -28,8 +28,8 @@ SimpleScene::~SimpleScene()
 }
 
 void SimpleScene::OnInit()
-{
-	defaultMaterial = resourceManager->defaultResources.simpleMat;
+{;
+	defaultMaterial = ResourceManager::defaultResources.simpleMat;
 
 	std::string modelName = "./Data/Models/Boat.fbx";
 	Model* m = ModelLoader::LoadModel(modelName, this);
