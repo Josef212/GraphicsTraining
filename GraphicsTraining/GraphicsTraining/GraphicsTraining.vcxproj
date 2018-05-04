@@ -145,6 +145,7 @@
     <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="OrthographicCamera.h" />
     <ClInclude Include="PerspectiveCamera.h" />
+    <ClInclude Include="PhongScene.h" />
     <ClInclude Include="RenderInfo.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -184,6 +185,7 @@
     <ClCompile Include="ModelLoader.cpp" />
     <ClCompile Include="OrthographicCamera.cpp" />
     <ClCompile Include="PerspectiveCamera.cpp" />
+    <ClCompile Include="PhongScene.cpp" />
     <ClCompile Include="RenderInfo.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />

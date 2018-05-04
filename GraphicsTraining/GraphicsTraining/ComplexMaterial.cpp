@@ -2,6 +2,7 @@
 
 #include "Shader.h"
 #include "Texture.h"
+#include <GL/glew.h>
 
 
 MatProperty::MatProperty(const char* name, int value) : propertyName(name), propertyType(MAT_INT)
@@ -40,6 +41,11 @@ ComplexMaterial::ComplexMaterial(const char * name, Shader * sh) : Material(name
 
 ComplexMaterial::~ComplexMaterial()
 {
+	for (auto it = properties.begin(); it != properties.end();)
+	{
+		//RELEASE((*it));
+		it = properties.erase(it);
+	}
 }
 
 void ComplexMaterial::AddProperty(MatProperty * prop)

@@ -28,6 +28,7 @@
 #include "Scene.h"
 #include "SimpleScene.h"
 #include "DirLightShadowScene.h"
+#include "PhongScene.h"
 
 #include "FrameBuffer.h"
 #include "DepthFrameBuffer.h"
@@ -159,12 +160,15 @@ int main(int argc, char** argv)
 	scene->AddCamera(&camera2, 1);
 
 	DirLightShadowScene* dlsScene = new DirLightShadowScene("Directional light shadow scene");
-
 	dlsScene->AddCamera(&camera, 0, true);
 	dlsScene->AddCamera(&camera2, 1);
 
+	PhongScene* phongScene = new PhongScene("Phong scene");
+	phongScene->AddCamera(&camera, 0, true);
+
 	sceneManager->AddScene(scene, true);
 	sceneManager->AddScene(dlsScene);
+	sceneManager->AddScene(phongScene);
 
 	/*Shader* simpleSh = new Shader("Simple shader", "./Data/Shaders/simple.vert", "./Data/Shaders/simple.frag");
 	Shader* framebufferRenderSh = new Shader("Frame buffer render", "./Data/Shaders/render_framebuffer.vert", "./Data/Shaders/render_framebuffer.frag");

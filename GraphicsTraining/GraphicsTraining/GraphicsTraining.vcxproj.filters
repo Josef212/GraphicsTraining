@@ -180,6 +180,9 @@
     <ClInclude Include="DirLightShadowScene.h">
       <Filter>CoreComponents\Scene\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="PhongScene.h">
+      <Filter>CoreComponents\Scene\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -276,6 +279,9 @@
       <Filter>Gui\Panels</Filter>
     </ClCompile>
     <ClCompile Include="DirLightShadowScene.cpp">
+      <Filter>CoreComponents\Scene\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="PhongScene.cpp">
       <Filter>CoreComponents\Scene\Scenes</Filter>
     </ClCompile>
   </ItemGroup>

@@ -10,6 +10,7 @@
 #include "Geometry.h"
 #include "Material.h"
 #include "ComplexMaterial.h"
+#include <GL/glew.h>
 
 
 Model::Model(const char* name) : Resource(name, RES_MODEL)
