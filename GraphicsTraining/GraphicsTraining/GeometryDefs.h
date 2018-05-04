@@ -4,8 +4,8 @@
 //----------------------------------------------------------------
 //Triangle
 
-unsigned int trinagleVerticesCount = 3;
-unsigned int trinagleIndicesCount = 3;
+unsigned int triangleVerticesCount = 3;
+unsigned int triangleIndicesCount = 3;
 
 float triangleVertices[] = {
 	-0.5f,  -0.5f, 0.0f,
@@ -17,7 +17,7 @@ int triangleIndices[] = {
 	0, 1, 2
 };
 
-float triangledNormals[] = {
+float triangleNormals[] = {
 	0.0f, 0.0f, 1.0f,
 	0.0f, 0.0f, 1.0f,
 	0.0f, 0.0f, 1.0f

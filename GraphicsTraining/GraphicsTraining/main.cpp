@@ -20,12 +20,13 @@
 #include "Model.h"
 #include "Texture.h"
 
-#include "GeometryDefs.h"
 #include "RenderInfo.h"
 
 #include "ResourceManager.h"
 #include "GuiManager.h"
+#include "SceneManager.h"
 #include "Scene.h"
+#include "SimpleScene.h"
 
 #include "FrameBuffer.h"
 #include "DepthFrameBuffer.h"
@@ -75,12 +76,9 @@ bool editorIsUsingKeyboard = false;
 float dt = 0.f;
 float lastFrame = 0.f;
 
-PerspectiveCamera camera;
-PerspectiveCamera camera2(glm::vec3(0.f, 2.f, 5.f));
-
 ResourceManager* resourceManager = nullptr;
 GuiManager* guiManager = nullptr; 
-Scene* scene = nullptr;
+SceneManager* sceneManager = nullptr;
 
 // -------------------------------------------------------------------------------
 
@@ -89,7 +87,7 @@ int main(int argc, char** argv)
 	glfwSetErrorCallback(ErrorCallback);
 
 	resourceManager = new ResourceManager();
-	scene = new Scene();
+	sceneManager = new SceneManager();
 	guiManager = new GuiManager();
 
 	if (!glfwInit()) return 1;
@@ -142,12 +140,9 @@ int main(int argc, char** argv)
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-
-	scene->Init();
+	resourceManager->Init();
 	guiManager->Init(window);
 
-	scene->AddCamera(&camera, 0, true);
-	scene->AddCamera(&camera2, 1);
 
 	// ==============================================
 	// Init geometry, materials, cameras, shaders, scene, etc.
@@ -156,7 +151,15 @@ int main(int argc, char** argv)
 	DepthFrameBuffer shadowMapBuffer;
 	shadowMapBuffer.Create(1024, 1024);
 
-	Shader* simpleSh = new Shader("Simple shader", "./Data/Shaders/simple.vert", "./Data/Shaders/simple.frag");
+	SimpleScene* scene = new SimpleScene("simple");
+	PerspectiveCamera camera;
+	PerspectiveCamera camera2(glm::vec3(0.f, 2.f, 5.f));
+	scene->AddCamera(&camera, 0, true);
+	scene->AddCamera(&camera2, 1);
+
+	sceneManager->AddScene(scene, true);
+
+	/*Shader* simpleSh = new Shader("Simple shader", "./Data/Shaders/simple.vert", "./Data/Shaders/simple.frag");
 	Shader* framebufferRenderSh = new Shader("Frame buffer render", "./Data/Shaders/render_framebuffer.vert", "./Data/Shaders/render_framebuffer.frag");
 	Shader* renderDepthBufferSh = new Shader("Render depth buffer shader", "./Data/Shaders/render_depth.vert", "./Data/Shaders/render_depth.frag");
 	Shader* simpleBillboardTextureSh = new Shader("Simple billboard texture shader", "./Data/Shaders/simple_billboard_texture.vert", "./Data/Shaders/simple_billboard_texture.frag");
@@ -166,11 +169,7 @@ int main(int argc, char** argv)
 	Geometry* simplePlane = new Geometry("Plane geometry", planeVerticesCount, planeIndicesCount, planeIndices, planeVertices, planeNormals, planeTexCoords, planeColors);
 
 	Geometry* quadToShowTexture = new Geometry("Quad geometry", quadVerticesCount, quadIndicesCount, quadIndices, quadVertices, quadNormals, quadTexCoords, quadColors);
-		
-	std::string modelName = "./Data/Models/Boat.fbx";
-	Model* m = ModelLoader::LoadModel(modelName, scene);
-	m->modelMat = glm::scale(m->modelMat, glm::vec3(0.05f));
-	
+		*/
 	// ==============================================
 
 	while(!glfwWindowShouldClose(window))
@@ -192,7 +191,7 @@ int main(int argc, char** argv)
 		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		//glEnable(GL_DEPTH_TEST);
 
-		scene->RenderScene();
+		sceneManager->RenderScene();
 
 		// Render
 		/*
@@ -377,7 +376,7 @@ void FrameBufferSizeCallback(GLFWwindow* window, int width, int height)
 	glfwSetWindowTitle(window, windowTitle.c_str());
 
 
-	scene->OnResize(winW, winH);
+	sceneManager->OnResize(winW, winH);
 }
 
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode)
@@ -396,7 +395,7 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode
 void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	if (!editorIsUsingMouse)
-		scene->GetActiveCamera()->ProcessMouseScroll(yoffset);
+		sceneManager->ProcessScroll(yoffset);
 
 	ImGui_ImplGlfw_ScrollCallback(window, xoffset, yoffset);
 }
@@ -417,7 +416,7 @@ void MouseCallback(GLFWwindow* window, double xpos, double ypos)
 	lastY = ypos;
 	
 	if (buttons[GLFW_MOUSE_BUTTON_LEFT] && !editorIsUsingMouse)
-		scene->GetActiveCamera()->ProcessMouseMovement(xoffset, yoffset);
+		sceneManager->ProcessMouseMovement(xoffset, yoffset);
 }
 
 void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
@@ -432,44 +431,42 @@ void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 
 void ProcessInput(GLFWwindow* window)
 {
-	Camera* activeCamera = scene->GetActiveCamera();
-	
-	if (activeCamera)
+	if (sceneManager)
 	{
 		float _dt = keys[GLFW_KEY_LEFT_SHIFT] ? dt * 2.f : dt;
 
 		if (keys[GLFW_KEY_W]) //w
-			activeCamera->ProcessKeyboard(FORWARD, _dt);
+			sceneManager->ProcessInput(FORWARD, _dt);
 		if (keys[GLFW_KEY_S]) //s
-			activeCamera->ProcessKeyboard(BACKWARD, _dt);
+			sceneManager->ProcessInput(BACKWARD, _dt);
 		if (keys[GLFW_KEY_A]) //a
-			activeCamera->ProcessKeyboard(LEFT, _dt);
+			sceneManager->ProcessInput(LEFT, _dt);
 		if (keys[GLFW_KEY_D]) //d
-			activeCamera->ProcessKeyboard(RIGHT, _dt);
+			sceneManager->ProcessInput(RIGHT, _dt);
 		if (keys[GLFW_KEY_Q]) //q
-			activeCamera->ProcessKeyboard(UP, _dt);
+			sceneManager->ProcessInput(UP, _dt);
 		if (keys[GLFW_KEY_E]) //e
-			activeCamera->ProcessKeyboard(DOWN, _dt);
+			sceneManager->ProcessInput(DOWN, _dt);
 	}
 	
 	if (keys[GLFW_KEY_1])
-		scene->SetActiveCamera(0);
+		sceneManager->SelectCamera(0);
 	if (keys[GLFW_KEY_2])
-		scene->SetActiveCamera(1);
+		sceneManager->SelectCamera(1);
 	if (keys[GLFW_KEY_3])
-		scene->SetActiveCamera(2);
+		sceneManager->SelectCamera(2);
 	if (keys[GLFW_KEY_4])
-		scene->SetActiveCamera(3);
+		sceneManager->SelectCamera(3);
 	if (keys[GLFW_KEY_5])
-		scene->SetActiveCamera(4);
+		sceneManager->SelectCamera(4);
 	if (keys[GLFW_KEY_6])
-		scene->SetActiveCamera(5);
+		sceneManager->SelectCamera(5);
 	if (keys[GLFW_KEY_7])
-		scene->SetActiveCamera(6);
+		sceneManager->SelectCamera(6);
 	if (keys[GLFW_KEY_8])
-		scene->SetActiveCamera(7);
+		sceneManager->SelectCamera(7);
 	if (keys[GLFW_KEY_9])
-		scene->SetActiveCamera(8);
+		sceneManager->SelectCamera(8);
 
 }
 
@@ -505,7 +502,7 @@ void RenderSimpleGeometryWithShadow(RenderInfo& info)
 	info.shader->SetMat4("view", info.view);
 	info.shader->SetMat4("model", info.model);
 
-	info.shader->SetVec3("viewPos", scene->GetActiveCamera()->Position);
+	info.shader->SetVec3("viewPos", sceneManager->GetActiveScene()->GetActiveCamera()->Position);
 	info.shader->SetVec3("lightPos", info.lightPos);
 	info.shader->SetMat4("lightSpaceMatrix", info.lightSpaceMatrix);
 

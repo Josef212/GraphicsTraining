@@ -13,9 +13,9 @@
 #include "ModelLoader.h"
 
 
-Scene::Scene()
+Scene::Scene(const char* name) : name(name)
 {
-	std::cout << "\tSCENE: Creation." << std::endl;
+	std::cout << "\tSCENE[" << this->name << "]: Creation." << std::endl;
 
 	for (int i = 0; i < MAX_CAMERAS; ++i)
 		cameras[i] = nullptr;
@@ -29,14 +29,16 @@ Scene::~Scene()
 
 void Scene::Init()
 {
-	std::cout << "\tSCENE: Init." << std::endl;
+	std::cout << "SCENE[" << name << "]: Init." << std::endl;
 
-	defaultMaterial = new Material("Default material", new Shader("Defualt shader", "./Data/Shaders/simple.vert", "./Data/Shaders/simple.frag"));
+	OnInit();
 }
 
 void Scene::CleanUp()
 {
-	std::cout << "\tSCENE: Clean up." << std::endl;
+	std::cout << "SCENE[" << name << "]: Clean up." << std::endl;
+
+	OnCleanUp();
 }
 
 void Scene::AddModel(Model * model)
@@ -101,16 +103,17 @@ Material * Scene::GetDefaultMaterial() const
 	return defaultMaterial;
 }
 
-void Scene::RenderScene()
+void Scene::ProcessScroll(double yoffset)
 {
-	glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	if (activeCamera) activeCamera->ProcessMouseScroll(yoffset);
+}
 
-	if(activeCamera)
-	{
-		for(auto it : models)
-		{
-			it->Render(this);
-		}
-	}
+void Scene::ProcessMouseMovement(double xoffset, double yoffset)
+{
+	if (activeCamera) activeCamera->ProcessMouseMovement(xoffset, yoffset);
+}
+
+void Scene::ProcessInput(Camera_Movement movement, float dt)
+{
+	if (activeCamera) activeCamera->ProcessKeyboard(movement, dt);
 }
