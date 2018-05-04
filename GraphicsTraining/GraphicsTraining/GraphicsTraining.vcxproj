@@ -73,6 +73,10 @@
     <IncludePath>ThirdParty\SOIL;ThirdParty\Glew\include;ThirdParty;ThirdParty\GLM;ThirdParty\stb;ThirdParty\assimp\include;$(IncludePath)</IncludePath>
     <LibraryPath>ThirdParty\SOIL\lib;ThirdParty\assimp\libx86;ThirdParty\Glew\lib\Release\Win32;ThirdParty\GLFW;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>ThirdParty\assimp\include;ThirdParty\stb;ThirdParty\GLM;ThirdParty;ThirdParty\Glew\include;ThirdParty\SOIL;$(IncludePath)</IncludePath>
+    <LibraryPath>ThirdParty\GLFW;ThirdParty\Glew\lib\Release\Win32;ThirdParty\assimp\libx86;ThirdParty\SOIL\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -106,6 +110,8 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32.lib;glew32s.lib;assimp.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

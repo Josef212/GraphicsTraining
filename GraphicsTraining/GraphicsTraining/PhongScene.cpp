@@ -45,10 +45,10 @@ void PhongScene::OnInit()
 
 	light = new Model("Light", resourceManager->defaultResources.cubeGeo, resourceManager->defaultResources.simpleMat);
 	
-	std::string modelName("./Data/Models/nanosuit/nanosuit.obj");
+	std::string modelName("./Data/Models/sponza/sponza.obj");
+	//std::string modelName("./Data/Models/nanosuit/nanosuit.obj");
 	//std::string modelName("./Data/Models/Boat.fbx");
 	Model* boat = ModelLoader::LoadModel(modelName, this);
-	boat->SetMaterial(phong, 0);
 	boat->modelMat = glm::scale(boat->modelMat, glm::vec3(0.05f));
 }
 
