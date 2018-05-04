@@ -359,10 +359,13 @@ int main(int argc, char** argv)
 		glfwSwapBuffers(window);
 	}
 
+	guiManager->CleanUp();
+	sceneManager->CleanUp();
+
 	glfwTerminate();
 
 	RELEASE(guiManager);
-	RELEASE(scene);
+	RELEASE(sceneManager);
 	RELEASE(resourceManager);
 
 	if(DEBUG_LOG) system("PAUSE");
