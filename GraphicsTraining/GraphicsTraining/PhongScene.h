@@ -24,6 +24,8 @@ public:
 private:
 
 public:
+	bool blinn = true;
+	bool useTexture = true;
 	glm::vec3 lightPos;
 	glm::vec3 lightColor, objectColor;
 

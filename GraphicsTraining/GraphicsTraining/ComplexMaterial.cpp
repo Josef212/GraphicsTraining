@@ -25,6 +25,11 @@ MatProperty::MatProperty(const char * name, Texture * value) : propertyName(name
 	propertyValue._texture = value;
 }
 
+MatProperty::MatProperty(const char * name, bool * value) : propertyName(name), propertyType(MAT_BOOL)
+{
+	propertyValue._bool = value;
+}
+
 MatProperty::~MatProperty()
 {
 }
@@ -143,6 +148,10 @@ void ComplexMaterial::SendInfo(Scene* scene) const
 				glBindTexture(GL_TEXTURE_2D, it->propertyValue._texture->TextureID());
 				shader->SetInt(it->propertyName.c_str(), texturesCount);
 				++texturesCount;
+				break;
+
+			case MatPropertyValueType::MAT_BOOL:
+				shader->SetBool(it->propertyName.c_str(), *it->propertyValue._bool);
 				break;
 			}
 		}

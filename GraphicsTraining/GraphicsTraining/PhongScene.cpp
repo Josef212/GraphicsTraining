@@ -4,6 +4,7 @@
 #include "Model.h"
 #include "ComplexMaterial.h"
 #include "Shader.h"
+#include "Texture.h"
 #include "ResourceManager.h"
 
 #include "ModelLoader.h"
@@ -34,6 +35,11 @@ void PhongScene::OnInit()
 	phong->AddProperty(new MatProperty("lightColor", &lightColor.r, MAT_VEC3));
 	phong->AddProperty(new MatProperty("lightPos", &lightPos.r, MAT_VEC3));
 	phong->AddProperty(new MatProperty("viewPos", &GetActiveCamera()->Position.x, MAT_VEC3));
+	phong->AddProperty(new MatProperty("blinn", &blinn));
+	phong->AddProperty(new MatProperty("hasTexture", &useTexture));
+	Texture* t = new Texture("text");
+	t->LoadTexture("./Data/Textures/marble.jpg");
+	phong->AddProperty(new MatProperty("colorTexture", t));
 
 	light = new Model("Light", resourceManager->defaultResources.cubeGeo, resourceManager->defaultResources.simpleMat);
 	
@@ -73,6 +79,8 @@ void PhongScene::OnGui()
 	ImGui::ColorEdit3("Object color", &objectColor.r);
 	ImGui::ColorEdit3("Light color", &lightColor.r);
 	ImGui::DragFloat3("Light pos", &lightPos.x, 0.05f);
+	ImGui::Checkbox("Blinn", &blinn); ImGui::SameLine();
+	ImGui::Checkbox("Use texture", &useTexture);
 
 	ImGui::Separator();
 }
