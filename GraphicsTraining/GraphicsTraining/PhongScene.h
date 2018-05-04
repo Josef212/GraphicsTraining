@@ -19,6 +19,8 @@ public:
 
 	void OnRenderScene() override;
 
+	void OnGui() override;
+
 private:
 
 public:
@@ -26,8 +28,6 @@ public:
 	glm::vec3 lightColor, objectColor;
 
 private:
-	Model * plane = nullptr;
-	Model* cube = nullptr;
 	Model* light = nullptr;
 	ComplexMaterial* phong = nullptr;
 };

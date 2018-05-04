@@ -6,7 +6,6 @@
 #include "ThirdParty/ImGui/imgui.h"
 
 #include <iostream>
-#include <GLFW/glfw3.h>
 
 #include "EditorPanel.h"
 #include "Editor_GeometryPanel.h"
@@ -15,6 +14,9 @@
 #include "Editor_ModelPanel.h"
 #include "Editor_TexturePanel.h"
 #include "Editor_ScenePanel.h"
+
+#include "Scene.h"
+#include "SceneManager.h"
 
 
 GuiManager::GuiManager()
@@ -26,7 +28,7 @@ GuiManager::GuiManager()
 	panels.push_back(static_cast<EditorPanel*>(new Editor_MaterialPanel("Material")));
 	panels.push_back(static_cast<EditorPanel*>(new Editor_ModelPanel("Model")));
 	panels.push_back(static_cast<EditorPanel*>(new Editor_TexturePanel("Texture")));
-	panels.push_back(static_cast<EditorPanel*>(new Editor_ScenePanel("Scene")));
+	panels.push_back(static_cast<EditorPanel*>(new Editor_ScenePanel("Scene", true)));
 }
 
 
@@ -67,7 +69,7 @@ void GuiManager::Render()
 	if (ImGui::BeginMenu("File"))
 	{
 		if (ImGui::MenuItem("ImGui example", nullptr, showImGuiExmple)) showImGuiExmple = !showImGuiExmple;
-		if (ImGui::MenuItem("Exit")) glfwSetWindowShouldClose(referenceWindow, 1);
+		//if (ImGui::MenuItem("Exit")) glfwSetWindowShouldClose(referenceWindow, 1);
 
 		ImGui::EndMenu();
 	}
@@ -86,6 +88,24 @@ void GuiManager::Render()
 	{
 		if (it->Visible()) it->Display();
 	}
+
+	ImGui::SetNextWindowPos(ImVec2(5.f, 25.f));
+	ImGui::Begin("Active scene", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav);
+	{
+		Scene* as = sceneManager->GetActiveScene();
+		ImGui::Text("Active scene: "); ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), as ? as->name.c_str() : "none");
+
+		ImGui::Text("Number of models: "); ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), std::to_string(as ? as->models.size() : 0).c_str());
+
+		ImGui::Separator();
+
+		if (ImGui::Button("Reload")) 
+			sceneManager->SelectActiveScene(as);
+
+	}
+	ImGui::End();
 
 	ImGui::EndMainMenuBar();
 

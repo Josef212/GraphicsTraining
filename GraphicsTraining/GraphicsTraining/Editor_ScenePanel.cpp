@@ -28,6 +28,8 @@ void Editor_ScenePanel::Display()
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), as->name.c_str());
 
 		ImGui::ColorEdit4("Background color", &as->backgroundColor.r);
+
+		as->OnGui();
 	}
 
 	static int sS = 0;

@@ -24,8 +24,8 @@ Editor_GeometryPanel::~Editor_GeometryPanel()
 
 void Editor_GeometryPanel::OnInit()
 {
-	geoFrameBuffer = new FrameBuffer(512, 512);
-	simpleGeoShader = new Shader("Simple shader for geometry display", "./Data/Shaders/simple.vert", "./Data/Shaders/simple.frag");
+	//geoFrameBuffer = new FrameBuffer(512, 512);
+	//simpleGeoShader = new Shader("Simple shader for geometry display", "./Data/Shaders/simple.vert", "./Data/Shaders/simple.frag");
 }
 
 void Editor_GeometryPanel::Display()

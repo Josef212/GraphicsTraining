@@ -30,6 +30,11 @@ Model::~Model()
 {
 }
 
+void Model::Free()
+{
+
+}
+
 void Model::AddMesh(Geometry * geometry, Material * material)
 {
 	meshes.push_back(std::pair<Geometry*, Material*>(geometry, material));

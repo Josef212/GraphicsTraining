@@ -41,11 +41,7 @@ ComplexMaterial::ComplexMaterial(const char * name, Shader * sh) : Material(name
 
 ComplexMaterial::~ComplexMaterial()
 {
-	for (auto it = properties.begin(); it != properties.end();)
-	{
-		//RELEASE((*it));
-		it = properties.erase(it);
-	}
+	OnFree();
 }
 
 void ComplexMaterial::AddProperty(MatProperty * prop)
@@ -93,9 +89,10 @@ void ComplexMaterial::RemoveProperty(const char * name)
 
 void ComplexMaterial::OnFree()
 {
-	for(auto it : properties)
+	for(auto it = properties.begin(); it != properties.end();)
 	{
-		RELEASE(it);
+		RELEASE((*it));
+		it = properties.erase(it);
 	}
 }
 

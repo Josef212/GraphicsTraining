@@ -42,11 +42,8 @@ void SimpleScene::OnCleanUp()
 
 void SimpleScene::OnRenderScene()
 {
-	if (GetActiveCamera())
+	for (auto it : models)
 	{
-		for (auto it : models)
-		{
-			it->Render(this);
-		}
+		it->Render(this);
 	}
 }

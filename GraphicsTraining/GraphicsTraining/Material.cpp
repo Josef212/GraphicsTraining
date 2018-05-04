@@ -1,6 +1,7 @@
 #include "Material.h"
 
 #include "Shader.h"
+#include <GL/glew.h>
 
 
 Material::Material(const char* name) : Resource(name, RES_MATERIAL)

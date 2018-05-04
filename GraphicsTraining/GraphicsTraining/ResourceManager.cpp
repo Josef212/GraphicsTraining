@@ -42,6 +42,58 @@ void ResourceManager::AddResource(Resource * res)
 	resources.push_back(res);
 }
 
+void ResourceManager::RemoveResource(Resource* res, bool forceDefaults)
+{
+	auto it = std::find(resources.begin(), resources.end(), res);
+	if(it != resources.end())
+	{
+		if (!IsDefaultResource(res) || forceDefaults)
+		{
+			res->Free();
+			RELEASE(res);
+			resources.erase(it);
+		}
+	}
+}
+
+void ResourceManager::RemoveResources(Resource** res, int count, bool forceDefaults)
+{
+	if(res)
+	{
+		for(int i = 0; i < count; ++i)
+		{
+			RemoveResource(res[i], forceDefaults);
+		}
+	}
+}
+
+void ResourceManager::RemoveResources(std::vector<Resource*>& res, bool forceDefaults)
+{
+	for(auto it = res.begin(); it != res.end();)
+	{
+		RemoveResource((*it), forceDefaults);
+		it = res.erase(it);
+	}
+}
+
+void ResourceManager::RemoveAllResources(bool forceDefaults)
+{
+	for(auto it = resources.begin(); it != resources.end();)
+	{
+		bool def = IsDefaultResource((*it));
+		if((def && forceDefaults) || !def)
+		{
+			(*it)->Free();
+			RELEASE((*it));
+			it = resources.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+}
+
 unsigned int ResourceManager::GatherResourceOfType(ResourceType type, std::vector<Resource*>& vec)
 {
 	vec.clear();
@@ -53,6 +105,15 @@ unsigned int ResourceManager::GatherResourceOfType(ResourceType type, std::vecto
 	}
 
 	return vec.size();
+}
+
+bool ResourceManager::IsDefaultResource(Resource* res)
+{
+	// TODO: Keep adding resources 
+	if (res == defaultResources.triangleGeo || res == defaultResources.quadGeo || res == defaultResources.cubeGeo || res == defaultResources.planeGeo || res == defaultResources.simpleSh || res == defaultResources.simpleMat)
+		return true;
+
+	return false;
 }
 
 void ResourceManager::SetDefaultResources()

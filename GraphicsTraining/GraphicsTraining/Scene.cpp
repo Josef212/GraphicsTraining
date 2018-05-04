@@ -39,6 +39,10 @@ void Scene::CleanUp()
 	std::cout << "SCENE[" << name << "]: Clean up." << std::endl;
 
 	OnCleanUp();
+
+	resourceManager->RemoveAllResources();
+	models.clear();
+	defaultMaterial = nullptr;
 }
 
 void Scene::AddModel(Model * model)
@@ -108,7 +112,7 @@ void Scene::RenderScene()
 	glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	OnRenderScene();
+	if (GetActiveCamera()) OnRenderScene();
 }
 
 void Scene::ProcessScroll(double yoffset)

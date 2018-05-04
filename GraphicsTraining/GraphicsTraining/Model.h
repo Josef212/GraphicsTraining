@@ -21,6 +21,8 @@ public:
 	Model(const char* name, Geometry* geometry, Material* material);
 	virtual ~Model();
 
+	void Free() override;
+
 	void AddMesh(Geometry* geometry, Material* material);
 	void SetGeometry(Geometry* geometry, int index);
 	void SetMaterial(Material* material, int index);

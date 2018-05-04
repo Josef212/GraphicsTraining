@@ -24,7 +24,14 @@ public:
 
 	void AddResource(Resource* res);
 
+	void RemoveResource(Resource* res, bool forceDefaults = false);
+	void RemoveResources(Resource** res, int count, bool forceDefaults = false);
+	void RemoveResources(std::vector<Resource*>& res, bool forceDefaults = false);
+	void RemoveAllResources(bool forceDefaults = false);
+
 	unsigned int GatherResourceOfType(ResourceType type, std::vector<Resource*>& vec);
+
+	bool IsDefaultResource(Resource* res);
 
 private:
 	void SetDefaultResources();
