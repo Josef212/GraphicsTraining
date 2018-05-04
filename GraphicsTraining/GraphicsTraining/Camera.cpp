@@ -90,6 +90,54 @@ void Camera::ResizeViewport(int width, int height)
 	OnViewportResize();
 }
 
+float Camera::GetZNear() const
+{
+	return zNear;
+}
+
+void Camera::SetZNear(float near)
+{
+	if(near < zFar)
+	{
+		zNear = near;
+		CalcProjection();
+	}
+}
+
+float Camera::GetZFar() const
+{
+	return zFar;
+}
+
+void Camera::SetZFar(float far)
+{
+	if(far > zNear)
+	{
+		zFar = far;
+		CalcProjection();
+	}
+}
+
+float Camera::GetZoom() const
+{
+	return Zoom;
+}
+
+float Camera::GetSize() const
+{
+	return Size;
+}
+
+void Camera::SetSize(float s)
+{
+	Size = s;
+}
+
+Camera_Type Camera::GetCameraType() const
+{
+	return cameraType;
+}
+
 // ------
 
 void Camera::updateCameraVectors(bool forceCalcProj)

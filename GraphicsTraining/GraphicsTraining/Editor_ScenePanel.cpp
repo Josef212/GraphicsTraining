@@ -30,6 +30,40 @@ void Editor_ScenePanel::Display()
 		ImGui::ColorEdit4("Background color", &as->backgroundColor.r);
 
 		as->OnGui();
+
+		if(ImGui::CollapsingHeader("Active camera"))
+		{
+			Camera* cam = as->GetActiveCamera();
+
+			if(cam)
+			{
+				Camera_Type cType = cam->GetCameraType();
+				ImGui::Text("Camera type: "); ImGui::SameLine();
+				if (cType == Camera_Type::CAM_PERSPECTIVE)
+				{
+					ImGui::TextColored(ImVec4(1, 1, 0, 1), "PERSPECTIVE");
+					float f = cam->GetZFar();
+					if (ImGui::DragFloat("Z Far", &f, 0.1f, 0.1f, 10000.f))
+						cam->SetZFar(f);
+
+					float n = cam->GetZNear();
+					if (ImGui::DragFloat("Z Near", &n, 0.1f, 0.1f, 10000.f))
+						cam->SetZNear(n);
+				}
+				else if (cType == Camera_Type::CAM_ORTHOGRAPHIC)
+				{
+					ImGui::TextColored(ImVec4(1, 1, 0, 1), "ORTHOGRAPHICS");
+
+					float s = cam->GetSize();
+					if (ImGui::DragFloat("Size", &s, 0.1f))
+						cam->SetSize(s);
+				}
+				else
+				{
+					ImGui::TextColored(ImVec4(1, 1, 0, 1), "UNDEFINED");
+				}
+			}
+		}
 	}
 
 	static int sS = 0;

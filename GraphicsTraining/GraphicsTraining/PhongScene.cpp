@@ -31,6 +31,8 @@ void PhongScene::OnInit()
 {
 	phong = new ComplexMaterial("Phong", new Shader("Phong shader", "./Data/Shaders/phong.vert", "./Data/Shaders/phong.frag"));
 
+	defaultMaterial = phong;
+
 	phong->AddProperty(new MatProperty("objectColor", &objectColor.r, MAT_VEC3));
 	phong->AddProperty(new MatProperty("lightColor", &lightColor.r, MAT_VEC3));
 	phong->AddProperty(new MatProperty("lightPos", &lightPos.r, MAT_VEC3));
@@ -43,7 +45,8 @@ void PhongScene::OnInit()
 
 	light = new Model("Light", resourceManager->defaultResources.cubeGeo, resourceManager->defaultResources.simpleMat);
 	
-	std::string modelName("./Data/Models/Boat.fbx");
+	std::string modelName("./Data/Models/nanosuit/nanosuit.obj");
+	//std::string modelName("./Data/Models/Boat.fbx");
 	Model* boat = ModelLoader::LoadModel(modelName, this);
 	boat->SetMaterial(phong, 0);
 	boat->modelMat = glm::scale(boat->modelMat, glm::vec3(0.05f));

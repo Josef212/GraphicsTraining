@@ -32,6 +32,9 @@ void Scene::Init()
 	std::cout << "SCENE[" << name << "]: Init." << std::endl;
 
 	OnInit();
+
+	if(!defaultMaterial) 
+		defaultMaterial = resourceManager->defaultResources.simpleMat;
 }
 
 void Scene::CleanUp()

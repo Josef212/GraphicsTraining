@@ -6,6 +6,13 @@
 
 #include "Defs.h"
 
+enum Camera_Type
+{
+	CAM_PERSPECTIVE = 0,
+	CAM_ORTHOGRAPHIC,
+	CAM_NONE
+};
+
 // Defines several possible options for camera movement. Used as abstraction to stay away from window-system specific input methods
 enum Camera_Movement {
 	FORWARD,
@@ -40,10 +47,7 @@ public:
 	// Camera options
 	float MovementSpeed;
 	float MouseSensitivity;
-
-	float Zoom;
-	float Size = 10.0f;
-
+	
 	// Constructor with vectors
 	Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH);
 
@@ -69,6 +73,20 @@ public:
 
 	void ResizeViewport(int width, int height);
 
+	float GetZNear()const;
+	void SetZNear(float near);
+
+	float GetZFar()const;
+	void SetZFar(float far);
+
+	float GetZoom()const;
+
+	float GetSize()const;
+	void SetSize(float s);
+
+	Camera_Type GetCameraType()const;
+	// TODO: Let change the camera type
+
 protected:
 	virtual void CalcProjection() = 0;
 	virtual void OnViewportResize() = 0;
@@ -78,6 +96,11 @@ protected:
 
 	int width = DEFAULT_WIN_WIDTH, height = DEFAULT_WIN_HEIGHT;
 	float zNear = 1.0f, zFar = 100.0f;
+
+	float Zoom;
+	float Size = 10.0f;
+
+	Camera_Type cameraType = CAM_NONE;
 
 private:
 	// Calculates the front vector from the Camera's (updated) Eular Angles

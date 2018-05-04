@@ -4,13 +4,14 @@
 
 OrthographicCamera::OrthographicCamera()
 {
+	cameraType = CAM_ORTHOGRAPHIC;
 	CalcProjection();
 }
 
 
 OrthographicCamera::~OrthographicCamera()
 {
-	CalcProjection();
+
 }
 
 void OrthographicCamera::CalcProjection()
