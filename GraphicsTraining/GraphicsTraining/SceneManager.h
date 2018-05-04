@@ -14,6 +14,8 @@ public:
 	SceneManager();
 	virtual ~SceneManager();
 
+	void CleanUp();
+
 	void AddScene(Scene* sc, bool activate = false);
 	void RemoveScene(Scene* sc);
 	void RemoveScene(const char* name);

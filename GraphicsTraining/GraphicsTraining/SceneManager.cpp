@@ -16,6 +16,15 @@ SceneManager::~SceneManager()
 {
 }
 
+void SceneManager::CleanUp()
+{
+	for(auto it : scenes)
+	{
+		it->CleanUp();
+		RELEASE(it);
+	}
+}
+
 void SceneManager::AddScene(Scene * sc, bool activate)
 {
 	if (!sc) return;
