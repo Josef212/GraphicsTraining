@@ -103,6 +103,14 @@ Material * Scene::GetDefaultMaterial() const
 	return defaultMaterial;
 }
 
+void Scene::RenderScene()
+{
+	glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	OnRenderScene();
+}
+
 void Scene::ProcessScroll(double yoffset)
 {
 	if (activeCamera) activeCamera->ProcessMouseScroll(yoffset);

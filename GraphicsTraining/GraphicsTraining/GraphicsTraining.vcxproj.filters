@@ -175,7 +175,10 @@
       <Filter>CoreComponents\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Editor_ScenePanel.h">
-      <Filter>Header Files</Filter>
+      <Filter>Gui\Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="DirLightShadowScene.h">
+      <Filter>CoreComponents\Scene\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -270,7 +273,10 @@
       <Filter>CoreComponents\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Editor_ScenePanel.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Gui\Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="DirLightShadowScene.cpp">
+      <Filter>CoreComponents\Scene\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

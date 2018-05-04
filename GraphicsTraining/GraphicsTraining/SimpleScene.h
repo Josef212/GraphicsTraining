@@ -12,7 +12,7 @@ public:
 	void OnInit() override;
 	void OnCleanUp() override;
 
-	void RenderScene() override;
+	void OnRenderScene() override;
 };
 
 #endif // !__SIMPLE_SCENE_H__

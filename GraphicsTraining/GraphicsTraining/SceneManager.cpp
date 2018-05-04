@@ -65,7 +65,7 @@ void SceneManager::SelectActiveScene(int index)
 {
 	if(index >= 0 && index < scenes.size())
 	{
-		activeScene->CleanUp();
+		if(activeScene) activeScene->CleanUp();
 		activeScene = scenes[index];
 		activeScene->Init();
 	}
@@ -79,7 +79,7 @@ void SceneManager::SelectActiveScene(const char* name)
 		{
 			if(it->name == name)
 			{
-				activeScene->CleanUp();
+				if (activeScene) activeScene->CleanUp();
 				activeScene = it;
 				activeScene->Init();
 			}

@@ -42,7 +42,8 @@ public:
 
 	Material* GetDefaultMaterial()const;
 
-	virtual void RenderScene() = 0;
+	void RenderScene();
+	virtual void OnRenderScene() = 0;
 
 	void ProcessScroll(double yoffset);
 	void ProcessMouseMovement(double xoffset, double yoffset);

@@ -40,11 +40,8 @@ void SimpleScene::OnCleanUp()
 {
 }
 
-void SimpleScene::RenderScene()
+void SimpleScene::OnRenderScene()
 {
-	glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	if (GetActiveCamera())
 	{
 		for (auto it : models)
