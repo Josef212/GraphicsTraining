@@ -8,6 +8,8 @@ class Scene;
 
 class SceneManager
 {
+friend class Editor_ScenePanel;
+
 public:
 	SceneManager();
 	virtual ~SceneManager();
@@ -18,6 +20,7 @@ public:
 
 	void SelectActiveScene(int index);
 	void SelectActiveScene(const char* name);
+	void SelectActiveScene(Scene* sc);
 	Scene* GetActiveScene()const;
 
 	void OnResize(int w, int h);

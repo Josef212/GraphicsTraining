@@ -30,7 +30,7 @@ private:
 	void SetDefaultResources();
 
 public:
-	static struct DefaultResources
+	struct DefaultResources
 	{
 		// Geometries
 		Geometry* triangleGeo	= nullptr;

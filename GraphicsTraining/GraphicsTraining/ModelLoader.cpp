@@ -21,8 +21,7 @@ ModelLoader::~ModelLoader()
 Model* ModelLoader::LoadModel(std::string & path, Scene * scene)
 {
 	Assimp::Importer importer;
-	const aiScene* aiscene = importer.ReadFile(
-		path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+	const aiScene* aiscene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 	if (!aiscene || aiscene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !aiscene->mRootNode)
 	{
 		std::cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << std::endl;

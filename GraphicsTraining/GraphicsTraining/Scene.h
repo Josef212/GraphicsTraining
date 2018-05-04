@@ -48,6 +48,8 @@ public:
 	void ProcessMouseMovement(double xoffset, double yoffset);
 	void ProcessInput(Camera_Movement movement, float dt);
 
+	virtual void OnGui() {}
+
 private:
 
 public:

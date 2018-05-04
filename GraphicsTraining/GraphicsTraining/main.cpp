@@ -190,9 +190,7 @@ int main(int argc, char** argv)
 		//glClearColor(.3f, .3f, .3f, 1.f);
 		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		//glEnable(GL_DEPTH_TEST);
-
-		sceneManager->RenderScene();
-
+		
 		// Render
 		/*
 		RenderInfo info;
@@ -344,6 +342,7 @@ int main(int argc, char** argv)
 		*/
 		// -------------------------
 
+		sceneManager->RenderScene();
 		guiManager->Render();
 
 		// ---------------------------

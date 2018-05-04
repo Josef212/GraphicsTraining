@@ -87,6 +87,17 @@ void SceneManager::SelectActiveScene(const char* name)
 	}
 }
 
+void SceneManager::SelectActiveScene(Scene * sc)
+{
+	auto it = std::find(scenes.begin(), scenes.end(), sc);
+	if(it != scenes.end())
+	{
+		if (activeScene) activeScene->CleanUp();
+		activeScene = sc;
+		activeScene->Init();
+	}
+}
+
 Scene * SceneManager::GetActiveScene() const
 {
 	return activeScene;

@@ -132,6 +132,7 @@
     <ClInclude Include="Editor_GeometryPanel.h" />
     <ClInclude Include="Editor_MaterialPanel.h" />
     <ClInclude Include="Editor_ModelPanel.h" />
+    <ClInclude Include="Editor_ScenePanel.h" />
     <ClInclude Include="Editor_ShaderPanel.h" />
     <ClInclude Include="Editor_TexturePanel.h" />
     <ClInclude Include="FrameBuffer.h" />
@@ -169,6 +170,7 @@
     <ClCompile Include="Editor_GeometryPanel.cpp" />
     <ClCompile Include="Editor_MaterialPanel.cpp" />
     <ClCompile Include="Editor_ModelPanel.cpp" />
+    <ClCompile Include="Editor_ScenePanel.cpp" />
     <ClCompile Include="Editor_ShaderPanel.cpp" />
     <ClCompile Include="Editor_TexturePanel.cpp" />
     <ClCompile Include="FrameBuffer.cpp" />
