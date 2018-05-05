@@ -65,7 +65,7 @@ void Editor_MaterialPanel::Display()
 void Editor_MaterialPanel::MaterialInfo(Material * mat)
 {
 	ImGui::Text("Shader: "); ImGui::SameLine();
-	ImGui::TextColored(ImVec4(1, 1, 0, 1), mat->GetShader()->GetNameCStr());
+	ImGui::TextColored(ImVec4(1, 1, 0, 1), mat->GetShader() ? mat->GetShader()->GetNameCStr() : "none");
 
 	ComplexMaterial* cm = dynamic_cast<ComplexMaterial*>(mat);
 	if(cm)
@@ -121,7 +121,7 @@ void Editor_MaterialPanel::EditMaterialWindow()
 				switch (it->propertyType)
 				{
 				case MAT_BOOL:
-					ImGui::Checkbox(it->propertyName.c_str(), it->propertyValue._bool);
+					ImGui::Checkbox(it->propertyName.c_str(), &it->propertyValue._bool);
 					break;
 
 				case MAT_INT:

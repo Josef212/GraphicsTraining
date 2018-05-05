@@ -15,6 +15,8 @@
 #include "Editor_TexturePanel.h"
 #include "Editor_ScenePanel.h"
 
+#include "MaterialCreator.h"
+
 #include "Scene.h"
 #include "SceneManager.h"
 
@@ -29,6 +31,8 @@ GuiManager::GuiManager()
 	panels.push_back(static_cast<EditorPanel*>(new Editor_ModelPanel("Model")));
 	panels.push_back(static_cast<EditorPanel*>(new Editor_TexturePanel("Texture")));
 	panels.push_back(static_cast<EditorPanel*>(new Editor_ScenePanel("Scene", true)));
+
+	materialCreator = new MaterialCreator();
 }
 
 
@@ -84,6 +88,20 @@ void GuiManager::Render()
 		ImGui::EndMenu();
 	}
 
+	if(ImGui::BeginMenu("Resources"))
+	{
+		if(ImGui::MenuItem("Create material"))
+		{
+			bool isOpen = materialCreator->Show();
+			if (isOpen) materialCreator->Close();
+			else materialCreator->Open();
+		}
+
+		ImGui::EndMenu();
+	}
+
+	if (materialCreator->Show()) materialCreator->Render();
+
 	for (auto it : panels)
 	{
 		if (it->Visible()) it->Display();
@@ -136,6 +154,8 @@ void GuiManager::CleanUp()
 	{
 		RELEASE(it);
 	}
+
+	RELEASE(materialCreator);
 
 	ImGui_ImplGlfwGL3_Shutdown();
 }

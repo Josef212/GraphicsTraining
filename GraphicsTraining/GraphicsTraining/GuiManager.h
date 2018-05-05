@@ -3,6 +3,7 @@
 
 struct GLFWwindow;
 class EditorPanel;
+class MaterialCreator;
 
 #include <vector>
 
@@ -24,6 +25,7 @@ private:
 	bool showImGuiExmple = false;
 
 	std::vector<EditorPanel*> panels;
+	MaterialCreator* materialCreator = nullptr;
 
 };
 extern GuiManager* guiManager;

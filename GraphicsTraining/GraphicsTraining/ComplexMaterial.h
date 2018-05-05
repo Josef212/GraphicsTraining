@@ -15,6 +15,7 @@ public:
 	MatProperty(const char* name, float value);
 	MatProperty(const char* name, float* value, MatPropertyValueType type);
 	MatProperty(const char* name, Texture* value);
+	MatProperty(const char* name, bool value);
 	MatProperty(const char* name, bool* value);
 	~MatProperty();
 
@@ -25,7 +26,8 @@ public:
 		float _float;
 		float* _floatPtr;
 		Texture* _texture;
-		bool* _bool;
+		bool _bool;
+		bool* _boolPtr;
 	} propertyValue;
 
 	std::string propertyName;

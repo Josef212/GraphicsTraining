@@ -25,9 +25,14 @@ MatProperty::MatProperty(const char * name, Texture * value) : propertyName(name
 	propertyValue._texture = value;
 }
 
-MatProperty::MatProperty(const char * name, bool * value) : propertyName(name), propertyType(MAT_BOOL)
+MatProperty::MatProperty(const char * name, bool value) : propertyName(name), propertyType(MAT_BOOL)
 {
 	propertyValue._bool = value;
+}
+
+MatProperty::MatProperty(const char * name, bool * value) : propertyName(name), propertyType(MAT_BOOL_PTR)
+{
+	propertyValue._boolPtr = value;
 }
 
 MatProperty::~MatProperty()
@@ -167,8 +172,12 @@ void ComplexMaterial::SendInfo(Scene* scene) const
 				break;
 
 			case MatPropertyValueType::MAT_BOOL:
-				shader->SetBool(it->propertyName.c_str(), *it->propertyValue._bool);
+				shader->SetBool(it->propertyName.c_str(), it->propertyValue._bool);
 				break;
+					
+			case MatPropertyValueType::MAT_BOOL_PTR:
+				shader->SetBool(it->propertyName.c_str(), *it->propertyValue._boolPtr);
+			break;
 			}
 		}
 	}

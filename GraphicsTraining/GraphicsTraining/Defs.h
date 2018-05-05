@@ -26,7 +26,7 @@
 
 enum MatPropertyValueType
 {
-	MAT_INT,
+	MAT_INT = 0,
 	MAT_FLOAT,
 	MAT_VEC2,
 	MAT_VEC3,
@@ -36,6 +36,7 @@ enum MatPropertyValueType
 	MAT_MAT4,
 	MAT_TEXTURE,
 	MAT_BOOL,
+	MAT_BOOL_PTR,
 	MAT_NONE
 };
 
