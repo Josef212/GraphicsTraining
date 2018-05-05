@@ -44,6 +44,7 @@ friend class Editor_MaterialPanel;
 	void AddProperty(MatProperty* prop);
 	void RemoveProperty(MatProperty* prop);
 	void RemoveProperty(const char*  name);
+	MatProperty* GetProperty(const char* name);
 
 	void OnFree() override;
 

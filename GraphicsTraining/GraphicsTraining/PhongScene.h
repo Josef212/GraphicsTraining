@@ -17,6 +17,8 @@ public:
 	void OnInit() override;
 	void OnCleanUp() override;
 
+	void OnActiveCameraChanged() override;
+
 	void OnRenderScene() override;
 
 	void OnGui() override;

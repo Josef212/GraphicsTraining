@@ -26,7 +26,6 @@
 
 enum MatPropertyValueType
 {
-	MAT_NONE = -1,
 	MAT_INT,
 	MAT_FLOAT,
 	MAT_VEC2,
@@ -36,7 +35,8 @@ enum MatPropertyValueType
 	MAT_MAT3,
 	MAT_MAT4,
 	MAT_TEXTURE,
-	MAT_BOOL
+	MAT_BOOL,
+	MAT_NONE
 };
 
 enum MatPropertyType
@@ -44,5 +44,7 @@ enum MatPropertyType
 	MPVT_UNIFORM = 0,
 	MPVT_LOCATION = 1
 };
+
+const char* GetMatPropertyValueTypeStr(MatPropertyValueType type);
 
 #endif // __DEFS_H__

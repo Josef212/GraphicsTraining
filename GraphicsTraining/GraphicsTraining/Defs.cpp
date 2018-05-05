@@ -1,0 +1,10 @@
+#include "Defs.h"
+
+const char* GetMatPropertyValueTypeStr(MatPropertyValueType type)
+{
+	static const char* rets[] = {
+		"INT", "FLOAT", "VEC2", "VEC3", "VEC4", "MAT2", "MAT3", "MAT4", "TEXTURE", "BOOL", "NONE"
+	};
+
+return rets[type];
+}

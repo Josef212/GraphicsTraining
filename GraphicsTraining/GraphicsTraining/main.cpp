@@ -168,6 +168,7 @@ int main(int argc, char** argv)
 
 	PhongScene* phongScene = new PhongScene("Phong scene");
 	phongScene->AddCamera(&camera, 0, true);
+	phongScene->AddCamera(&camera2, 1);
 
 	sceneManager->AddScene(scene, true);
 	sceneManager->AddScene(dlsScene);

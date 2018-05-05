@@ -61,6 +61,14 @@ void PhongScene::OnCleanUp()
 	resourceManager->RemoveResources(res, 1);
 }
 
+void PhongScene::OnActiveCameraChanged()
+{
+	if (!phong) return;
+
+	auto it = phong->GetProperty("viewPos");
+	if (it) it->propertyValue._floatPtr = &GetActiveCamera()->Position.x;
+}
+
 void PhongScene::OnRenderScene()
 {
 	light->modelMat = glm::mat4(1.f);

@@ -18,6 +18,13 @@ public:
 private:
 	void MaterialInfo(Material* mat);
 	void CMaterialInfo(ComplexMaterial* cmat);
+	void EditMaterialWindow();
+
+public:
+
+private:
+	ComplexMaterial * editingMaterial = nullptr;
+	bool editingMat = false;
 };
 
 #endif // !__EDITOR_MATERIAL_PANEL_H__

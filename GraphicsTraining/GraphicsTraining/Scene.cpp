@@ -76,7 +76,11 @@ void Scene::AddCamera(Camera * cam, int index, bool setAsActive)
 	if(index >= 0 && index < MAX_CAMERAS)
 	{
 		cameras[index] = cam;
-		if (setAsActive) activeCamera = cam;
+		if (setAsActive)
+		{
+			activeCamera = cam;
+			OnActiveCameraChanged();
+		}
 	}
 }
 
@@ -92,8 +96,11 @@ void Scene::SetActiveCamera(int index)
 {
 	if (index >= 0 && index < MAX_CAMERAS)
 	{
-		if(cameras[index])
+		if (cameras[index])
+		{
 			activeCamera = cameras[index];
+			OnActiveCameraChanged();
+		}
 	}
 }
 

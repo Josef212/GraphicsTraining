@@ -183,6 +183,9 @@
     <ClInclude Include="PhongScene.h">
       <Filter>CoreComponents\Scene\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="MaterialCreator.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -283,6 +286,12 @@
     </ClCompile>
     <ClCompile Include="PhongScene.cpp">
       <Filter>CoreComponents\Scene\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Defs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialCreator.cpp">
+      <Filter>Gui</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

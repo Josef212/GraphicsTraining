@@ -26,6 +26,8 @@ public:
 	virtual void OnInit() {}
 	virtual void OnCleanUp() {}
 
+	virtual void OnActiveCameraChanged() {}
+
 	void AddModel(Model* model);
 	void RemoveModel(const char* name);
 

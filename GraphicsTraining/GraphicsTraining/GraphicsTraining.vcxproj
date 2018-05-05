@@ -147,6 +147,7 @@
     <ClInclude Include="GeometryDefs.h" />
     <ClInclude Include="GuiManager.h" />
     <ClInclude Include="Material.h" />
+    <ClInclude Include="MaterialCreator.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="OrthographicCamera.h" />
@@ -173,6 +174,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ComplexMaterial.cpp" />
     <ClCompile Include="CubeMapFrameBuffer.cpp" />
+    <ClCompile Include="Defs.cpp" />
     <ClCompile Include="DepthFrameBuffer.cpp" />
     <ClCompile Include="DirLightShadowScene.cpp" />
     <ClCompile Include="EditorPanel.cpp" />
@@ -187,6 +189,7 @@
     <ClCompile Include="GuiManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Material.cpp" />
+    <ClCompile Include="MaterialCreator.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelLoader.cpp" />
     <ClCompile Include="OrthographicCamera.cpp" />

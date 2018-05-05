@@ -62,8 +62,8 @@ void ComplexMaterial::RemoveProperty(MatProperty * prop)
 		{
 			if ((*it) == prop)
 			{
+				RELEASE((*it));
 				it = properties.erase(it);
-				RELEASE(*it);
 			}
 			else
 			{
@@ -81,8 +81,8 @@ void ComplexMaterial::RemoveProperty(const char * name)
 		{
 			if ((*it)->propertyName == name)
 			{
+				RELEASE((*it));
 				it = properties.erase(it);
-				RELEASE(*it);
 			}
 			else
 			{
@@ -90,6 +90,22 @@ void ComplexMaterial::RemoveProperty(const char * name)
 			}
 		}
 	}
+}
+
+MatProperty* ComplexMaterial::GetProperty(const char* name)
+{
+	if (name)
+	{
+		for (auto it = properties.begin(); it != properties.end(); ++it)
+		{
+			if ((*it)->propertyName == name)
+			{
+				return (*it);
+			}
+		}
+	}
+
+	return nullptr;
 }
 
 void ComplexMaterial::OnFree()
