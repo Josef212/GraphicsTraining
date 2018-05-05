@@ -66,6 +66,13 @@ void Editor_ModelPanel::ModelInfo(Model * model)
 	if (ImGui::DragFloat3("Rotation", &e.x, 0.1f, -360.f, 360.f)) model->SetEuler(e);
 	if (ImGui::DragFloat3("Scale", &s.x, 0.01f)) model->SetScale(s);
 
+	if (ImGui::Button("Reset transform"))
+	{
+		model->SetScale(glm::vec3(1.f));
+		model->SetEuler(glm::vec3(0.f));
+		model->SetTranslation(glm::vec3(0.f));
+	}
+
 	// -----------------------------
 
 	if (ImGui::Button("Select material for all meshes"))

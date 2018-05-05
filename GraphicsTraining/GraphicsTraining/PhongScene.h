@@ -11,7 +11,7 @@ class ComplexMaterial;
 class PhongScene : public Scene
 {
 public:
-	PhongScene(const char* name);
+	PhongScene(const char* name, const char* modelName);
 	virtual ~PhongScene();
 
 	void OnInit() override;
@@ -34,6 +34,7 @@ public:
 private:
 	Model* light = nullptr;
 	ComplexMaterial* phong = nullptr;
+	std::string modelName = "";
 };
 
 #endif // !__PHONGSCENE_H__

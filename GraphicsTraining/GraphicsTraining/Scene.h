@@ -16,6 +16,7 @@ enum Camera_Movement;
 class Scene
 {
 	friend class GuiManager;
+	friend class Editor_ScenePanel;
 public:
 	Scene(const char* name);
 	virtual ~Scene();

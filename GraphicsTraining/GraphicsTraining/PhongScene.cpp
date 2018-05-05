@@ -16,11 +16,13 @@
 
 #include <ImGui/imgui.h>
 
-PhongScene::PhongScene(const char * name) : Scene(name)
+PhongScene::PhongScene(const char * name, const char* modelName) : Scene(name)
 {
 	lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
 	objectColor = glm::vec3(1.0f, 0.5f, 0.31f);
 	lightPos = glm::vec3(1.2f, 1.0f, 2.0f);
+
+	this->modelName = std::string("./Data/Models/") + std::string(modelName);
 }
 
 PhongScene::~PhongScene()
@@ -45,9 +47,6 @@ void PhongScene::OnInit()
 
 	light = new Model("Light", resourceManager->defaultResources.cubeGeo, resourceManager->defaultResources.simpleMat);
 	
-	std::string modelName("./Data/Models/sponza/sponza.obj");
-	//std::string modelName("./Data/Models/nanosuit/nanosuit.obj");
-	//std::string modelName("./Data/Models/Boat.fbx");
 	Model* boat = ModelLoader::LoadModel(modelName, this);
 	boat->modelMat = glm::scale(boat->modelMat, glm::vec3(0.05f));
 }

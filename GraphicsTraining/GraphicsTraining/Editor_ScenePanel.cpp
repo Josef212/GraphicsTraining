@@ -4,6 +4,7 @@
 #include "Resource.h"
 #include "SceneManager.h"
 #include "Scene.h"
+#include "Model.h"
 
 #include "ImGui/imgui.h"
 
@@ -28,6 +29,30 @@ void Editor_ScenePanel::Display()
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), as->name.c_str());
 
 		ImGui::ColorEdit4("Background color", &as->backgroundColor.r);
+
+		ImGui::Separator();
+
+		// Transformation
+
+		for(auto model : as->models)
+		{
+			glm::vec3 t = model->GetTranslation();
+			glm::vec3 e = model->GetEuler();
+			glm::vec3 s = model->GetScale();
+
+			if (ImGui::DragFloat3("Translation", &t.x, 0.1f)) model->SetTranslation(t);
+			if (ImGui::DragFloat3("Rotation", &e.x, 0.1f, -360.f, 360.f)) model->SetEuler(e);
+			if (ImGui::DragFloat3("Scale", &s.x, 0.01f)) model->SetScale(s);
+
+			if(ImGui::Button("Reset transform"))
+			{
+				model->SetScale(glm::vec3(1.f));
+				model->SetEuler(glm::vec3(0.f));
+				model->SetTranslation(glm::vec3(0.f));
+			}
+		}
+
+		ImGui::Separator();
 
 		as->OnGui();
 
