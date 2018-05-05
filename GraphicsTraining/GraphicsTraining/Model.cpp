@@ -98,7 +98,7 @@ Material * Model::GetMaterial(int index) const
 	return nullptr;
 }
 
-void Model::Render(Scene * scene)
+void Model::Render(Scene * scene, int renderConfig)
 {
 	for(auto it : meshes)
 	{
@@ -111,9 +111,9 @@ void Model::Render(Scene * scene)
 
 			material->InitRender();
 
-			material->GetShader()->SetMat4("model", modelMat);
-			material->GetShader()->SetMat4("view", scene->GetActiveCamera()->GetViewMatrix());
-			material->GetShader()->SetMat4("projection", scene->GetActiveCamera()->GetProjectionMatrix());
+			material->GetShader()->SetMat4("model", renderConfig & PASS_MODEL ? modelMat : glm::mat4(1.f));
+			material->GetShader()->SetMat4("view", renderConfig & PASS_VIEW ? scene->GetActiveCamera()->GetViewMatrix() : glm::mat4(1.f));
+			material->GetShader()->SetMat4("projection", renderConfig & PASS_PROJ ? scene->GetActiveCamera()->GetProjectionMatrix() : glm::mat4(1.f));
 
 			material->SendInfo(scene);
 

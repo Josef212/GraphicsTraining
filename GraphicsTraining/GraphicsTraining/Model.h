@@ -8,6 +8,12 @@
 
 #include <glm/glm.hpp>
 
+#define NO_RENDER_CONFIG 0
+#define PASS_MODEL 1
+#define PASS_VIEW 2
+#define PASS_PROJ 4
+#define PASS_PROJ_VIEW_MODEL  PASS_MODEL | PASS_VIEW | PASS_PROJ
+
 class Geometry;
 class Material;
 class Scene;
@@ -32,7 +38,7 @@ public:
 	Geometry* GetGeometry(int index)const;
 	Material* GetMaterial(int index)const;
 
-	void Render(Scene* scene);
+	void Render(Scene* scene, int renderConfig = PASS_PROJ_VIEW_MODEL);
 
 	glm::vec3 GetTranslation()const;
 	void SetTranslation(glm::vec3 pos);
