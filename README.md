@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/pi2ql7bbhvgf6ouk?svg=true)](https://ci.appveyor.com/project/Josef212/graphicstraining)
+
 # GraphicsTraining
 A simple graphics engine with C++ and OpenGL for learning purposes.
 
