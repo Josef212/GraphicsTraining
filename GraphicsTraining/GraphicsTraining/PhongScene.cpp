@@ -22,7 +22,7 @@ PhongScene::PhongScene(const char * name, const char* modelName) : Scene(name)
 	objectColor = glm::vec3(1.0f, 0.5f, 0.31f);
 	lightPos = glm::vec3(1.2f, 1.0f, 2.0f);
 
-	this->modelName = std::string("./Data/Models/") + std::string(modelName);
+	if(modelName) this->modelName = std::string("./Data/Models/") + std::string(modelName);
 }
 
 PhongScene::~PhongScene()
@@ -47,8 +47,11 @@ void PhongScene::OnInit()
 
 	light = new Model("Light", resourceManager->defaultResources.cubeGeo, resourceManager->defaultResources.simpleMat);
 	
-	Model* boat = ModelLoader::LoadModel(modelName, this);
-	boat->modelMat = glm::scale(boat->modelMat, glm::vec3(0.05f));
+	if (!modelName.empty())
+	{
+		Model* model = ModelLoader::LoadModel(modelName, this);
+		model->SetScale(glm::vec3(0.05f));
+	}
 }
 
 void PhongScene::OnCleanUp()
