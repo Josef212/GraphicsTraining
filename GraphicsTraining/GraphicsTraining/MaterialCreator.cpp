@@ -125,6 +125,8 @@ void MaterialCreator::Render()
 
 				// TODO: Texture, vecs & mats
 			}
+
+			tmpPropName = "";
 		}
 
 		ImGui::Separator();
@@ -143,7 +145,10 @@ void MaterialCreator::Render()
 			CreateMaterial();
 			open = false;
 			shSelected = 0;
-			tySelected = 0;
+			tySelected = 0; 
+			tmpName = ""; 
+			tmpPropName = "";
+			tmpShader = nullptr;
 		}
 
 		ImGui::SameLine();
