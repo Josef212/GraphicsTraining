@@ -89,9 +89,19 @@ void GuiManager::Render()
 		if (it->Visible()) it->Display();
 	}
 
+	ImGuiWindowFlags floatingWindowFlags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav;
+
 	ImGui::SetNextWindowPos(ImVec2(5.f, 25.f));
-	ImGui::Begin("Active scene", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav);
+	ImGui::Begin("Active scene", nullptr, floatingWindowFlags);
 	{
+		ImGui::Text("FPS: "); ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%d", sceneManager->fps);
+
+		ImGui::SameLine();
+
+		ImGui::Text("Dt: "); ImGui::SameLine();
+		ImGui::TextColored(ImVec4(1, 1, 0, 1), "%.3f", sceneManager->dt);
+
 		Scene* as = sceneManager->GetActiveScene();
 		ImGui::Text("Active scene: "); ImGui::SameLine();
 		ImGui::TextColored(ImVec4(1, 1, 0, 1), as ? as->name.c_str() : "none");

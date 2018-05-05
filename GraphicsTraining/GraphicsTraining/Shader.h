@@ -6,11 +6,22 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
+enum Shader_Status
+{
+	SH_COMPILED = 0,
+	SH_ERROR,
+	SH_PENDING
+};
+
 class Shader : public Resource
 {
 public:
 	Shader(const char* name, const char* vertexPath, const char* fragmentPath, const char* geometryPath = nullptr);
 	virtual ~Shader();
+
+	void LoadShader(const char* vertexPath, const char* fragmentPath, const char* geometryPath = nullptr);
+	void LoadShader();
+	void ReloadShader();
 
 	void Free() override;
 
@@ -35,6 +46,10 @@ public:
 	void SetMat4(const char* name, const glm::mat4& value) const;
 	void SetMat4(const char* name, const float* value) const;
 
+	void LogCode();
+
+	Shader_Status GetStatus()const;
+
 private:
 	std::string LoadCode(const char* path);
 	int CreateShader(const char* code, GLenum type);
@@ -43,6 +58,9 @@ private:
 public:
 	unsigned int ID;
 	std::string vertPath, fragPath, geoPath;
+
+private:
+	Shader_Status status = SH_PENDING;
 };
 
 #endif // SHADER_H

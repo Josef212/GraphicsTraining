@@ -6,6 +6,10 @@
 
 #include "ImGui/imgui.h"
 
+#define COMPILED_COLOR ImVec4(0, 1, 0, 1)
+#define ERROR_COLOR ImVec4(1, 0, 0, 1)
+#define PENDING_COLOR ImVec4(1, 1, 0, 1)
+
 
 Editor_ShaderPanel::Editor_ShaderPanel(const char* name, bool startEnabled) : EditorPanel(name, startEnabled)
 {
@@ -58,6 +62,17 @@ void Editor_ShaderPanel::ShaderInfo(Shader * sh)
 {
 	//ImGui::BeginChild("geos", ImVec2(400, 100));
 
+	ImGui::Text("STATUS: "); ImGui::SameLine();
+	switch (sh->GetStatus())
+	{
+	case Shader_Status::SH_COMPILED: ImGui::TextColored(COMPILED_COLOR, "COMPILED");
+		break;
+	case Shader_Status::SH_ERROR: ImGui::TextColored(ERROR_COLOR, "ERROR");
+		break;
+	case Shader_Status::SH_PENDING: ImGui::TextColored(PENDING_COLOR, "PENDING");
+		break;
+	}
+
 	ImGui::Text("Program ID: "); ImGui::SameLine();
 	ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), "%d", sh->ID);
 
@@ -71,6 +86,12 @@ void Editor_ShaderPanel::ShaderInfo(Shader * sh)
 
 	ImGui::Text("Geometry path: "); ImGui::SameLine();
 	ImGui::TextColored(ImVec4(1.f, 1.f, 0.f, 1.f), sh->geoPath.c_str());
+
+	if (ImGui::Button("Compile")) sh->ReloadShader();
+
+	ImGui::SameLine();
+
+	if (ImGui::Button("Log code")) sh->LogCode();
 
 	//ImGui::EndChild();
 }

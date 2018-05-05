@@ -34,6 +34,10 @@ public:
 
 	void RenderScene();
 
+public:
+	float dt = 0.f;
+	int fps = 0;
+
 private:
 	std::vector<Scene*> scenes;
 	Scene* activeScene = nullptr;

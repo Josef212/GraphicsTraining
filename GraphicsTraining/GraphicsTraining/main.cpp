@@ -77,6 +77,9 @@ bool editorIsUsingKeyboard = false;
 
 float dt = 0.f;
 float lastFrame = 0.f;
+int fps = 0;
+int fpsCount = 0;
+float msCount = 0.f;
 
 ResourceManager* resourceManager = nullptr;
 GuiManager* guiManager = nullptr; 
@@ -187,7 +190,19 @@ int main(int argc, char** argv)
 	{
 		float currentFrame = glfwGetTime();
 		dt = currentFrame - lastFrame;
+		sceneManager->dt = dt;
 		lastFrame = currentFrame;
+
+		msCount += dt;
+		++fpsCount;
+
+		if(msCount >= 1.f)
+		{
+			msCount = 0.f;
+			fps = fpsCount;
+			sceneManager->fps = fps;
+			fpsCount = 0;
+		}
 
 		// ---------------
 

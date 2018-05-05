@@ -9,30 +9,9 @@ Shader::Shader(const char* name, const char* vertexPath, const char* fragmentPat
 {
 	vertPath = vertexPath;
 	fragPath = fragmentPath;
-	if (geometryPath) geoPath = geometryPath;
+	geoPath = geometryPath ? geometryPath : "";
 
-	std::string vertexCode = LoadCode(vertexPath);
-	std::string fragmentCode = LoadCode(fragmentPath);
-	std::string geometryCode;
-	if (geometryPath) geometryCode = LoadCode(geometryPath);
-
-	unsigned int vertex, fragment, geometry;
-
-	vertex = CreateShader(vertexCode.c_str(), GL_VERTEX_SHADER);
-	fragment = CreateShader(fragmentCode.c_str(), GL_FRAGMENT_SHADER);
-	if (geometryPath) geometry = CreateShader(geometryCode.c_str(), GL_GEOMETRY_SHADER);
-
-	ID = glCreateProgram();
-	glAttachShader(ID, vertex);
-	glAttachShader(ID, fragment);
-	if (geometryPath) glAttachShader(ID, geometry);
-
-	glLinkProgram(ID);
-	CheckCompileErrors(ID, "PROGRAM");
-
-	glDeleteShader(vertex);
-	glDeleteShader(fragment);
-	if (geometryPath) glDeleteShader(geometry);
+	LoadShader();
 }
 
 Shader::~Shader()
@@ -40,10 +19,52 @@ Shader::~Shader()
 
 }
 
+void Shader::LoadShader(const char * vertexPath, const char * fragmentPath, const char * geometryPath)
+{
+	vertPath = vertexPath;
+	fragPath = fragmentPath;
+	geoPath = geometryPath;
+
+	LoadShader();
+}
+
+void Shader::LoadShader()
+{
+	std::string vertexCode = LoadCode(vertPath.c_str());
+	std::string fragmentCode = LoadCode(fragPath.c_str());
+	std::string geometryCode;
+	if (!geoPath.empty()) geometryCode = LoadCode(geoPath.c_str());
+
+	unsigned int vertex, fragment, geometry;
+
+	vertex = CreateShader(vertexCode.c_str(), GL_VERTEX_SHADER);
+	fragment = CreateShader(fragmentCode.c_str(), GL_FRAGMENT_SHADER);
+	if (!geoPath.empty()) geometry = CreateShader(geometryCode.c_str(), GL_GEOMETRY_SHADER);
+
+	ID = glCreateProgram();
+	glAttachShader(ID, vertex);
+	glAttachShader(ID, fragment);
+	if (!geoPath.empty()) glAttachShader(ID, geometry);
+
+	glLinkProgram(ID);
+	CheckCompileErrors(ID, "PROGRAM");
+
+	glDeleteShader(vertex);
+	glDeleteShader(fragment);
+	if (!geoPath.empty()) glDeleteShader(geometry);
+}
+
+void Shader::ReloadShader()
+{
+	glDeleteProgram(ID);
+	LoadShader();
+}
+
 void Shader::Free()
 {
 	glDeleteProgram(ID);
 	vertPath = fragPath = geoPath = "";
+	status = SH_PENDING;
 }
 
 void Shader::Use()const
@@ -126,6 +147,40 @@ void Shader::SetMat4(const char* name, const float* value) const
 	glUniformMatrix4fv(glGetUniformLocation(ID, name), 1, GL_FALSE, value);
 }
 
+void Shader::LogCode()
+{
+	std::string vertexCode = LoadCode(vertPath.c_str());
+	std::string fragmentCode = LoadCode(fragPath.c_str());
+	std::string geometryCode;
+	if (!geoPath.empty()) geometryCode = LoadCode(geoPath.c_str());
+
+	std::cout << "==========================" << std::endl;
+
+	std::cout << "SHADER CODE: " << GetName() << std::endl;
+	std::cout << "STATUS: ";
+	switch (status)
+	{
+	case SH_COMPILED: std::cout << "COMPILED"; break;
+	case SH_ERROR: std::cout << "ERROR"; break;
+	case SH_PENDING: std::cout << "PENDING"; break;
+	}
+	std::cout << std::endl;
+
+	std::cout << "\tVertex: " << std::endl;
+	std::cout << vertexCode << std::endl << std::endl;
+	std::cout << "\tFragment: " << std::endl;
+	std::cout << fragmentCode << std::endl << std::endl;
+	std::cout << "\tGeometry: " << std::endl;
+	std::cout << geometryCode << std::endl << std::endl;
+
+	std::cout << "==========================" << std::endl;
+}
+
+Shader_Status Shader::GetStatus() const
+{
+	return status;
+}
+
 // ---------------------------------------------------------------------
 
 std::string Shader::LoadCode(const char* path)
@@ -182,6 +237,12 @@ void Shader::CheckCompileErrors(int sh, const char* type)
 		{
 			glGetProgramInfoLog(sh, 1024, NULL, infoLog);
 			std::cout << GetName() << "->" << "ERROR::PROGRAM_LINKING_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+			status = SH_ERROR;
+		}
+		else
+		{
+			status = SH_COMPILED;
+			std::cout << GetName() << " just compiled." << std::endl;
 		}
 	}
 }
