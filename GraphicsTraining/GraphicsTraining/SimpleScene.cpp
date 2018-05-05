@@ -33,7 +33,7 @@ void SimpleScene::OnInit()
 
 	std::string modelName = "./Data/Models/Boat.fbx";
 	Model* m = ModelLoader::LoadModel(modelName, this);
-	m->modelMat = glm::scale(m->modelMat, glm::vec3(0.05f));
+	m->SetScale(glm::vec3(0.05f));
 }
 
 void SimpleScene::OnCleanUp()

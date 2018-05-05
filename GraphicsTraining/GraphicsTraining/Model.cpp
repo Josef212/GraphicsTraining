@@ -11,6 +11,7 @@
 #include "Material.h"
 #include "ComplexMaterial.h"
 #include <GL/glew.h>
+#include <glm/gtc/matrix_transform.hpp>
 
 
 Model::Model(const char* name) : Resource(name, RES_MODEL)
@@ -53,6 +54,17 @@ void Model::SetMaterial(Material * material, int index)
 	if (index >= 0 && index < meshes.size())
 	{
 		meshes[index].second = material;
+	}
+}
+
+void Model::SetMaterial(Material* material)
+{
+	if(material)
+	{
+		for (auto it = meshes.begin(); it != meshes.end(); ++it)
+		{
+			(*it).second = material;
+		}
 	}
 }
 
@@ -117,4 +129,50 @@ void Model::Render(Scene * scene)
 			material->EndRender();
 		}
 	}
+}
+
+glm::vec3 Model::GetTranslation() const
+{
+	return translation;
+}
+
+void Model::SetTranslation(glm::vec3 pos)
+{
+	translation = pos;
+	CalcModel();
+}
+
+glm::vec3 Model::GetEuler() const
+{
+	return eulerRot;
+}
+
+void Model::SetEuler(glm::vec3 euler)
+{
+	eulerRot = euler;
+	CalcModel();
+}
+
+glm::vec3 Model::GetScale() const
+{
+	return scale;
+}
+
+void Model::SetScale(glm::vec3 scl)
+{
+	scale = scl;
+	CalcModel();
+}
+
+void Model::CalcModel()
+{
+	modelMat = glm::mat4(1.f);
+
+	modelMat = glm::scale(modelMat, scale);
+	
+	modelMat = glm::rotate(modelMat, glm::radians(eulerRot.x), glm::vec3(1.f, 0.f, 0.f));
+	modelMat = glm::rotate(modelMat, glm::radians(eulerRot.y), glm::vec3(0.f, 1.f, 0.f));
+	modelMat = glm::rotate(modelMat, glm::radians(eulerRot.z), glm::vec3(0.f, 0.f, 1.f));
+
+	modelMat = glm::translate(modelMat, translation);
 }
