@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AdvancedPhongScene.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ComplexMaterial.h" />
     <ClInclude Include="CubeMapFrameBuffer.h" />
@@ -152,6 +153,7 @@
     <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="OrthographicCamera.h" />
     <ClInclude Include="PerspectiveCamera.h" />
+    <ClInclude Include="PhongMaterial.h" />
     <ClInclude Include="PhongScene.h" />
     <ClInclude Include="RenderInfo.h" />
     <ClInclude Include="Resource.h" />
@@ -171,6 +173,7 @@
     <ClInclude Include="ThirdParty\stb\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AdvancedPhongScene.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ComplexMaterial.cpp" />
     <ClCompile Include="CubeMapFrameBuffer.cpp" />
@@ -194,6 +197,7 @@
     <ClCompile Include="ModelLoader.cpp" />
     <ClCompile Include="OrthographicCamera.cpp" />
     <ClCompile Include="PerspectiveCamera.cpp" />
+    <ClCompile Include="PhongMaterial.cpp" />
     <ClCompile Include="PhongScene.cpp" />
     <ClCompile Include="RenderInfo.cpp" />
     <ClCompile Include="ResourceManager.cpp" />

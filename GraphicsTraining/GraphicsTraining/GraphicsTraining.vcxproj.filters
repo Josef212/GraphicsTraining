@@ -186,6 +186,12 @@
     <ClInclude Include="MaterialCreator.h">
       <Filter>Gui</Filter>
     </ClInclude>
+    <ClInclude Include="PhongMaterial.h">
+      <Filter>CoreComponents\Rendering\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="AdvancedPhongScene.h">
+      <Filter>CoreComponents\Scene\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -292,6 +298,12 @@
     </ClCompile>
     <ClCompile Include="MaterialCreator.cpp">
       <Filter>Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="PhongMaterial.cpp">
+      <Filter>CoreComponents\Rendering\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="AdvancedPhongScene.cpp">
+      <Filter>CoreComponents\Scene\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -42,7 +42,7 @@ void PhongScene::OnInit()
 	phong->AddProperty(new MatProperty("blinn", &blinn));
 	phong->AddProperty(new MatProperty("hasTexture", &useTexture));
 	Texture* t = new Texture("text");
-	t->LoadTexture("./Data/Textures/marble.jpg");
+	t->LoadTexture("./Data/Textures/albedo.png");
 	phong->AddProperty(new MatProperty("colorTexture", t));
 
 	light = new Model("Light", resourceManager->defaultResources.cubeGeo, resourceManager->defaultResources.simpleMat);
