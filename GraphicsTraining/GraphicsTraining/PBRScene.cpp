@@ -1,0 +1,102 @@
+#include "PBRScene.h"
+
+#include "Geometry.h"
+#include "Model.h"
+#include "PBRMaterial.h"
+#include "Shader.h"
+#include "Texture.h"
+#include "ResourceManager.h"
+
+#include "ModelLoader.h"
+
+#include "Camera.h"
+
+#include <glm/glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
+#include <ImGui/imgui.h>
+
+
+PBRScene::PBRScene(const char* name) : Scene(name)
+{
+	lightPositions.push_back(glm::vec3(-10.f, 10.f, 10.f));
+	lightPositions.push_back(glm::vec3(10.f, 10.f, 10.f));
+	lightPositions.push_back(glm::vec3(-10.f, -10.f, 10.f));
+	lightPositions.push_back(glm::vec3(10.f, -10.f, 10.f));
+
+	lightColors.push_back(glm::vec3(300.f, 300.f, 300.f));
+	lightColors.push_back(glm::vec3(300.f, 300.f, 300.f));
+	lightColors.push_back(glm::vec3(300.f, 300.f, 300.f));
+	lightColors.push_back(glm::vec3(300.f, 300.f, 300.f));
+
+	modelName = "./Data/Models/Boat.fbx";
+}
+
+
+PBRScene::~PBRScene()
+{
+}
+
+void PBRScene::OnInit()
+{
+	pbr = new PBRMaterial("PBR material", new Shader("PBR shader", "./Data/Shaders/pbr.vert", "./Data/Shaders/pbr.frag"));
+
+	pbr->camPos = &GetActiveCamera()->Position;
+	pbr->lightCount = &lightsCount;
+	pbr->lightPositions = &lightPositions;
+	pbr->lightColors = &lightColors;
+
+	pbr->albedoColor = glm::vec3(0.5f, 0.0f, 0.0f);
+	pbr->metallicValue = 0.5f;
+	pbr->roughnessValue = 0.5f;
+	pbr->aoValue = 1.0f;
+
+	Texture* albedo = new Texture("PBR albedo");
+	Texture* normal = new Texture("PBR normal");
+	Texture* metallic = new Texture("PBR metallic");
+	Texture* roughness = new Texture("PBR roughness");
+	Texture* ao = new Texture("PBR ao");
+
+	albedo->LoadTexture		("./Data/Textures/rusted_iron/albedo.png");
+	normal->LoadTexture		("./Data/Textures/rusted_iron/normal.png");
+	metallic->LoadTexture	("./Data/Textures/rusted_iron/metallic.png");
+	roughness->LoadTexture	("./Data/Textures/rusted_iron/roughness.png");
+	ao->LoadTexture			("./Data/Textures/rusted_iron/ao.png");
+
+	pbr->albedoMap = albedo;
+	//pbr->normalMap = normal;
+	pbr->metallicMap = metallic;
+	pbr->roughnessMap = roughness;
+	pbr->aoMap = ao;
+
+	defaultMaterial = pbr;
+
+	if (!modelName.empty())
+	{
+		Model* model = ModelLoader::LoadModel(modelName, this);
+		model->SetScale(glm::vec3(0.05f));
+	}
+}
+
+void PBRScene::OnCleanUp()
+{
+}
+
+void PBRScene::OnActiveCameraChanged()
+{
+	if (!pbr) return;
+
+	pbr->camPos = &GetActiveCamera()->Position;
+}
+
+void PBRScene::OnRenderScene()
+{
+	for (auto it : models)
+	{
+		it->Render(this);
+	}
+}
+
+void PBRScene::OnGui()
+{
+}

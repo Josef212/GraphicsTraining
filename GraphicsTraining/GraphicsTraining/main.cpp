@@ -30,6 +30,7 @@
 #include "DirLightShadowScene.h"
 #include "PhongScene.h"
 #include "AdvancedPhongScene.h"
+#include "PBRScene.h"
 
 #include "FrameBuffer.h"
 #include "DepthFrameBuffer.h"
@@ -180,12 +181,16 @@ int main(int argc, char** argv)
 	AdvancedPhongScene* advPhongScene = new AdvancedPhongScene("Advanced phong");
 	advPhongScene->AddCamera(&camera, 0, true);
 
+	PBRScene* pbrScene = new PBRScene("PBR scene");
+	pbrScene->AddCamera(&camera, 0, true);
+
 	sceneManager->AddScene(scene, true);
 	sceneManager->AddScene(dlsScene);
 	sceneManager->AddScene(phongSceneNano);
 	sceneManager->AddScene(phongSceneBoat);
 	sceneManager->AddScene(phongSceneSponza);
 	sceneManager->AddScene(advPhongScene);
+	sceneManager->AddScene(pbrScene);
 
 	/*Shader* simpleSh = new Shader("Simple shader", "./Data/Shaders/simple.vert", "./Data/Shaders/simple.frag");
 	Shader* framebufferRenderSh = new Shader("Frame buffer render", "./Data/Shaders/render_framebuffer.vert", "./Data/Shaders/render_framebuffer.frag");

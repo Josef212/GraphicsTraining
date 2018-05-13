@@ -6,6 +6,7 @@
 #include "Material.h"
 #include "ComplexMaterial.h"
 #include "PhongMaterial.h"
+#include "PBRMaterial.h"
 
 #include "Shader.h"
 #include "Texture.h"
@@ -79,6 +80,12 @@ void Editor_MaterialPanel::MaterialInfo(Material * mat)
 	if(pm)
 	{
 		PhongMaterialInfo(pm);
+	}
+
+	PBRMaterial* pbr = dynamic_cast<PBRMaterial*>(mat);
+	if(pbr)
+	{
+		PBRMaterialInfo(pbr);
 	}
 }
 
@@ -162,6 +169,18 @@ void Editor_MaterialPanel::PhongMaterialInfo(PhongMaterial * phong)
 
 		ImGui::EndPopup();
 	}
+
+	ImGui::Separator();
+}
+
+void Editor_MaterialPanel::PBRMaterialInfo(PBRMaterial * pbr)
+{
+	ImGui::Separator();
+
+	ImGui::ColorEdit3("Albedo color", &pbr->albedoColor.r);
+	ImGui::DragFloat("Metallic", &pbr->metallicValue, 0.01f, 0.f, 1.f);
+	ImGui::DragFloat("Roughness", &pbr->roughnessValue, 0.01f, 0.f, 1.f);
+	ImGui::DragFloat("AO", &pbr->aoValue, 0.01f, 0.f, 1.f);
 
 	ImGui::Separator();
 }

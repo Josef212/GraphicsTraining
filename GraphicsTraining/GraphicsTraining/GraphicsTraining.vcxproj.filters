@@ -195,6 +195,9 @@
     <ClInclude Include="PBRMaterial.h">
       <Filter>CoreComponents\Rendering\Materials</Filter>
     </ClInclude>
+    <ClInclude Include="PBRScene.h">
+      <Filter>CoreComponents\Scene\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -310,6 +313,9 @@
     </ClCompile>
     <ClCompile Include="PBRMaterial.cpp">
       <Filter>CoreComponents\Rendering\Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="PBRScene.cpp">
+      <Filter>CoreComponents\Scene\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
