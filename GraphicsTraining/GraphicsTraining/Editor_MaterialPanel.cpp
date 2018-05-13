@@ -5,8 +5,10 @@
 #include "Resource.h"
 #include "Material.h"
 #include "ComplexMaterial.h"
+#include "PhongMaterial.h"
 
 #include "Shader.h"
+#include "Texture.h"
 
 #include "ImGui/imgui.h"
 
@@ -72,6 +74,12 @@ void Editor_MaterialPanel::MaterialInfo(Material * mat)
 	{
 		CMaterialInfo(cm);
 	}
+
+	PhongMaterial* pm = dynamic_cast<PhongMaterial*>(mat);
+	if(pm)
+	{
+		PhongMaterialInfo(pm);
+	}
 }
 
 void Editor_MaterialPanel::CMaterialInfo(ComplexMaterial* cmat)
@@ -92,6 +100,70 @@ void Editor_MaterialPanel::CMaterialInfo(ComplexMaterial* cmat)
 		editingMat = true;
 		editingMaterial = cmat;
 	}
+}
+
+void Editor_MaterialPanel::PhongMaterialInfo(PhongMaterial * phong)
+{
+	ImGui::Separator();
+
+	ImGui::ColorEdit3("Object color", &phong->color.r);
+	ImGui::Checkbox("Blinn", &phong->blinn); ImGui::SameLine();
+	ImGui::Checkbox("Use texture", &phong->useTexture); ImGui::SameLine();
+	ImGui::Checkbox("Use normal map", &phong->useNormalMap);
+
+	if(phong->colorTexture)
+	{
+		if (ImGui::ImageButton((ImTextureID*)phong->colorTexture->TextureID(), ImVec2(64, 64)))
+		{
+			ImGui::OpenPopup("Select color texture");
+		}
+		ImGui::SameLine();
+		ImGui::Text("Color");
+	}
+
+	if(phong->normalMap)
+	{
+		if (ImGui::ImageButton((ImTextureID*)phong->normalMap->TextureID(), ImVec2(64, 64)))
+		{
+			ImGui::OpenPopup("Select normal map texture");
+		}
+		ImGui::SameLine();
+		ImGui::Text("Normal map");
+	}
+
+	if(ImGui::BeginPopup("Select color texture"))
+	{
+		std::vector<Resource*> textures;
+		resourceManager->GatherResourceOfType(RES_TEXTURE, textures);
+
+		for(auto tex : textures)
+		{
+			Texture* t = static_cast<Texture*>(tex);
+			ImGui::Image((ImTextureID*)t->TextureID(), ImVec2(16, 16)); ImGui::SameLine();
+			if (ImGui::Selectable(tex->GetNameCStr()))
+				phong->colorTexture = t;
+		}
+
+		ImGui::EndPopup();
+	}
+
+	if (ImGui::BeginPopup("Select normal map texture"))
+	{
+		std::vector<Resource*> textures;
+		resourceManager->GatherResourceOfType(RES_TEXTURE, textures);
+
+		for (auto tex : textures)
+		{
+			Texture* t = static_cast<Texture*>(tex);
+			ImGui::Image((ImTextureID*)t->TextureID(), ImVec2(16, 16)); ImGui::SameLine();
+			if (ImGui::Selectable(tex->GetNameCStr()))
+				phong->normalMap = t;
+		}
+
+		ImGui::EndPopup();
+	}
+
+	ImGui::Separator();
 }
 
 void Editor_MaterialPanel::EditMaterialWindow()

@@ -5,6 +5,7 @@
 
 class Material;
 class ComplexMaterial;
+class PhongMaterial;
 
 class Editor_MaterialPanel : public EditorPanel
 {
@@ -18,6 +19,7 @@ public:
 private:
 	void MaterialInfo(Material* mat);
 	void CMaterialInfo(ComplexMaterial* cmat);
+	void PhongMaterialInfo(PhongMaterial* phong);
 	void EditMaterialWindow();
 
 public:

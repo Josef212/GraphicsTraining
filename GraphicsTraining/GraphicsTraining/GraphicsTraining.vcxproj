@@ -152,6 +152,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="OrthographicCamera.h" />
+    <ClInclude Include="PBRMaterial.h" />
     <ClInclude Include="PerspectiveCamera.h" />
     <ClInclude Include="PhongMaterial.h" />
     <ClInclude Include="PhongScene.h" />
@@ -196,6 +197,7 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelLoader.cpp" />
     <ClCompile Include="OrthographicCamera.cpp" />
+    <ClCompile Include="PBRMaterial.cpp" />
     <ClCompile Include="PerspectiveCamera.cpp" />
     <ClCompile Include="PhongMaterial.cpp" />
     <ClCompile Include="PhongScene.cpp" />

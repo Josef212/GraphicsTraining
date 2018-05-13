@@ -192,6 +192,9 @@
     <ClInclude Include="AdvancedPhongScene.h">
       <Filter>CoreComponents\Scene\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="PBRMaterial.h">
+      <Filter>CoreComponents\Rendering\Materials</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -304,6 +307,9 @@
     </ClCompile>
     <ClCompile Include="AdvancedPhongScene.cpp">
       <Filter>CoreComponents\Scene\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="PBRMaterial.cpp">
+      <Filter>CoreComponents\Rendering\Materials</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

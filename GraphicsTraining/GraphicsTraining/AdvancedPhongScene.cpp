@@ -34,8 +34,11 @@ void AdvancedPhongScene::OnInit()
 	Texture* colorTexture = new Texture("Bricks");
 	Texture* normalMapTexture = new Texture("Bricks normal");
 
-	//colorTexture->LoadTexture("./Data/Textures/bricks2.jpg");
-	//normalMapTexture->LoadTexture("./Data/Textures/bricks2_normal.jpg");
+	Texture* colorTexture2 = new Texture("Bricks2");
+	Texture* normalMapTexture2 = new Texture("Bricks2 normal");
+
+	colorTexture2->LoadTexture("./Data/Textures/bricks2.jpg");
+	normalMapTexture2->LoadTexture("./Data/Textures/bricks2_normal.jpg");
 
 	colorTexture->LoadTexture("./Data/Textures/brickwall.jpg");
 	normalMapTexture->LoadTexture("./Data/Textures/brickwall_normal.jpg");
