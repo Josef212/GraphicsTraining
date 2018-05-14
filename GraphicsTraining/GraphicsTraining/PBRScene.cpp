@@ -15,6 +15,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <ImGui/imgui.h>
+#include "SceneManager.h"
 
 
 PBRScene::PBRScene(const char* name) : Scene(name)
@@ -94,7 +95,7 @@ void PBRScene::OnInit()
 
 	if (!modelName.empty())
 	{
-		Model* model = ModelLoader::LoadModel(modelName, this);
+		model = ModelLoader::LoadModel(modelName, this);
 		if(model) model->SetScale(glm::vec3(0.05f));
 	}
 }
@@ -112,6 +113,13 @@ void PBRScene::OnActiveCameraChanged()
 
 void PBRScene::OnRenderScene()
 {
+	glm::vec3 rot = model->GetEuler();
+	rot += sceneManager->dt * rotationSpeed;
+	rot.x = CLAMP_ROT_ROUND(rot.x);
+	rot.y = CLAMP_ROT_ROUND(rot.y);
+	rot.z = CLAMP_ROT_ROUND(rot.z);
+	model->SetEuler(rot);
+
 	for (auto it : models)
 	{
 		it->Render(this);
@@ -120,4 +128,9 @@ void PBRScene::OnRenderScene()
 
 void PBRScene::OnGui()
 {
+	ImGui::Separator();
+
+	ImGui::DragFloat3("Rotation speed", &rotationSpeed.x);
+
+	ImGui::Separator();
 }

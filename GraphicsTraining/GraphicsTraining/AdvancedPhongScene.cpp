@@ -60,6 +60,7 @@ void AdvancedPhongScene::OnInit()
 
 	Model* quad = new Model("Phong quad", resourceManager->defaultResources.quadGeo, phong);
 	AddModel(quad);
+	quad->SetEuler(glm::vec3(0.f, 180.f, 0.f));
 
 }
 

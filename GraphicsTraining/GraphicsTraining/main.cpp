@@ -114,7 +114,7 @@ int main(int argc, char** argv)
 	}
 
 	glfwMakeContextCurrent(window);
-	glfwSwapInterval(1);
+	glfwSwapInterval(0);
 
 	glewExperimental = GL_TRUE;
 	GLenum error = glewInit();
@@ -139,8 +139,8 @@ int main(int argc, char** argv)
 	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	glEnable(GL_DEPTH_TEST);
-	//glEnable(GL_CULL_FACE);
-	//glCullFace(GL_BACK);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 	//glFrontFace(GL_CW);
 
 

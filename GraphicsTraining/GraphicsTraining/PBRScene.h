@@ -4,6 +4,7 @@
 #include "Scene.h"
 
 class PBRMaterial;
+class Model;
 
 class PBRScene : public Scene
 {
@@ -25,10 +26,16 @@ public:
 	std::vector<glm::vec3> lightPositions; //TODO: Light system
 	std::vector<glm::vec3> lightColors;
 
+	glm::vec3 rotationSpeed = glm::vec3(0.f, 5.f, 0.f);
+
 private:
 	PBRMaterial * pbr = nullptr;
 
 	std::string modelName = "";
+	Model* model = nullptr;
+
+	//TMP
+	
 };
 
 #endif // !__PBR_SCENE_H__
