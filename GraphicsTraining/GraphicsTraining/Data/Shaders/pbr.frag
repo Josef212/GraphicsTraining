@@ -14,6 +14,8 @@ uniform float metallicValue;
 uniform float roughnessValue;
 uniform float aoValue;
 
+uniform float opacityValue;
+
 // Material parameters samplers - TODO
 uniform sampler2D albedoMap;
 uniform sampler2D normalMap;
@@ -21,11 +23,14 @@ uniform sampler2D metallicMap;
 uniform sampler2D roughnessMap;
 uniform sampler2D aoMap;
 
+uniform sampler2D opacityMap;
+
 uniform bool hasAlbedoTexture;
 uniform bool hasNormalMap;
 uniform bool hasMetallicTexture;
 uniform bool hasRoughnessTexture;
 uniform bool hasAOTexture;
+uniform bool hasOpacityTexture;
 
 const int lightCount = 4; // TODO: As uniform
 
@@ -91,6 +96,8 @@ void main()
 	float roughness = hasRoughnessTexture ? texture(roughnessMap, fs_in.TexCoord).r : roughnessValue;
 	float ao = hasAOTexture ? texture(aoMap, fs_in.TexCoord).r : aoValue;
 
+	float alpha = hasOpacityTexture ? texture(opacityMap, fs_in.TexCoord).r : opacityValue;
+
     vec3 N = normalize(hasNormalMap ? texture(normalMap, fs_in.TexCoord).rgb : fs_in.Normal);
     vec3 V = normalize(camPos - fs_in.WorldPos);
 
@@ -148,5 +155,5 @@ void main()
     // gamma correct
     color = pow(color, vec3(1.0/2.2));
 
-    FragColor = vec4(color, 1.0);
+    FragColor = vec4(color, alpha);
 }

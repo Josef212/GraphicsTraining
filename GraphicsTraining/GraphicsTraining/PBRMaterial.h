@@ -32,6 +32,9 @@ public:
 	float aoValue;
 	Texture* aoMap = nullptr;
 
+	float opacityValue;
+	Texture* opacityTexture = nullptr;
+
 	Texture* normalMap = nullptr;
 
 	glm::vec3* camPos = nullptr;

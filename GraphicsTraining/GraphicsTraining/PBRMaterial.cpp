@@ -90,4 +90,17 @@ void PBRMaterial::SendInfo(Scene * scene) const
 		shader->SetInt("aoMap", texCount);
 		++texCount;
 	}
+
+	// --------------
+
+	shader->SetFloat("opacityValue", opacityValue);
+	shader->SetBool("hasOpacityTexture", opacityTexture != nullptr);
+
+	if(opacityTexture)
+	{
+		glActiveTexture(GL_TEXTURE0 + texCount);
+		glBindTexture(GL_TEXTURE_2D, opacityTexture->TextureID());
+		shader->SetInt("opacityMap", texCount);
+		++texCount;
+	}
 }
