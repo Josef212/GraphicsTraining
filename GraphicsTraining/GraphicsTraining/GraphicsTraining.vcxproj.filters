@@ -1,14 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -16,20 +8,8 @@
     <Filter Include="CoreComponents">
       <UniqueIdentifier>{c7fed43b-15f0-4e43-890e-7f9f8aba137a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CoreComponents\Camera">
-      <UniqueIdentifier>{30af7e28-e481-43a4-88dc-fceffa4de7eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreComponents\Geometry">
-      <UniqueIdentifier>{444937ae-ee20-41ad-8a3b-aade8f21478f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreComponents\Rendering">
-      <UniqueIdentifier>{06e8b717-9463-4b9d-aaa0-3192d370c3fc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Tools">
       <UniqueIdentifier>{c25773ee-ed54-4263-ad0f-22ff3b9dc71a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreComponents\Resources">
-      <UniqueIdentifier>{c41ea101-1278-40cf-9ee9-6269273d7749}</UniqueIdentifier>
     </Filter>
     <Filter Include="Gui">
       <UniqueIdentifier>{28f4fe0f-345f-4717-a425-0a59dbc56d2f}</UniqueIdentifier>
@@ -39,18 +19,6 @@
     </Filter>
     <Filter Include="CoreComponents\Scene">
       <UniqueIdentifier>{6aaa4fc1-b689-4439-a870-35aa9e2fffa2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreComponents\Rendering\Shaders">
-      <UniqueIdentifier>{c52c20ee-968e-483e-a821-5fb09ed5f12c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreComponents\Rendering\Materials">
-      <UniqueIdentifier>{51034b0a-f5fa-47ae-886c-9628985a9629}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreComponents\Model">
-      <UniqueIdentifier>{8642b0f4-2b71-4065-8088-84a97dfb2188}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CoreComponents\Textures">
-      <UniqueIdentifier>{938b247c-3638-4778-a6d2-f809695a9c65}</UniqueIdentifier>
     </Filter>
     <Filter Include="ThirdPrty">
       <UniqueIdentifier>{b4feeec9-b37a-4e0d-b410-39eac5091187}</UniqueIdentifier>
@@ -64,44 +32,14 @@
     <Filter Include="CoreComponents\Scene\Scenes">
       <UniqueIdentifier>{04975639-04ff-4c5b-be31-359a2a5f7c1e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{c943b2c2-549b-42c7-9e6a-aa3d04e7c9f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CoreComponents\Modules">
+      <UniqueIdentifier>{6aec398d-ca11-40fd-b91d-5cedfd612546}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Defs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeometryDefs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>CoreComponents\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="PerspectiveCamera.h">
-      <Filter>CoreComponents\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="OrthographicCamera.h">
-      <Filter>CoreComponents\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Geometry.h">
-      <Filter>CoreComponents\Geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderInfo.h">
-      <Filter>CoreComponents\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="DepthFrameBuffer.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="CubeMapFrameBuffer.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="FrameBuffer.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>CoreComponents\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>CoreComponents\Resources</Filter>
-    </ClInclude>
     <ClInclude Include="ThirdParty\ImGui\imconfig.h">
       <Filter>ThirdPrty\ImGui</Filter>
     </ClInclude>
@@ -123,113 +61,24 @@
     <ClInclude Include="ThirdParty\ImGui\stb_truetype.h">
       <Filter>ThirdPrty\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="GuiManager.h">
-      <Filter>Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="EditorPanel.h">
-      <Filter>Gui\Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor_GeometryPanel.h">
-      <Filter>Gui\Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor_ShaderPanel.h">
-      <Filter>Gui\Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>CoreComponents\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>CoreComponents\Rendering\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="Material.h">
-      <Filter>CoreComponents\Rendering\Materials</Filter>
-    </ClInclude>
-    <ClInclude Include="ComplexMaterial.h">
-      <Filter>CoreComponents\Rendering\Materials</Filter>
-    </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>CoreComponents\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor_MaterialPanel.h">
-      <Filter>Gui\Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="Editor_ModelPanel.h">
-      <Filter>Gui\Panels</Filter>
-    </ClInclude>
-    <ClInclude Include="ModelLoader.h">
-      <Filter>CoreComponents\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>CoreComponents\Textures</Filter>
-    </ClInclude>
     <ClInclude Include="ThirdParty\stb\stb_image.h">
       <Filter>ThirdPrty\stb</Filter>
     </ClInclude>
-    <ClInclude Include="Editor_TexturePanel.h">
-      <Filter>Gui\Panels</Filter>
+    <ClInclude Include="Defs.h">
+      <Filter>Tools</Filter>
     </ClInclude>
-    <ClInclude Include="SimpleScene.h">
-      <Filter>CoreComponents\Scene\Scenes</Filter>
+    <ClInclude Include="GeometryDefs.h">
+      <Filter>Tools</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>CoreComponents\Scene</Filter>
+    <ClInclude Include="App.h">
+      <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Editor_ScenePanel.h">
-      <Filter>Gui\Panels</Filter>
+    <ClInclude Include="Module.h">
+      <Filter>CoreComponents\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="DirLightShadowScene.h">
-      <Filter>CoreComponents\Scene\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="PhongScene.h">
-      <Filter>CoreComponents\Scene\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="MaterialCreator.h">
-      <Filter>Gui</Filter>
-    </ClInclude>
-    <ClInclude Include="PhongMaterial.h">
-      <Filter>CoreComponents\Rendering\Materials</Filter>
-    </ClInclude>
-    <ClInclude Include="AdvancedPhongScene.h">
-      <Filter>CoreComponents\Scene\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="PBRMaterial.h">
-      <Filter>CoreComponents\Rendering\Materials</Filter>
-    </ClInclude>
-    <ClInclude Include="PBRScene.h">
-      <Filter>CoreComponents\Scene\Scenes</Filter>
-    </ClInclude>
+    <ClInclude Include="M_Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>CoreComponents\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="OrthographicCamera.cpp">
-      <Filter>CoreComponents\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="PerspectiveCamera.cpp">
-      <Filter>CoreComponents\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="Geometry.cpp">
-      <Filter>CoreComponents\Geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderInfo.cpp">
-      <Filter>CoreComponents\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="CubeMapFrameBuffer.cpp">
-      <Filter>Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="DepthFrameBuffer.cpp">
-      <Filter>Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="FrameBuffer.cpp">
-      <Filter>Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>CoreComponents\Resources</Filter>
-    </ClCompile>
     <ClCompile Include="ThirdParty\ImGui\imgui.cpp">
       <Filter>ThirdPrty\ImGui</Filter>
     </ClCompile>
@@ -242,80 +91,15 @@
     <ClCompile Include="ThirdParty\ImGui\imgui_impl_glfw_gl3.cpp">
       <Filter>ThirdPrty\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="GuiManager.cpp">
-      <Filter>Gui</Filter>
-    </ClCompile>
-    <ClCompile Include="EditorPanel.cpp">
-      <Filter>Gui\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor_GeometryPanel.cpp">
-      <Filter>Gui\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor_ShaderPanel.cpp">
-      <Filter>Gui\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>CoreComponents\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>CoreComponents\Rendering\Shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="Material.cpp">
-      <Filter>CoreComponents\Rendering\Materials</Filter>
-    </ClCompile>
-    <ClCompile Include="ComplexMaterial.cpp">
-      <Filter>CoreComponents\Rendering\Materials</Filter>
-    </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>CoreComponents\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor_MaterialPanel.cpp">
-      <Filter>Gui\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor_ModelPanel.cpp">
-      <Filter>Gui\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="ModelLoader.cpp">
-      <Filter>CoreComponents\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>CoreComponents\Textures</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor_TexturePanel.cpp">
-      <Filter>Gui\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="SimpleScene.cpp">
-      <Filter>CoreComponents\Scene\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>CoreComponents\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Editor_ScenePanel.cpp">
-      <Filter>Gui\Panels</Filter>
-    </ClCompile>
-    <ClCompile Include="DirLightShadowScene.cpp">
-      <Filter>CoreComponents\Scene\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="PhongScene.cpp">
-      <Filter>CoreComponents\Scene\Scenes</Filter>
+    <ClCompile Include="main.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Defs.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Tools</Filter>
     </ClCompile>
-    <ClCompile Include="MaterialCreator.cpp">
-      <Filter>Gui</Filter>
+    <ClCompile Include="App.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="PhongMaterial.cpp">
-      <Filter>CoreComponents\Rendering\Materials</Filter>
-    </ClCompile>
-    <ClCompile Include="AdvancedPhongScene.cpp">
-      <Filter>CoreComponents\Scene\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="PBRMaterial.cpp">
-      <Filter>CoreComponents\Rendering\Materials</Filter>
-    </ClCompile>
-    <ClCompile Include="PBRScene.cpp">
-      <Filter>CoreComponents\Scene\Scenes</Filter>
-    </ClCompile>
+    <ClCompile Include="M_Window.cpp" />
   </ItemGroup>
 </Project>
