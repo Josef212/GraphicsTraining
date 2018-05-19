@@ -24,9 +24,10 @@ private:
 
 
 public:
-	
+	std::shared_ptr<M_Window> window = nullptr;
 
 private:
+	std::vector<std::shared_ptr<Module>> modules;
 
 
 };
