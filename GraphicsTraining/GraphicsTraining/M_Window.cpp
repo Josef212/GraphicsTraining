@@ -1,11 +1,12 @@
 #include "M_Window.h"
 
-#include <GLFW/glfw3.h>
+#include <SDL.h>
+#include "App.h"
 
 
 M_Window::M_Window(const char* name, bool startEnabled) : Module(name, startEnabled)
 {
-	LOG(LOG_INFO, "%s: Creation --------------", name);
+	LOG_CREATION(name);
 
 	width = DEFAULT_WIN_WIDTH;
 	height = DEFAULT_WIN_HEIGHT;
@@ -14,25 +15,35 @@ M_Window::M_Window(const char* name, bool startEnabled) : Module(name, startEnab
 
 M_Window::~M_Window()
 {
-	LOG(LOG_INFO, "%s: Destruction --------------", name.c_str());
+	LOG(LOG_INFO, "\t%s: Destruction --------------", name.c_str());
 }
 
 bool M_Window::Init()
 {
+	LOG_INIT(name.c_str());
+
 	bool ret = false;
 
-	if(glfwInit())
+	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
+		LOG(LOG_ERROR, "SDL_Video could not initialize. SDL_Error: %s", SDL_GetError());
+	}
+	else
+	{
+		// TODO: Get the config 
 
-		window = glfwCreateWindow(width, height, "Graphics engine", NULL, NULL);
+		uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;// | SDL_WINDOW_MAXIMIZED;
+
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+		//SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
+
+		window = SDL_CreateWindow("Graphics engine.", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
 
 		if(!window)
 		{
-			LOG(LOG_ERROR, "Failed to create window.");
-			glfwTerminate();
+			LOG(LOG_ERROR, "Could not create window. SDL_Error: %s", SDL_GetError());
 		}
 		else
 		{
@@ -45,7 +56,10 @@ bool M_Window::Init()
 
 bool M_Window::CleanUp()
 {
-	glfwDestroyWindow(window);
+	LOG_CLEANUP(name.c_str());
+
+	if (window) SDL_DestroyWindow(window);
+	SDL_Quit();
 
 	return true;
 }

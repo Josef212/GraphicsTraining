@@ -70,8 +70,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>ThirdParty\SOIL;ThirdParty\Glew\include;ThirdParty;ThirdParty\GLM;ThirdParty\stb;ThirdParty\assimp\include;$(IncludePath)</IncludePath>
-    <LibraryPath>ThirdParty\SOIL\lib;ThirdParty\assimp\libx86;ThirdParty\Glew\lib\Release\Win32;ThirdParty\GLFW;$(LibraryPath)</LibraryPath>
+    <IncludePath>ThirdParty\SOIL;ThirdParty\Glew\include;ThirdParty;ThirdParty\GLM;ThirdParty\stb;ThirdParty\assimp\include;ThirdParty\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>ThirdParty\SOIL\lib;ThirdParty\assimp\libx86;ThirdParty\Glew\lib\Release\Win32;ThirdParty\GLFW;ThirdParty\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>ThirdParty\assimp\include;ThirdParty\stb;ThirdParty\GLM;ThirdParty;ThirdParty\Glew\include;ThirdParty\SOIL;$(IncludePath)</IncludePath>
@@ -86,7 +86,7 @@
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32.lib;glew32s.lib;assimp.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;glew32s.lib;assimp.lib;SOIL.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -133,10 +133,12 @@
     <ClInclude Include="Defs.h" />
     <ClInclude Include="GeometryDefs.h" />
     <ClInclude Include="Module.h" />
+    <ClInclude Include="M_Input.h" />
+    <ClInclude Include="M_Renderer.h" />
     <ClInclude Include="M_Window.h" />
+    <ClInclude Include="OpenGL.h" />
     <ClInclude Include="ThirdParty\ImGui\imconfig.h" />
     <ClInclude Include="ThirdParty\ImGui\imgui.h" />
-    <ClInclude Include="ThirdParty\ImGui\imgui_impl_glfw_gl3.h" />
     <ClInclude Include="ThirdParty\ImGui\imgui_internal.h" />
     <ClInclude Include="ThirdParty\ImGui\stb_rect_pack.h" />
     <ClInclude Include="ThirdParty\ImGui\stb_textedit.h" />
@@ -147,11 +149,12 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Defs.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="M_Input.cpp" />
+    <ClCompile Include="M_Renderer.cpp" />
     <ClCompile Include="M_Window.cpp" />
     <ClCompile Include="ThirdParty\ImGui\imgui.cpp" />
     <ClCompile Include="ThirdParty\ImGui\imgui_demo.cpp" />
     <ClCompile Include="ThirdParty\ImGui\imgui_draw.cpp" />
-    <ClCompile Include="ThirdParty\ImGui\imgui_impl_glfw_gl3.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

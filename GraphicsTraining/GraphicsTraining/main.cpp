@@ -6,18 +6,13 @@
 
 #include "Defs.h"
 
-#include <GLFW/glfw3.h>
+#include <SDL.h>
 
 #include "App.h"
 
 // -------------------------------------------------------------------------------
 // Callbacks
 
-static void ErrorCallback(int error, const char* description)
-{
-	LOG(CONSOLE_TEXT_RED, "Error %d: %s", error, description)
-	fprintf(stderr, "Error %d: %s\n", error, description);
-}
 
 // -------------------------------------------------------------------------------
 // Globals
@@ -37,9 +32,7 @@ std::unique_ptr<App> app = nullptr;
 
 int main(int argc, char** argv)
 {
-	LOG(CONSOLE_TEXT_GREEN, "Starting graphics engine.")
-
-	glfwSetErrorCallback(ErrorCallback);
+	LOG(CONSOLE_TEXT_GREEN, "Starting graphics engine.");
 
 	int ret = EXIT_FAILURE;
 	MainState state = MAIN_CREATION;

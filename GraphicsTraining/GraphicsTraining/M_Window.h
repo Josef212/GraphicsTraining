@@ -3,7 +3,7 @@
 
 #include "Module.h"
 
-class GLFWwindow;
+struct SDL_Window;
 
 class M_Window : public Module
 {
@@ -14,13 +14,21 @@ public:
 	bool Init() override;
 	bool CleanUp() override;
 
+	// ================================
+
+	SDL_Window* GetWindow()const { return window; }
+
+	int GetWidth()const { return width; }
+	int GetHeight()const { return height; }
+	int GetScale()const { return scale; }
+
 private:
 
 public:
 
 private:
 	uint width, height, scale;
-	GLFWwindow* window = nullptr;
+	SDL_Window* window = nullptr;
 };
 
 #endif

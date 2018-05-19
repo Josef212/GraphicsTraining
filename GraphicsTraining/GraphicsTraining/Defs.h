@@ -108,6 +108,12 @@ const char* GetLogTypeStr(ushort type);
 #define HAVE_M_PI
 #define PI 3.14159265358979323846264338327950288
 
+#define LOG_CREATION(name) LOG(LOG_INFO, "\t%s: Creation", name);
+#define LOG_INIT(name) LOG(LOG_INFO, "\t%s: Init", name);
+#define LOG_START(name) LOG(LOG_INFO, "\t%s: Start", name);
+#define LOG_CLEANUP(name) LOG(LOG_INFO, "\t%s: CleanUp", name);
+#define LOG_DESTRUCTION(name) LOG(LOG_INFO, "\t%s: Destruction", name);
+
 // ----------------------------------------------
 // Global enums
 
