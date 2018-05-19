@@ -16,12 +16,12 @@ public:
 	UpdateReturn PostUpdate(float dt) override;
 	bool CleanUp() override;
 
+	void OnResize(uint w, uint h)override;
+
 	// ================================
 
 	bool SetVSync()const { return vsync; }
 	void SetVSync(bool set);
-
-	void OnResize(uint w, uint h);
 
 private:
 

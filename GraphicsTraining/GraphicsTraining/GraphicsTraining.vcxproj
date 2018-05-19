@@ -130,6 +130,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="Clock.h" />
     <ClInclude Include="Defs.h" />
     <ClInclude Include="GeometryDefs.h" />
     <ClInclude Include="Module.h" />
@@ -137,6 +138,7 @@
     <ClInclude Include="M_Renderer.h" />
     <ClInclude Include="M_Window.h" />
     <ClInclude Include="OpenGL.h" />
+    <ClInclude Include="PerfTimer.h" />
     <ClInclude Include="ThirdParty\ImGui\imconfig.h" />
     <ClInclude Include="ThirdParty\ImGui\imgui.h" />
     <ClInclude Include="ThirdParty\ImGui\imgui_internal.h" />
@@ -147,11 +149,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="Clock.cpp" />
     <ClCompile Include="Defs.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="M_Input.cpp" />
     <ClCompile Include="M_Renderer.cpp" />
     <ClCompile Include="M_Window.cpp" />
+    <ClCompile Include="PerfTimer.cpp" />
     <ClCompile Include="ThirdParty\ImGui\imgui.cpp" />
     <ClCompile Include="ThirdParty\ImGui\imgui_demo.cpp" />
     <ClCompile Include="ThirdParty\ImGui\imgui_draw.cpp" />

@@ -6,7 +6,7 @@
 #define MAX_MOUSE_BUTTONS 5
 #define MAX_KEYS 300
 
-enum KEY_STATE
+enum KeyState
 {
 	KEY_IDLE = 0,
 	KEY_DOWN,
@@ -26,13 +26,31 @@ public:
 
 	// ================================
 
+	// Get keyboard and mouse state
+	KeyState GetKey(int id)const { return keyboard[id]; }
+	KeyState GetMouseButton(int id)const { return mouse[id]; }
+
+	bool GetKeyDown(int id)const { return keyboard[id] == KEY_DOWN; }
+	bool GetKeyUp(int id)const { return keyboard[id] == KEY_UP; }
+	bool GetKeyRepeat(int id)const { return keyboard[id] == KEY_REPEAT; }
+
+	bool GetMouseDown(int id)const { return mouse[id] == KEY_DOWN; }
+	bool GetMouseUp(int id)const { return mouse[id] == KEY_UP; }
+	bool GetMouseRepeat(int id)const { return mouse[id] == KEY_REPEAT; }
+
+	int GetMouseX()const { return mouseX; }
+	int GetMouseY()const { return mouseY; }
+	int GetMouseMotionX()const { return mouseMotionX; }
+	int GetMouseMotionY()const { return mouseMotionY; }
+	int GetMouseWheel()const { return wheelY; }
+
 private:
 
 public:
 
 private:
-	KEY_STATE * keyboard = nullptr;
-	KEY_STATE mouse[MAX_MOUSE_BUTTONS];
+	KeyState * keyboard = nullptr;
+	KeyState mouse[MAX_MOUSE_BUTTONS];
 	int mouseX, mouseY, mouseMotionX, mouseMotionY, wheelY;
 };
 

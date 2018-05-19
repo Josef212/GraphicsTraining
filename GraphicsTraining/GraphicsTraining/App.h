@@ -6,6 +6,7 @@
 
 #include <string>
 #include <vector>
+#include "Clock.h"
 
 class Module;
 class M_Window;
@@ -22,13 +23,18 @@ public:
 	UpdateReturn Update();
 	bool CleanUp();
 
+	void OnResize(uint w, uint h);
+
 	// ================================
 
 	void Close() { shouldClose = true; };
 
+	uint GetMaxFPS()const;
+	void SetMaxFPS(uint _fps);
+
 private:
 	void PrepareUpdate();
-	void PostUpdate();
+	void FinishUpdate();
 
 public:
 	std::shared_ptr<M_Window>		window = nullptr;
@@ -37,10 +43,15 @@ public:
 
 	std::shared_ptr<M_Renderer>		renderer = nullptr;
 
+
+	std::unique_ptr<GE::Clock>		clock = nullptr;
+
 private:
 	std::vector<std::shared_ptr<Module>> modules;
 
 	bool shouldClose;
+
+	uint32	cappedMs = 0;
 
 
 };

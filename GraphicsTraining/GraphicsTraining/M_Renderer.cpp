@@ -11,6 +11,8 @@ M_Renderer::M_Renderer(const char* name, bool startEnabled) : Module(name, start
 	LOG_CREATION(name);
 
 	vsync = false;
+
+	configuration = M_INIT | M_START | M_PRE_UPDATE | M_POST_UPDATE | M_CLEAN_UP | M_SAVE_CONFIG | M_RESIZE_EVENT;
 }
 
 
@@ -105,6 +107,11 @@ bool M_Renderer::CleanUp()
 	return true;
 }
 
+void M_Renderer::OnResize(uint w, uint h)
+{
+	glViewport(0, 0, w, h);
+}
+
 void M_Renderer::SetVSync(bool set)
 {
 	if(set != vsync)
@@ -113,9 +120,4 @@ void M_Renderer::SetVSync(bool set)
 		if (SDL_GL_SetSwapInterval(vsync ? 1 : 0) < 0)
 			LOG(LOG_WARN, "Unable to set VSync. SDL_Error: %s", SDL_GetError());
 	}
-}
-
-void M_Renderer::OnResize(uint w, uint h)
-{
-	glViewport(0, 0, w, h);
 }

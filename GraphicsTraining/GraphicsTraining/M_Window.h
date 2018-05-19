@@ -14,6 +14,8 @@ public:
 	bool Init() override;
 	bool CleanUp() override;
 
+	void OnResize(uint w, uint h) override;
+
 	// ================================
 
 	SDL_Window* GetWindow()const { return window; }

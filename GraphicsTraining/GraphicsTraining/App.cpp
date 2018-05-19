@@ -10,6 +10,8 @@ App::App(int argc, char** argv) : shouldClose(false)
 {
 	LOG(LOG_INFO, "Creating modules.");
 
+	clock = std::make_unique<GE::Clock>();
+
 	window = std::make_shared<M_Window>("M_Window");
 	input = std::make_shared<M_Input>("M_Input");
 
@@ -34,6 +36,8 @@ App::~App()
 		(*it).reset();
 		++it;
 	}
+
+	clock.release();
 }
 
 bool App::Init()
@@ -45,7 +49,8 @@ bool App::Init()
 	auto it = modules.begin();
 	while(it != modules.end() && ret == true)
 	{
-		ret = (*it)->Init();
+		if((*it)->configuration & M_INIT)
+			ret = (*it)->Init();
 		++it;
 	}
 
@@ -56,7 +61,7 @@ bool App::Init()
 	it = modules.begin();
 	while (it != modules.end() && ret == true)
 	{
-		if((*it)->IsEnabled())
+		if((*it)->configuration & M_START && (*it)->IsEnabled())
 			ret = (*it)->Start();
 		++it;
 	}
@@ -74,8 +79,8 @@ UpdateReturn App::Update()
 	auto it = modules.begin();
 	while (it != modules.end() && ret == UpdateReturn::UPDT_CONTINUE)
 	{
-		if ((*it)->IsEnabled())
-			ret = (*it)->PreUpdate(0.f);
+		if ((*it)->configuration & M_PRE_UPDATE && (*it)->IsEnabled())
+			ret = (*it)->PreUpdate(clock->Dt());
 		++it;
 	}
 
@@ -85,8 +90,8 @@ UpdateReturn App::Update()
 	it = modules.begin();
 	while (it != modules.end() && ret == UpdateReturn::UPDT_CONTINUE)
 	{
-		if ((*it)->IsEnabled())
-			ret = (*it)->Update(0.f);
+		if ((*it)->configuration & M_UPDATE && (*it)->IsEnabled())
+			ret = (*it)->Update(clock->Dt());
 		++it;
 	}
 
@@ -96,15 +101,15 @@ UpdateReturn App::Update()
 	it = modules.begin();
 	while (it != modules.end() && ret == UpdateReturn::UPDT_CONTINUE)
 	{
-		if ((*it)->IsEnabled())
-			ret = (*it)->PostUpdate(0.f);
+		if ((*it)->configuration & M_POST_UPDATE && (*it)->IsEnabled())
+			ret = (*it)->PostUpdate(clock->Dt());
 		++it;
 	}
 
 	if (ret == UpdateReturn::UPDT_ERROR)
 		LOG(LOG_ERROR, "Exiting with error on postupdate!");
 
-	PostUpdate();
+	FinishUpdate();
 
 	if(shouldClose)
 	{
@@ -124,17 +129,62 @@ bool App::CleanUp()
 	auto it = modules.rbegin();
 	while (it != modules.rend() && ret)
 	{
-		ret = (*it)->CleanUp();
+		if((*it)->configuration & M_CLEAN_UP)
+			ret = (*it)->CleanUp();
 		++it;
 	}
 
 	return ret;
 }
 
-void App::PrepareUpdate()
+void App::OnResize(uint w, uint h)
 {
+	for(auto it = modules.begin(); it != modules.end(); ++it)
+	{
+		if((*it)->IsEnabled() && (*it)->configuration & M_RESIZE_EVENT)
+		{
+			(*it)->OnResize(w, h);
+		}
+	}
 }
 
-void App::PostUpdate()
+// ===============================================================
+
+/**
+*	- GetMaxFPS: Return app max fps.
+*/
+uint App::GetMaxFPS() const
 {
+	if (cappedMs > 0)
+		return (uint)((1.0f / (float)cappedMs) * 1000.0f);
+	else
+		return 0;
+}
+
+/**
+*	- SetMaxFPS: Set app max fps.
+*/
+void App::SetMaxFPS(uint _fps)
+{
+	if (_fps > 0)
+		cappedMs = 1000 / _fps;
+	else
+		cappedMs = 0;
+}
+
+// ===============================================================
+
+void App::PrepareUpdate()
+{
+	clock->OnPrepareUpdate();
+}
+
+void App::FinishUpdate()
+{
+	clock->OnFinishUpdate();
+
+	if (cappedMs > 0 && (clock->LastFrameMs() < cappedMs))
+		SDL_Delay(cappedMs - clock->LastFrameMs());
+
+	//if (editor) editor->LogFPS((float)clock->LastFPS(), (float)clock->LastFrameMs());
 }

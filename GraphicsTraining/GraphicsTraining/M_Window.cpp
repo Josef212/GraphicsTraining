@@ -11,6 +11,8 @@ M_Window::M_Window(const char* name, bool startEnabled) : Module(name, startEnab
 	width = DEFAULT_WIN_WIDTH;
 	height = DEFAULT_WIN_HEIGHT;
 	scale = 1;
+
+	configuration = M_INIT | M_CLEAN_UP | M_SAVE_CONFIG | M_RESIZE_EVENT;
 }
 
 M_Window::~M_Window()
@@ -62,4 +64,10 @@ bool M_Window::CleanUp()
 	SDL_Quit();
 
 	return true;
+}
+
+void M_Window::OnResize(uint w, uint h)
+{
+	width = w;
+	height = h;
 }

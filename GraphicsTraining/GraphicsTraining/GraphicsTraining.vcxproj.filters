@@ -38,6 +38,9 @@
     <Filter Include="CoreComponents\Modules">
       <UniqueIdentifier>{6aec398d-ca11-40fd-b91d-5cedfd612546}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tools\Time">
+      <UniqueIdentifier>{6d81e286-fb36-4eca-af30-b5f42fb27a60}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ThirdParty\ImGui\imconfig.h">
@@ -82,7 +85,15 @@
     <ClInclude Include="OpenGL.h">
       <Filter>Tools</Filter>
     </ClInclude>
-    <ClInclude Include="M_Input.h" />
+    <ClInclude Include="M_Input.h">
+      <Filter>CoreComponents\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Clock.h">
+      <Filter>Tools\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="PerfTimer.h">
+      <Filter>Tools\Time</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\ImGui\imgui.cpp">
@@ -109,6 +120,14 @@
     <ClCompile Include="M_Window.cpp">
       <Filter>CoreComponents\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="M_Input.cpp" />
+    <ClCompile Include="M_Input.cpp">
+      <Filter>CoreComponents\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Clock.cpp">
+      <Filter>Tools\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="PerfTimer.cpp">
+      <Filter>Tools\Time</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
