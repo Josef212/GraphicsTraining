@@ -15,7 +15,8 @@ typedef enum
 	M_POST_UPDATE	= 1 << 4,
 	M_CLEAN_UP		= 1 << 5,
 	M_SAVE_CONFIG	= 1 << 6,
-	M_RESIZE_EVENT	= 1 << 7
+	M_RESIZE_EVENT	= 1 << 7,
+	M_DRAW_DEBUG	= 1 << 8
 
 } ModuleConfig;
 

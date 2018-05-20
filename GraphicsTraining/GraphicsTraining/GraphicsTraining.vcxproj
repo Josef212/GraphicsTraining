@@ -134,6 +134,7 @@
     <ClInclude Include="Defs.h" />
     <ClInclude Include="GeometryDefs.h" />
     <ClInclude Include="Module.h" />
+    <ClInclude Include="M_Editor.h" />
     <ClInclude Include="M_Input.h" />
     <ClInclude Include="M_Renderer.h" />
     <ClInclude Include="M_Window.h" />
@@ -152,6 +153,7 @@
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="Defs.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="M_Editor.cpp" />
     <ClCompile Include="M_Input.cpp" />
     <ClCompile Include="M_Renderer.cpp" />
     <ClCompile Include="M_Window.cpp" />

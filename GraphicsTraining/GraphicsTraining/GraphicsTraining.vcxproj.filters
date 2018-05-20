@@ -94,6 +94,9 @@
     <ClInclude Include="PerfTimer.h">
       <Filter>Tools\Time</Filter>
     </ClInclude>
+    <ClInclude Include="M_Editor.h">
+      <Filter>CoreComponents\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\ImGui\imgui.cpp">
@@ -128,6 +131,9 @@
     </ClCompile>
     <ClCompile Include="PerfTimer.cpp">
       <Filter>Tools\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="M_Editor.cpp">
+      <Filter>CoreComponents\Modules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

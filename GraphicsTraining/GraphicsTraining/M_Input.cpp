@@ -4,6 +4,7 @@
 
 #include "App.h"
 #include "M_Window.h"
+#include "M_Editor.h"
 
 
 M_Input::M_Input(const char* name, bool startEnabled) : Module(name, startEnabled)
@@ -92,7 +93,7 @@ UpdateReturn M_Input::PreUpdate(float dt)
 	SDL_Event e;
 	while (SDL_PollEvent(&e))
 	{
-		//app->editor->PassInput(&e); // TODO: Editor input
+		app->editor->PassInput(&e);
 
 		switch (e.type)
 		{

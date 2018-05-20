@@ -1,5 +1,6 @@
 #include "App.h"
 
+#include "M_Editor.h"
 #include "M_Window.h"
 #include "M_Input.h"
 
@@ -12,6 +13,8 @@ App::App(int argc, char** argv) : shouldClose(false)
 
 	clock = std::make_unique<GE::Clock>();
 
+
+	editor = std::make_shared<M_Editor>("M_Editor");
 	window = std::make_shared<M_Window>("M_Window");
 	input = std::make_shared<M_Input>("M_Input");
 
@@ -19,6 +22,7 @@ App::App(int argc, char** argv) : shouldClose(false)
 	renderer = std::make_shared<M_Renderer>("M_Renderer");
 
 
+	modules.push_back(editor);
 	modules.push_back(window);
 	modules.push_back(input);
 
@@ -144,6 +148,17 @@ void App::OnResize(uint w, uint h)
 		if((*it)->IsEnabled() && (*it)->configuration & M_RESIZE_EVENT)
 		{
 			(*it)->OnResize(w, h);
+		}
+	}
+}
+
+void App::DrawDebug()
+{
+	for (auto it = modules.begin(); it != modules.end(); ++it)
+	{
+		if ((*it)->IsEnabled() && (*it)->configuration & M_DRAW_DEBUG)
+		{
+			(*it)->DrawDebug();
 		}
 	}
 }

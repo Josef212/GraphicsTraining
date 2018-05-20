@@ -2,6 +2,7 @@
 
 #include "App.h"
 #include "M_Window.h"
+#include "M_Editor.h"
 
 #include "OpenGL.h"
 
@@ -92,6 +93,10 @@ UpdateReturn M_Renderer::Update(float dt)
 UpdateReturn M_Renderer::PostUpdate(float dt)
 {
 
+
+	if (app->debugDraw) app->DrawDebug();
+
+	if (app->editor) app->editor->Render();
 
 	SDL_GL_SwapWindow(app->window->GetWindow());
 

@@ -12,6 +12,7 @@ class Module;
 class M_Window;
 class M_Input;
 class M_Renderer;
+class M_Editor;
 
 class App
 {
@@ -25,6 +26,8 @@ public:
 
 	void OnResize(uint w, uint h);
 
+	void DrawDebug();
+
 	// ================================
 
 	void Close() { shouldClose = true; };
@@ -37,6 +40,7 @@ private:
 	void FinishUpdate();
 
 public:
+	std::shared_ptr<M_Editor>		editor = nullptr;
 	std::shared_ptr<M_Window>		window = nullptr;
 	std::shared_ptr<M_Input>		input = nullptr;
 
@@ -45,6 +49,8 @@ public:
 
 
 	std::unique_ptr<GE::Clock>		clock = nullptr;
+
+	bool debugDraw = false;
 
 private:
 	std::vector<std::shared_ptr<Module>> modules;
