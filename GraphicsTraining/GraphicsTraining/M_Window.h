@@ -35,7 +35,7 @@ public:
 	int GetWinWidth()const { return m_width; }
 	int GetWinHeight()const { return m_height; }
 	void GetWinSize(int& width, int& height)const { width = this->m_width, height = this->m_height; }
-	int GetWinScale()const { return m_scale; }
+	uint GetWinScale()const { return m_scale; }
 
 	void SetWinWidth(int w);
 	void SetWinHeight(int h);

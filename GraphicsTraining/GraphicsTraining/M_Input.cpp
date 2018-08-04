@@ -11,9 +11,9 @@ M_Input::M_Input(const char* name, bool startEnabled) : Module(name, startEnable
 {
 	LOG_CREATION(name);
 
-	keyboard = new KeyState[MAX_KEYS];
-	memset(keyboard, KEY_IDLE, sizeof(KeyState) * MAX_KEYS);
-	memset(mouse, KEY_IDLE, sizeof(KeyState) * MAX_MOUSE_BUTTONS);
+	m_keyboard = new KeyState[MAX_KEYS];
+	memset(m_keyboard, KEY_IDLE, sizeof(KeyState) * MAX_KEYS);
+	memset(m_mouse, KEY_IDLE, sizeof(KeyState) * MAX_MOUSE_BUTTONS);
 
 	configuration = M_INIT | M_PRE_UPDATE | M_CLEAN_UP;
 }
@@ -23,7 +23,7 @@ M_Input::~M_Input()
 {
 	LOG_DESTRUCTION(name.c_str());
 
-	RELEASE_ARRAY(keyboard);
+	RELEASE_ARRAY(m_keyboard);
 }
 
 bool M_Input::Init()
@@ -51,42 +51,43 @@ UpdateReturn M_Input::PreUpdate(float dt)
 	{
 		if (keys[i] == 1)
 		{
-			if (keyboard[i] == KEY_IDLE)
-				keyboard[i] = KEY_DOWN;
+			if (m_keyboard[i] == KEY_IDLE)
+				m_keyboard[i] = KEY_DOWN;
 			else
-				keyboard[i] = KEY_REPEAT;
+				m_keyboard[i] = KEY_REPEAT;
 		}
 		else
 		{
-			if (keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
-				keyboard[i] = KEY_UP;
+			if (m_keyboard[i] == KEY_REPEAT || m_keyboard[i] == KEY_DOWN)
+				m_keyboard[i] = KEY_UP;
 			else
-				keyboard[i] = KEY_IDLE;
+				m_keyboard[i] = KEY_IDLE;
 		}
 	}
 
-	Uint32 buttons = SDL_GetMouseState(&mouseX, &mouseY);
+	uint winScl = app->window->GetWinScale();
+	Uint32 buttons = SDL_GetMouseState(&m_mouseX, &m_mouseY);
 
-	mouseX /= app->window->GetWinScale();
-	mouseY /= app->window->GetWinScale();
-	wheelY = 0;
-	mouseMotionX = mouseMotionY = 0;
+	m_mouseX /= winScl;
+	m_mouseY /= winScl;
+	m_wheelY = 0;
+	m_mouseMotionX = m_mouseMotionY = 0;
 
 	for (int i = 0; i < MAX_MOUSE_BUTTONS; ++i)
 	{
 		if (buttons & SDL_BUTTON(i))
 		{
-			if (mouse[i] == KEY_IDLE)
-				mouse[i] = KEY_DOWN;
+			if (m_mouse[i] == KEY_IDLE)
+				m_mouse[i] = KEY_DOWN;
 			else
-				mouse[i] = KEY_REPEAT;
+				m_mouse[i] = KEY_REPEAT;
 		}
 		else
 		{
-			if (mouse[i] == KEY_REPEAT || mouse[i] == KEY_DOWN)
-				mouse[i] = KEY_UP;
+			if (m_mouse[i] == KEY_REPEAT || m_mouse[i] == KEY_DOWN)
+				m_mouse[i] = KEY_UP;
 			else
-				mouse[i] = KEY_IDLE;
+				m_mouse[i] = KEY_IDLE;
 		}
 	}
 
@@ -98,14 +99,14 @@ UpdateReturn M_Input::PreUpdate(float dt)
 		switch (e.type)
 		{
 		case SDL_MOUSEWHEEL:
-			wheelY = e.wheel.y;
+			m_wheelY = e.wheel.y;
 			break;
 
 		case SDL_MOUSEMOTION:
-			mouseX = e.motion.x / app->window->GetWinScale();
-			mouseY = e.motion.y / app->window->GetWinScale();
-			mouseMotionX = e.motion.xrel / app->window->GetWinScale();
-			mouseMotionY = e.motion.yrel / app->window->GetWinScale();
+			m_mouseX = e.motion.x / winScl;
+			m_mouseY = e.motion.y / winScl;
+			m_mouseMotionX = e.motion.xrel / winScl;
+			m_mouseMotionY = e.motion.yrel / winScl;
 			break;
 
 		case SDL_QUIT:
@@ -128,11 +129,11 @@ UpdateReturn M_Input::PreUpdate(float dt)
 
 		case SDL_DROPFILE:
 		{
-			char* dropped_file = e.drop.file;
+			char* droppedFile = e.drop.file;
 			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "File dropped on window: ",
-				dropped_file, app->window->GetWindow());
+				droppedFile, app->window->GetWindow());
 			//app->resources->ImportFile(dropped_file);	//TODO: Should do this by events
-			SDL_free(dropped_file);
+			SDL_free(droppedFile);
 		}
 		break;
 
