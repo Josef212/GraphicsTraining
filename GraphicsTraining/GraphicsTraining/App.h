@@ -40,6 +40,7 @@ private:
 	void FinishUpdate();
 
 public:
+	// Modules
 	std::shared_ptr<M_Editor>		editor = nullptr;
 	std::shared_ptr<M_Window>		window = nullptr;
 	std::shared_ptr<M_Input>		input = nullptr;
@@ -47,7 +48,7 @@ public:
 
 	std::shared_ptr<M_Renderer>		renderer = nullptr;
 
-
+	// Other public variables
 	std::unique_ptr<GE::Clock>		clock = nullptr;
 
 	bool debugDraw = false;
@@ -55,7 +56,7 @@ public:
 private:
 	std::vector<std::shared_ptr<Module>> modules;
 
-	bool shouldClose;
+	bool shouldClose = false;
 
 	uint32	cappedMs = 0;
 

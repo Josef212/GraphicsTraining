@@ -70,7 +70,7 @@ bool M_Renderer::Init()
 
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-			OnResize(app->window->GetWidth(), app->window->GetHeight());
+			OnResize(app->window->GetWinWidth(), app->window->GetWinHeight());
 		}
 	}
 
