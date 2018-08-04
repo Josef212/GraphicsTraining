@@ -33,6 +33,14 @@ double GE::PerfTimer::ReadMs() const
 		return 1000.0 * (stopedAt - startedAt);
 }
 
+uint64 GE::PerfTimer::ReadSec() const
+{
+	if (running)
+		return uint64(double(SDL_GetPerformanceCounter() - startedAt) / double(frequency));
+	else
+		return (stopedAt - startedAt);
+}
+
 uint64 GE::PerfTimer::ReadTicks() const
 {
 	if (running)

@@ -15,6 +15,7 @@ namespace GE
 		void Stop();
 
 		double ReadMs()const;
+		uint64 ReadSec()const;
 		unsigned long long ReadTicks()const;
 
 	private:
