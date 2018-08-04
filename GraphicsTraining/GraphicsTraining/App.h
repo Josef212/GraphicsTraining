@@ -13,6 +13,7 @@ class M_Window;
 class M_Input;
 class M_Renderer;
 class M_Editor;
+class M_ResourceManager;
 
 class App
 {
@@ -41,9 +42,10 @@ private:
 
 public:
 	// Modules
-	std::shared_ptr<M_Editor>		editor = nullptr;
-	std::shared_ptr<M_Window>		window = nullptr;
-	std::shared_ptr<M_Input>		input = nullptr;
+	std::shared_ptr<M_Editor>				editor = nullptr;
+	std::shared_ptr<M_Window>				window = nullptr;
+	std::shared_ptr<M_Input>				input = nullptr;
+	std::shared_ptr<M_ResourceManager>		resourceManager = nullptr;
 
 
 	std::shared_ptr<M_Renderer>		renderer = nullptr;

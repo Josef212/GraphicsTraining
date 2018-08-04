@@ -3,6 +3,7 @@
 #include "M_Editor.h"
 #include "M_Window.h"
 #include "M_Input.h"
+#include "M_ResourceManager.h"
 
 #include "M_Renderer.h"
 
@@ -17,6 +18,8 @@ App::App(int argc, char** argv) : shouldClose(false)
 	editor = std::make_shared<M_Editor>("M_Editor");
 	window = std::make_shared<M_Window>("M_Window");
 	input = std::make_shared<M_Input>("M_Input");
+	resourceManager = std::make_shared<M_ResourceManager>("M_ResourceManager");
+
 
 
 	renderer = std::make_shared<M_Renderer>("M_Renderer");
@@ -25,6 +28,7 @@ App::App(int argc, char** argv) : shouldClose(false)
 	modules.push_back(editor);
 	modules.push_back(window);
 	modules.push_back(input);
+	modules.push_back(resourceManager);
 
 
 

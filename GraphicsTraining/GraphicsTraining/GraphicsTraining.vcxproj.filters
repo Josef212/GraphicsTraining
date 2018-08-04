@@ -106,6 +106,10 @@
     <ClInclude Include="Color.h">
       <Filter>Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>CoreComponents\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="M_ResourceManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\ImGui\imgui.cpp">
@@ -147,5 +151,6 @@
     <ClCompile Include="Color.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
+    <ClCompile Include="M_ResourceManager.cpp" />
   </ItemGroup>
 </Project>
