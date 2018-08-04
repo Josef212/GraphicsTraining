@@ -131,6 +131,7 @@
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="Clock.h" />
+    <ClInclude Include="Color.h" />
     <ClInclude Include="Defs.h" />
     <ClInclude Include="GeometryDefs.h" />
     <ClInclude Include="Module.h" />
@@ -151,6 +152,7 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="Clock.cpp" />
+    <ClCompile Include="Color.cpp" />
     <ClCompile Include="Defs.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="M_Editor.cpp" />

@@ -11,12 +11,6 @@
     <Filter Include="Tools">
       <UniqueIdentifier>{c25773ee-ed54-4263-ad0f-22ff3b9dc71a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Gui">
-      <UniqueIdentifier>{28f4fe0f-345f-4717-a425-0a59dbc56d2f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Gui\Panels">
-      <UniqueIdentifier>{9c8dc433-7f77-4eca-b59f-b2f0b23f2e95}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CoreComponents\Scene">
       <UniqueIdentifier>{6aaa4fc1-b689-4439-a870-35aa9e2fffa2}</UniqueIdentifier>
     </Filter>
@@ -40,6 +34,18 @@
     </Filter>
     <Filter Include="Tools\Time">
       <UniqueIdentifier>{6d81e286-fb36-4eca-af30-b5f42fb27a60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CoreComponents\Editor">
+      <UniqueIdentifier>{28f4fe0f-345f-4717-a425-0a59dbc56d2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CoreComponents\Editor\Panels">
+      <UniqueIdentifier>{9c8dc433-7f77-4eca-b59f-b2f0b23f2e95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CoreComponents\Resources">
+      <UniqueIdentifier>{1b5a80de-fc3f-4c29-a6c3-a70defed1ae6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CoreComponents\Resources\Resources">
+      <UniqueIdentifier>{2a7cf4a3-b14a-46c4-a593-bdb23ef3863e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -95,7 +101,10 @@
       <Filter>Tools\Time</Filter>
     </ClInclude>
     <ClInclude Include="M_Editor.h">
-      <Filter>CoreComponents\Modules</Filter>
+      <Filter>CoreComponents\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -133,7 +142,10 @@
       <Filter>Tools\Time</Filter>
     </ClCompile>
     <ClCompile Include="M_Editor.cpp">
-      <Filter>CoreComponents\Modules</Filter>
+      <Filter>CoreComponents\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>Tools</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

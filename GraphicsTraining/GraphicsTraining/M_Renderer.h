@@ -20,17 +20,17 @@ public:
 
 	// ================================
 
-	bool SetVSync()const { return vsync; }
+	bool SetVSync()const { return m_vsync; }
 	void SetVSync(bool set);
 
 private:
 
 public:
-
+	bool m_showGrid = true;
 
 private:
-	SDL_GLContext context;
-	bool vsync;
+	SDL_GLContext m_context;
+	bool m_vsync;
 };
 
 #endif

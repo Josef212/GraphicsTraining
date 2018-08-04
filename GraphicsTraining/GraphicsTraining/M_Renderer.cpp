@@ -11,7 +11,7 @@ M_Renderer::M_Renderer(const char* name, bool startEnabled) : Module(name, start
 {
 	LOG_CREATION(name);
 
-	vsync = false;
+	m_vsync = false;
 
 	configuration = M_INIT | M_START | M_PRE_UPDATE | M_POST_UPDATE | M_CLEAN_UP | M_SAVE_CONFIG | M_RESIZE_EVENT;
 }
@@ -27,9 +27,9 @@ bool M_Renderer::Init()
 	LOG_INIT(name.c_str());
 	bool ret = true;
 
-	context = SDL_GL_CreateContext(app->window->GetWindow());
+	m_context = SDL_GL_CreateContext(app->window->GetWindow());
 
-	if(context == nullptr)
+	if(m_context == nullptr)
 	{
 		LOG(LOG_ERROR, "OpenGL could not create context. SDL_Error: %s", SDL_GetError());
 		ret = false;
@@ -60,7 +60,7 @@ bool M_Renderer::Init()
 			LOG(LOG_INFO, "OpenGL version supported %s", glGetString(GL_VERSION));
 			LOG(LOG_INFO, "GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
-			SetVSync(vsync);
+			SetVSync(m_vsync);
 
 			glClearDepth(1.f);
 			glClearColor(0.f, 0.f, 0.f, 1.f);
@@ -94,6 +94,8 @@ UpdateReturn M_Renderer::PostUpdate(float dt)
 {
 
 
+	if (m_showGrid); // TODO: draw grid
+
 	if (app->debugDraw) app->DrawDebug();
 
 	if (app->editor) app->editor->Render();
@@ -107,7 +109,7 @@ bool M_Renderer::CleanUp()
 {
 	LOG_CLEANUP(name.c_str());
 
-	SDL_GL_DeleteContext(context);
+	SDL_GL_DeleteContext(m_context);
 
 	return true;
 }
@@ -119,10 +121,10 @@ void M_Renderer::OnResize(uint w, uint h)
 
 void M_Renderer::SetVSync(bool set)
 {
-	if(set != vsync)
+	if(set != m_vsync)
 	{
-		vsync = set;
-		if (SDL_GL_SetSwapInterval(vsync ? 1 : 0) < 0)
+		m_vsync = set;
+		if (SDL_GL_SetSwapInterval(m_vsync ? 1 : 0) < 0)
 			LOG(LOG_WARN, "Unable to set VSync. SDL_Error: %s", SDL_GetError());
 	}
 }
