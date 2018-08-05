@@ -109,7 +109,10 @@
     <ClInclude Include="Resource.h">
       <Filter>CoreComponents\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="M_ResourceManager.h" />
+    <ClInclude Include="M_ResourceManager.h">
+      <Filter>CoreComponents\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="R_Geometry.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\ImGui\imgui.cpp">
@@ -151,6 +154,9 @@
     <ClCompile Include="Color.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
-    <ClCompile Include="M_ResourceManager.cpp" />
+    <ClCompile Include="M_ResourceManager.cpp">
+      <Filter>CoreComponents\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="R_Geometry.cpp" />
   </ItemGroup>
 </Project>

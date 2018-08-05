@@ -143,6 +143,7 @@
     <ClInclude Include="OpenGL.h" />
     <ClInclude Include="PerfTimer.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="R_Geometry.h" />
     <ClInclude Include="ThirdParty\ImGui\imconfig.h" />
     <ClInclude Include="ThirdParty\ImGui\imgui.h" />
     <ClInclude Include="ThirdParty\ImGui\imgui_internal.h" />
@@ -163,6 +164,7 @@
     <ClCompile Include="M_ResourceManager.cpp" />
     <ClCompile Include="M_Window.cpp" />
     <ClCompile Include="PerfTimer.cpp" />
+    <ClCompile Include="R_Geometry.cpp" />
     <ClCompile Include="ThirdParty\ImGui\imgui.cpp" />
     <ClCompile Include="ThirdParty\ImGui\imgui_demo.cpp" />
     <ClCompile Include="ThirdParty\ImGui\imgui_draw.cpp" />

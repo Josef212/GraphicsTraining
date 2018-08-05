@@ -19,8 +19,7 @@ enum ResourceType
 
 class Resource
 {
-	friend class M_ResourceManager;
-
+public:
 	Resource(const char* name, ResourceType type) : m_resType(type)
 	{
 		this->m_resName = name;
@@ -43,7 +42,7 @@ public:
 
 
 private:
-	std::string m_resName = "Unmamed resource.";
+	std::string m_resName = "Unmamed resource";
 	ResourceType m_resType = RES_NONE;
 };
 
