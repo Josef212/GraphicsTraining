@@ -151,6 +151,8 @@
     <ClInclude Include="ThirdParty\ImGui\stb_rect_pack.h" />
     <ClInclude Include="ThirdParty\ImGui\stb_textedit.h" />
     <ClInclude Include="ThirdParty\ImGui\stb_truetype.h" />
+    <ClInclude Include="ThirdParty\jsoncpp\json\json-forwards.h" />
+    <ClInclude Include="ThirdParty\jsoncpp\json\json.h" />
     <ClInclude Include="ThirdParty\stb\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +172,7 @@
     <ClCompile Include="ThirdParty\ImGui\imgui.cpp" />
     <ClCompile Include="ThirdParty\ImGui\imgui_demo.cpp" />
     <ClCompile Include="ThirdParty\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="ThirdParty\jsoncpp\jsoncpp.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

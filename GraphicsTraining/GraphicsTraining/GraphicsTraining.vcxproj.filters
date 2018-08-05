@@ -47,6 +47,9 @@
     <Filter Include="CoreComponents\Resources\Resources">
       <UniqueIdentifier>{2a7cf4a3-b14a-46c4-a593-bdb23ef3863e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdPrty\Json">
+      <UniqueIdentifier>{ec458be8-caed-4cb7-9e98-3a4585732422}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ThirdParty\ImGui\imconfig.h">
@@ -118,6 +121,12 @@
     <ClInclude Include="M_FileSystem.h">
       <Filter>CoreComponents\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="ThirdParty\jsoncpp\json\json.h">
+      <Filter>ThirdPrty\Json</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdParty\jsoncpp\json\json-forwards.h">
+      <Filter>ThirdPrty\Json</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\ImGui\imgui.cpp">
@@ -167,6 +176,9 @@
     </ClCompile>
     <ClCompile Include="M_FileSystem.cpp">
       <Filter>CoreComponents\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdParty\jsoncpp\jsoncpp.cpp">
+      <Filter>ThirdPrty\Json</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
