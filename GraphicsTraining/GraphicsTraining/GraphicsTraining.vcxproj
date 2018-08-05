@@ -70,8 +70,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>ThirdParty\SOIL;ThirdParty\Glew\include;ThirdParty;ThirdParty\GLM;ThirdParty\stb;ThirdParty\assimp\include;ThirdParty\SDL2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>ThirdParty\SOIL\lib;ThirdParty\assimp\libx86;ThirdParty\Glew\lib\Release\Win32;ThirdParty\GLFW;ThirdParty\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>ThirdParty\PhysFS\include;ThirdParty\SOIL;ThirdParty\Glew\include;ThirdParty;ThirdParty\GLM;ThirdParty\stb;ThirdParty\assimp\include;ThirdParty\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>ThirdParty\PhysFS\libx86;ThirdParty\SOIL\lib;ThirdParty\assimp\libx86;ThirdParty\Glew\lib\Release\Win32;ThirdParty\GLFW;ThirdParty\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>ThirdParty\assimp\include;ThirdParty\stb;ThirdParty\GLM;ThirdParty;ThirdParty\Glew\include;ThirdParty\SOIL;$(IncludePath)</IncludePath>
@@ -86,7 +86,7 @@
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;glew32s.lib;assimp.lib;SOIL.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;glew32s.lib;assimp.lib;SOIL.lib;SDL2.lib;SDL2main.lib;physfs.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -136,6 +136,7 @@
     <ClInclude Include="GeometryDefs.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="M_Editor.h" />
+    <ClInclude Include="M_FileSystem.h" />
     <ClInclude Include="M_Input.h" />
     <ClInclude Include="M_Renderer.h" />
     <ClInclude Include="M_ResourceManager.h" />
@@ -159,6 +160,7 @@
     <ClCompile Include="Defs.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="M_Editor.cpp" />
+    <ClCompile Include="M_FileSystem.cpp" />
     <ClCompile Include="M_Input.cpp" />
     <ClCompile Include="M_Renderer.cpp" />
     <ClCompile Include="M_ResourceManager.cpp" />

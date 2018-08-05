@@ -112,7 +112,12 @@
     <ClInclude Include="M_ResourceManager.h">
       <Filter>CoreComponents\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="R_Geometry.h" />
+    <ClInclude Include="R_Geometry.h">
+      <Filter>CoreComponents\Resources\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="M_FileSystem.h">
+      <Filter>CoreComponents\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ThirdParty\ImGui\imgui.cpp">
@@ -157,6 +162,11 @@
     <ClCompile Include="M_ResourceManager.cpp">
       <Filter>CoreComponents\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="R_Geometry.cpp" />
+    <ClCompile Include="R_Geometry.cpp">
+      <Filter>CoreComponents\Resources\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="M_FileSystem.cpp">
+      <Filter>CoreComponents\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
