@@ -20,7 +20,7 @@ public:
 
 	// ================================
 
-	bool SetVSync()const { return m_vsync; }
+	bool GetVSync()const { return m_vsync; }
 	void SetVSync(bool set);
 
 private:
